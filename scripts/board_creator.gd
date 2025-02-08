@@ -40,6 +40,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		var y_pos := int(float(idx) / float(size.x))
 
 		current_cell.position = CELL_SPRITE_SIZE * Vector2(x_pos, y_pos)
+		current_cell.counter_presence = get_default_counter(size, x_pos, y_pos)
 
 		if is_new:
 			cells_parent.add_child(current_cell)
@@ -54,3 +55,16 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 	var remaining_cells := child_cells.slice(size.x * size.y)
 	for cell in remaining_cells:
 		cell.queue_free()
+
+func get_default_counter(size: Vector2i, x_pos: int, y_pos: int) -> BoardCell.CounterPresence:
+	var half_x := int(float(size.x) / 2)
+	var half_y := int(float(size.y) / 2)
+
+	var starts_filled := [half_x, half_x - 1].has(x_pos) and [half_y, half_y - 1].has(y_pos)
+	if starts_filled:
+		if (x_pos + y_pos) % 2 != 0:
+			return BoardCell.CounterPresence.WHITE
+
+		return BoardCell.CounterPresence.BLACK
+
+	return BoardCell.CounterPresence.NONE
