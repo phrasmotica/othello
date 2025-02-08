@@ -6,9 +6,11 @@ enum CounterType { NONE, BLACK, WHITE }
 @export
 var counter_type: CounterType:
 	set(value):
-		counter_type = value
+		if counter_type != value:
+			counter_type = value
+			counter_changed.emit(counter_type)
 
-		_refresh()
+			_refresh()
 
 @onready
 var counter: Counter = %Counter
@@ -18,6 +20,8 @@ var counter_preview: Node2D = %CounterPreview
 
 @onready
 var mouse_area_button: Button = %MouseAreaButton
+
+signal counter_changed(type: CounterType)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
