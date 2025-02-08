@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbt4l8heggobx"]
+
+[ext_resource type="Script" path="res://scripts/score_ui.gd" id="1_uk3uu"]
+
+[node name="ScoreUI" type="VBoxContainer"]
+custom_minimum_size = Vector2(648, 0)
+size_flags_horizontal = 4
+mouse_filter = 2
+script = ExtResource("1_uk3uu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+
+[node name="BlackScoreLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Black: 0"
+horizontal_alignment = 1
+
+[node name="WhiteScoreLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "White: 0"
+horizontal_alignment = 1

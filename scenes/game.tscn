@@ -1,7 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://dskbe0sonplca"]
+[gd_scene load_steps=3 format=3 uid="uid://dskbe0sonplca"]
 
 [ext_resource type="PackedScene" uid="uid://c5cc76vukx7db" path="res://scenes/board.tscn" id="1_8kvr6"]
+[ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="2_b5ltn"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Board" parent="." instance=ExtResource("1_8kvr6")]
+position = Vector2(320, 68)
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="UICanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("board") instance=ExtResource("2_b5ltn")]
+layout_mode = 2
+board = NodePath("../../../Board")

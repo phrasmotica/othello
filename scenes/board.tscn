@@ -15,6 +15,7 @@ cells_parent = NodePath("../Cells")
 board_cell_scene = ExtResource("1_52xkg")
 
 [node name="BoardState" type="Node" parent="." node_paths=PackedStringArray("board_creator")]
+unique_name_in_owner = true
 script = ExtResource("4_sxf1f")
 board_creator = NodePath("../BoardCreator")
 

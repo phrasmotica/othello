@@ -21,8 +21,6 @@ func _update_score() -> void:
 		elif v == BoardCell.CounterType.BLACK:
 			black_score += 1
 
-	print("Score: black %d white %d" % [black_score, white_score])
-
 	score_changed.emit(black_score, white_score)
 
 func _handle_cell_counter_changed(index: int, type: BoardCell.CounterType) -> void:

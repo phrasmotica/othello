@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+class_name Board extends Node2D
 
 const MIN_WIDTH := 6
 const MIN_HEIGHT := 6
@@ -20,7 +20,15 @@ var size: Vector2i = Vector2i(MAX_WIDTH, MAX_HEIGHT):
 @onready
 var board_creator: BoardCreator = %BoardCreator
 
+@onready
+var board_state: BoardState = %BoardState
+
+signal score_changed(black_score: int, white_score: int)
+
 func _ready() -> void:
+	if not Engine.is_editor_hint():
+		board_state.score_changed.connect(score_changed.emit)
+
 	_refresh()
 
 func _refresh() -> void:
