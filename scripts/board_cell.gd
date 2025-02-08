@@ -39,14 +39,25 @@ func _ready() -> void:
 		mouse_area_button.pressed.connect(_handle_pressed)
 
 	_handle_mouse_exited()
+	_refresh()
 
 func _refresh() -> void:
+	var has_counter := counter_presence != CounterPresence.NONE
+
 	if counter:
-		counter.visible = counter_presence != CounterPresence.NONE
+		counter.visible = has_counter
 		counter.is_white = counter_presence == CounterPresence.WHITE
 
 	if counter_preview:
 		counter_preview.is_white = next_colour == CounterType.WHITE
+
+	if mouse_area_button:
+		mouse_area_button.disabled = has_counter
+
+		if has_counter:
+			mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_ARROW
+		else:
+			mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 func _handle_mouse_entered() -> void:
 	if counter_presence != CounterPresence.NONE:
