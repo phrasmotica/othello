@@ -1,14 +1,23 @@
 @tool
 class_name BoardCell extends Node2D
 
-enum CounterType { NONE, BLACK, WHITE }
+enum CounterPresence { BLACK, WHITE, NONE }
+enum CounterType { BLACK, WHITE }
 
 @export
-var counter_type: CounterType:
+var counter_presence := CounterPresence.NONE:
 	set(value):
-		if counter_type != value:
-			counter_type = value
-			counter_changed.emit(counter_type)
+		if counter_presence != value:
+			counter_presence = value
+			counter_changed.emit(counter_presence)
+
+			_refresh()
+
+@export
+var next_colour := CounterType.BLACK:
+	set(value):
+		if next_colour != value:
+			next_colour = value
 
 			_refresh()
 
@@ -16,12 +25,12 @@ var counter_type: CounterType:
 var counter: Counter = %Counter
 
 @onready
-var counter_preview: Node2D = %CounterPreview
+var counter_preview: Counter = %CounterPreview
 
 @onready
 var mouse_area_button: Button = %MouseAreaButton
 
-signal counter_changed(type: CounterType)
+signal counter_changed(presence: CounterPresence)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -32,11 +41,15 @@ func _ready() -> void:
 	_handle_mouse_exited()
 
 func _refresh() -> void:
-	counter.visible = counter_type != CounterType.NONE
-	counter.is_white = counter_type == CounterType.WHITE
+	if counter:
+		counter.visible = counter_presence != CounterPresence.NONE
+		counter.is_white = counter_presence == CounterPresence.WHITE
+
+	if counter_preview:
+		counter_preview.is_white = next_colour == CounterType.WHITE
 
 func _handle_mouse_entered() -> void:
-	if counter_type != CounterType.NONE:
+	if counter_presence != CounterPresence.NONE:
 		return
 
 	counter_preview.show()
@@ -45,9 +58,9 @@ func _handle_mouse_exited() -> void:
 	counter_preview.hide()
 
 func _handle_pressed() -> void:
-	if counter_type != CounterType.NONE:
+	if counter_presence != CounterPresence.NONE:
 		return
 
-	counter_type = CounterType.BLACK
+	counter_presence = next_colour as CounterPresence
 
 	counter_preview.hide()

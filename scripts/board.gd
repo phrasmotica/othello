@@ -17,19 +17,41 @@ var size: Vector2i = Vector2i(MAX_WIDTH, MAX_HEIGHT):
 
 			_refresh()
 
+@export
+var starting_colour := BoardCell.CounterType.BLACK:
+	set(value):
+		if starting_colour != value:
+			starting_colour = value
+
+			_refresh()
+
 @onready
 var board_creator: BoardCreator = %BoardCreator
 
 @onready
 var board_state: BoardState = %BoardState
 
+var _next_turn_colour := starting_colour
+
 signal score_changed(black_score: int, white_score: int)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		board_state.score_changed.connect(score_changed.emit)
+		board_state.score_changed.connect(_handle_score_changed)
 
 	_refresh()
 
 func _refresh() -> void:
-	board_creator.render_board(size, self)
+	if board_creator:
+		board_creator.render_board(size, self)
+		board_creator.set_next_colour(starting_colour)
+
+func _handle_score_changed(black_score: int, white_score: int) -> void:
+	if (black_score + white_score) % 2 == 0:
+		_next_turn_colour = starting_colour
+	else:
+		_next_turn_colour = ((starting_colour + 1) % 2) as BoardCell.CounterType
+
+	board_creator.set_next_colour(_next_turn_colour)
+
+	score_changed.emit(black_score, white_score)

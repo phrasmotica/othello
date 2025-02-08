@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/counter.gd" id="1_x17p2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_buy3s"]
+resource_local_to_scene = true
 shader = ExtResource("1_fsfmw")
 shader_parameter/colour = Color(0, 0, 0, 1)
 shader_parameter/circle_centre = Vector2(6, 6)
