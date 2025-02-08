@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+class_name Counter extends Node2D
 
 @export
 var is_white := false:
