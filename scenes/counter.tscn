@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://8bpnftmnrsln"]
+
+[ext_resource type="Shader" path="res://shaders/fill_circle.gdshader" id="1_fsfmw"]
+[ext_resource type="Script" path="res://scripts/counter.gd" id="1_x17p2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_buy3s"]
+shader = ExtResource("1_fsfmw")
+shader_parameter/colour = Color(0, 0, 0, 1)
+shader_parameter/circle_centre = Vector2(6, 6)
+shader_parameter/circle_radius = 6.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qtt64"]
+size = Vector2(48, 48)
+
+[node name="Counter" type="Node2D"]
+script = ExtResource("1_x17p2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_buy3s")
+texture = SubResource("PlaceholderTexture2D_qtt64")
+centered = false

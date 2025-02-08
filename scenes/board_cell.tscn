@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://flkpinjhixfv"]
+[gd_scene load_steps=7 format=3 uid="uid://flkpinjhixfv"]
 
 [ext_resource type="Shader" path="res://shaders/board_cell.gdshader" id="1_awqyd"]
 [ext_resource type="Script" path="res://scripts/board_cell.gd" id="1_prucg"]
+[ext_resource type="PackedScene" uid="uid://8bpnftmnrsln" path="res://scenes/counter.tscn" id="3_lv8le"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wicer"]
 shader = ExtResource("1_awqyd")
@@ -15,10 +16,30 @@ colors = PackedColorArray(3.00817e-07, 0.499264, 1.05888e-06, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1r13k"]
 gradient = SubResource("Gradient_dp88n")
 
-[node name="Cell" type="Node2D"]
+[node name="BoardCell" type="Node2D"]
 script = ExtResource("1_prucg")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_wicer")
 texture = SubResource("GradientTexture2D_1r13k")
 centered = false
+
+[node name="Counter" parent="." instance=ExtResource("3_lv8le")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(8, 8)
+
+[node name="CounterPreview" parent="." instance=ExtResource("3_lv8le")]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.5)
+position = Vector2(8, 8)
+
+[node name="MouseAreaButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 60.0
+offset_bottom = 60.0
+mouse_default_cursor_shape = 2
+flat = true

@@ -14,3 +14,194 @@ cells_parent = NodePath("../Cells")
 board_cell_scene = ExtResource("1_52xkg")
 
 [node name="Cells" type="Node2D" parent="."]
+
+[node name="Cell0" parent="Cells" instance=ExtResource("1_52xkg")]
+
+[node name="Cell1" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 0)
+
+[node name="Cell2" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 0)
+
+[node name="Cell3" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 0)
+
+[node name="Cell4" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 0)
+
+[node name="Cell5" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 0)
+
+[node name="Cell6" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 0)
+
+[node name="Cell7" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 0)
+
+[node name="Cell8" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 64)
+
+[node name="Cell9" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 64)
+
+[node name="Cell10" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 64)
+
+[node name="Cell11" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 64)
+
+[node name="Cell12" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 64)
+
+[node name="Cell13" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 64)
+
+[node name="Cell14" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 64)
+
+[node name="Cell15" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 64)
+
+[node name="Cell16" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 128)
+
+[node name="Cell17" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 128)
+
+[node name="Cell18" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 128)
+
+[node name="Cell19" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 128)
+
+[node name="Cell20" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 128)
+
+[node name="Cell21" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 128)
+
+[node name="Cell22" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 128)
+
+[node name="Cell23" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 128)
+
+[node name="Cell24" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 192)
+
+[node name="Cell25" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 192)
+
+[node name="Cell26" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 192)
+
+[node name="Cell27" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 192)
+
+[node name="Cell28" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 192)
+
+[node name="Cell29" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 192)
+
+[node name="Cell30" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 192)
+
+[node name="Cell31" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 192)
+
+[node name="Cell32" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 256)
+
+[node name="Cell33" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 256)
+
+[node name="Cell34" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 256)
+
+[node name="Cell35" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 256)
+
+[node name="Cell36" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 256)
+
+[node name="Cell37" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 256)
+
+[node name="Cell38" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 256)
+
+[node name="Cell39" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 256)
+
+[node name="Cell40" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 320)
+
+[node name="Cell41" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 320)
+
+[node name="Cell42" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 320)
+
+[node name="Cell43" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 320)
+
+[node name="Cell44" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 320)
+
+[node name="Cell45" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 320)
+
+[node name="Cell46" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 320)
+
+[node name="Cell47" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 320)
+
+[node name="Cell48" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 384)
+
+[node name="Cell49" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 384)
+
+[node name="Cell50" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 384)
+
+[node name="Cell51" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 384)
+
+[node name="Cell52" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 384)
+
+[node name="Cell53" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 384)
+
+[node name="Cell54" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 384)
+
+[node name="Cell55" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 384)
+
+[node name="Cell56" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(0, 448)
+
+[node name="Cell57" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(64, 448)
+
+[node name="Cell58" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(128, 448)
+
+[node name="Cell59" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(192, 448)
+
+[node name="Cell60" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(256, 448)
+
+[node name="Cell61" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(320, 448)
+
+[node name="Cell62" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(384, 448)
+
+[node name="Cell63" parent="Cells" instance=ExtResource("1_52xkg")]
+position = Vector2(448, 448)
