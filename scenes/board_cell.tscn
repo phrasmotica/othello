@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://flkpinjhixfv"]
+
+[ext_resource type="Shader" path="res://shaders/board_cell.gdshader" id="1_awqyd"]
+[ext_resource type="Script" path="res://scripts/board_cell.gd" id="1_prucg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wicer"]
+shader = ExtResource("1_awqyd")
+shader_parameter/border_width = 0.01
+shader_parameter/border_colour = null
+
+[sub_resource type="Gradient" id="Gradient_dp88n"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(3.00817e-07, 0.499264, 1.05888e-06, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1r13k"]
+gradient = SubResource("Gradient_dp88n")
+
+[node name="Cell" type="Node2D"]
+script = ExtResource("1_prucg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_wicer")
+texture = SubResource("GradientTexture2D_1r13k")
+centered = false
