@@ -7,6 +7,9 @@ var cells_parent: Node2D
 @export
 var board_cell_scene: PackedScene
 
+# TODO: get this from the board cell scene
+const CELL_SPRITE_SIZE: int = 64
+
 func render_board(size: Vector2i, scene_root: Node) -> void:
 	if not cells_parent:
 		return
@@ -28,7 +31,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		var x_pos := idx % size.x
 		var y_pos := int(float(idx) / float(size.x))
 
-		current_cell.position = 64 * Vector2(x_pos, y_pos)
+		current_cell.position = CELL_SPRITE_SIZE * Vector2(x_pos, y_pos)
 
 		if is_new:
 			cells_parent.add_child(current_cell)
