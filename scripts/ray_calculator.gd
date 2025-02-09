@@ -8,16 +8,25 @@ var _size: Vector2i
 var _empty_cell_code := "E"
 var _missing_cell_code := "N"
 
+var _regex_b: RegEx = RegEx.new()
+var _regex_w: RegEx = RegEx.new()
+
+var _placement_checkers := {
+	BoardCell.CounterType.BLACK: _regex_b,
+	BoardCell.CounterType.WHITE: _regex_w,
+}
+
+func _ready() -> void:
+	_regex_b.compile("^1+0")
+	_regex_w.compile("^0+1")
+
 func provide_size(size: Vector2i) -> void:
 	_size = size
 
-# HIGH: create a function that returns the indexes of all the other cells
-# in the rays for a given cell, so that we can flip their counters over
-
-func get_rays(idx: int) -> Array[String]:
+func get_rays(idx: int, cell: BoardCell) -> Array[String]:
 	var pos := _get_idx_as_pos(idx)
 
-	return [
+	var strings := [
 		_encode_ray_cells(pos, 0, -1),
 		_encode_ray_cells(pos, 1, -1),
 		_encode_ray_cells(pos, 1, 0),
@@ -27,6 +36,16 @@ func get_rays(idx: int) -> Array[String]:
 		_encode_ray_cells(pos, -1, 0),
 		_encode_ray_cells(pos, -1, -1),
 	]
+
+	var result: Array[String] = []
+
+	var regex: RegEx = _placement_checkers[cell.next_colour]
+
+	for s in strings:
+		if regex.search(s):
+			result.append(s)
+
+	return result
 
 func _encode_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> String:
 	var result := ""

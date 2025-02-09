@@ -7,18 +7,6 @@ var cells_manager: CellsManager
 @export
 var ray_calculator: RayCalculator
 
-var _regex_b: RegEx = RegEx.new()
-var _regex_w: RegEx = RegEx.new()
-
-var _placement_checkers := {
-	BoardCell.CounterType.BLACK: _regex_b,
-	BoardCell.CounterType.WHITE: _regex_w,
-}
-
-func _ready() -> void:
-	_regex_b.compile("^1+0")
-	_regex_w.compile("^0+1")
-
 func refresh() -> void:
 	# check place-ability under the assumption that we have all of the cells
 	for idx in cells_manager.count():
@@ -41,12 +29,5 @@ func _can_place(idx: int) -> bool:
 	# cast eight "rays" outwards and check whether the cells that each ray
 	# passes through match the regular expressions defined at the top, depending
 	# on the colour of this cell. 0 represents a black counter, 1 a white one.
-	var rays := ray_calculator.get_rays(idx)
-
-	var regex: RegEx = _placement_checkers[cell.next_colour]
-
-	for r in rays:
-		if regex.search(r):
-			return true
-
-	return false
+	var rays := ray_calculator.get_rays(idx, cell)
+	return rays.size() > 0
