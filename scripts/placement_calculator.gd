@@ -4,6 +4,13 @@ class_name PlacementCalculator extends Node
 @export
 var cells_manager: CellsManager
 
+var _regex_b: RegEx = RegEx.new()
+var _regex_w: RegEx = RegEx.new()
+
+func _ready() -> void:
+	_regex_b.compile("^1+0$")
+	_regex_w.compile("^0+1$")
+
 func refresh() -> void:
 	# check place-ability under the assumption that we have all of the cells
 	for idx in cells_manager.count():
@@ -47,10 +54,6 @@ func _compute_valid_neighbours(idx: int, step: int) -> Array[int]:
 		var next_colour := cell.next_colour as BoardCell.CounterPresence
 		var n_presence := cells_manager.get_cell(n_idx).counter_presence
 
-		# TODO: check that the following are also true:
-		# 1. continuing past the valid neighbour, there is another cell C occupied by the same colour as our colour
-		# 2. all cells between this one and C are occupied
-
 		if next_colour == BoardCell.CounterPresence.BLACK and n_presence == BoardCell.CounterPresence.WHITE:
 			valid_neighbours.append(n_idx)
 
@@ -71,11 +74,8 @@ func _can_place(idx: int) -> bool:
 
 	var result := valid_neighbours.size() > 0
 
-	# TODO: if there is a valid neighbour C, we can check its immediate
-	# neighbour in the same direction D. If D is occupied with a different
-	# colour to C, then we would have a trivial BWB or WBW sequence, so the
-	# placement is valid. However its colour is the same as C, we need to keep
-	# checking neighbours in that direction until we hit a different colour.
-	# Only then would the placement be valid.
+	# TODO: cast eight "rays" outwards and check whether the cells that each ray
+	# passes through match the regular expressions defined at the top, depending
+	# on the colour of this cell. 0 represents a black counter, 1 a white one.
 
 	return result
