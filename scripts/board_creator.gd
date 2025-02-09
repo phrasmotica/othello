@@ -11,6 +11,9 @@ var cells_manager: CellsManager
 var placement_calculator: PlacementCalculator
 
 @export
+var ray_calculator: RayCalculator
+
+@export
 var board_cell_scene: PackedScene
 
 # TODO: get this from the board cell scene
@@ -30,6 +33,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		return
 
 	cells_manager.clear(size)
+	ray_calculator.provide_size(size)
 
 	var child_cells := cells_parent.get_children()
 
