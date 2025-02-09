@@ -23,7 +23,8 @@ var starting_colour := BoardCell.CounterType.BLACK:
 		if starting_colour != value:
 			starting_colour = value
 
-			_refresh()
+			if board_creator:
+				board_creator.set_next_colour(starting_colour)
 
 @onready
 var board_creator: BoardCreator = %BoardCreator
@@ -44,7 +45,6 @@ func _ready() -> void:
 func _refresh() -> void:
 	if board_creator:
 		board_creator.render_board(size, self)
-		board_creator.set_next_colour(starting_colour)
 
 func _handle_score_changed(black_score: int, white_score: int) -> void:
 	if (black_score + white_score) % 2 == 0:

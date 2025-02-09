@@ -21,6 +21,30 @@ var next_colour := CounterType.BLACK:
 
 			_refresh()
 
+@export
+var index: int = 0:
+	set(value):
+		if index != value:
+			index = value
+
+			_refresh()
+
+@export
+var cannot_place := false:
+	set(value):
+		if cannot_place != value:
+			cannot_place = value
+
+			_refresh()
+
+@export
+var debug_mode := false:
+	set(value):
+		if debug_mode != value:
+			debug_mode = value
+
+			_refresh()
+
 @onready
 var counter: Counter = %Counter
 
@@ -30,6 +54,9 @@ var counter_preview: Counter = %CounterPreview
 @onready
 var mouse_area_button: Button = %MouseAreaButton
 
+@onready
+var index_label: Label = %IndexLabel
+
 signal counter_changed(presence: CounterPresence)
 
 func _ready() -> void:
@@ -38,29 +65,41 @@ func _ready() -> void:
 		mouse_area_button.mouse_exited.connect(_handle_mouse_exited)
 		mouse_area_button.pressed.connect(_handle_pressed)
 
+		Globals.toggled_debug_mode.connect(_handle_toggled_debug_mode)
+
 	_handle_mouse_exited()
 	_refresh()
 
+func _handle_toggled_debug_mode(is_debug: bool) -> void:
+	debug_mode = is_debug
+
 func _refresh() -> void:
-	var has_counter := counter_presence != CounterPresence.NONE
+	if debug_mode and cannot_place:
+		modulate = Color.DIM_GRAY
+	else:
+		modulate = Color.WHITE
 
 	if counter:
-		counter.visible = has_counter
+		counter.visible = counter_presence != CounterPresence.NONE
 		counter.is_white = counter_presence == CounterPresence.WHITE
 
 	if counter_preview:
 		counter_preview.is_white = next_colour == CounterType.WHITE
 
 	if mouse_area_button:
-		mouse_area_button.disabled = has_counter
-
-		if has_counter:
+		if cannot_place:
+			mouse_area_button.disabled = true
 			mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		else:
+			mouse_area_button.disabled = false
 			mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
+	if index_label:
+		index_label.visible = debug_mode
+		index_label.text = str(index)
+
 func _handle_mouse_entered() -> void:
-	if counter_presence != CounterPresence.NONE:
+	if cannot_place:
 		return
 
 	counter_preview.show()
@@ -69,7 +108,7 @@ func _handle_mouse_exited() -> void:
 	counter_preview.hide()
 
 func _handle_pressed() -> void:
-	if counter_presence != CounterPresence.NONE:
+	if cannot_place:
 		return
 
 	counter_presence = next_colour as CounterPresence

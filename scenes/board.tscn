@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5cc76vukx7db"]
+[gd_scene load_steps=6 format=3 uid="uid://c5cc76vukx7db"]
 
 [ext_resource type="Script" path="res://scripts/board.gd" id="1_2oqc0"]
 [ext_resource type="PackedScene" uid="uid://flkpinjhixfv" path="res://scenes/board_cell.tscn" id="1_52xkg"]
 [ext_resource type="Script" path="res://scripts/board_creator.gd" id="4_0bgla"]
 [ext_resource type="Script" path="res://scripts/board_state.gd" id="4_sxf1f"]
+[ext_resource type="Script" path="res://scripts/board_cell.gd" id="5_xu822"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_2oqc0")
@@ -21,193 +22,324 @@ board_creator = NodePath("../BoardCreator")
 
 [node name="Cells" type="Node2D" parent="."]
 
-[node name="Cell0" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell0" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
+script = ExtResource("5_xu822")
 
-[node name="Cell1" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell1" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 0)
+script = ExtResource("5_xu822")
+index = 1
 
-[node name="Cell2" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell2" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 0)
+script = ExtResource("5_xu822")
+index = 2
 
-[node name="Cell3" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell3" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 0)
+script = ExtResource("5_xu822")
+index = 3
 
-[node name="Cell4" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell4" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 0)
+script = ExtResource("5_xu822")
+index = 4
 
-[node name="Cell5" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell5" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 0)
+script = ExtResource("5_xu822")
+index = 5
 
-[node name="Cell6" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell6" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 0)
+script = ExtResource("5_xu822")
+index = 6
 
-[node name="Cell7" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell7" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 0)
+script = ExtResource("5_xu822")
+index = 7
 
-[node name="Cell8" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell8" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 64)
+script = ExtResource("5_xu822")
+index = 8
 
-[node name="Cell9" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell9" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 64)
+script = ExtResource("5_xu822")
+index = 9
 
-[node name="Cell10" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell10" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 64)
+script = ExtResource("5_xu822")
+index = 10
 
-[node name="Cell11" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell11" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 64)
+script = ExtResource("5_xu822")
+index = 11
 
-[node name="Cell12" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell12" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 64)
+script = ExtResource("5_xu822")
+index = 12
 
-[node name="Cell13" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell13" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 64)
+script = ExtResource("5_xu822")
+index = 13
 
-[node name="Cell14" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell14" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 64)
+script = ExtResource("5_xu822")
+index = 14
 
-[node name="Cell15" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell15" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 64)
+script = ExtResource("5_xu822")
+index = 15
 
-[node name="Cell16" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell16" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 128)
+script = ExtResource("5_xu822")
+index = 16
 
-[node name="Cell17" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell17" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 128)
+script = ExtResource("5_xu822")
+index = 17
 
-[node name="Cell18" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell18" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 128)
+script = ExtResource("5_xu822")
+index = 18
 
-[node name="Cell19" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell19" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 128)
+script = ExtResource("5_xu822")
+index = 19
 
-[node name="Cell20" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell20" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 128)
+script = ExtResource("5_xu822")
+index = 20
 
-[node name="Cell21" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell21" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 128)
+script = ExtResource("5_xu822")
+index = 21
 
-[node name="Cell22" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell22" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 128)
+script = ExtResource("5_xu822")
+index = 22
 
-[node name="Cell23" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell23" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 128)
+script = ExtResource("5_xu822")
+index = 23
 
-[node name="Cell24" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell24" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 192)
+script = ExtResource("5_xu822")
+index = 24
 
-[node name="Cell25" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell25" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 192)
+script = ExtResource("5_xu822")
+index = 25
 
-[node name="Cell26" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell26" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 192)
+script = ExtResource("5_xu822")
+index = 26
 
-[node name="Cell27" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell27" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 192)
+script = ExtResource("5_xu822")
+counter_presence = 0
+index = 27
 
-[node name="Cell28" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell28" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 192)
+script = ExtResource("5_xu822")
+counter_presence = 1
+index = 28
 
-[node name="Cell29" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell29" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 192)
+script = ExtResource("5_xu822")
+index = 29
 
-[node name="Cell30" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell30" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 192)
+script = ExtResource("5_xu822")
+index = 30
 
-[node name="Cell31" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell31" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 192)
+script = ExtResource("5_xu822")
+index = 31
 
-[node name="Cell32" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell32" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 256)
+script = ExtResource("5_xu822")
+index = 32
 
-[node name="Cell33" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell33" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 256)
+script = ExtResource("5_xu822")
+index = 33
 
-[node name="Cell34" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell34" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 256)
+script = ExtResource("5_xu822")
+index = 34
 
-[node name="Cell35" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell35" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 256)
+script = ExtResource("5_xu822")
+counter_presence = 1
+index = 35
 
-[node name="Cell36" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell36" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 256)
+script = ExtResource("5_xu822")
+counter_presence = 0
+index = 36
 
-[node name="Cell37" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell37" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 256)
+script = ExtResource("5_xu822")
+index = 37
 
-[node name="Cell38" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell38" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 256)
+script = ExtResource("5_xu822")
+index = 38
 
-[node name="Cell39" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell39" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 256)
+script = ExtResource("5_xu822")
+index = 39
 
-[node name="Cell40" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell40" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 320)
+script = ExtResource("5_xu822")
+index = 40
 
-[node name="Cell41" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell41" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 320)
+script = ExtResource("5_xu822")
+index = 41
 
-[node name="Cell42" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell42" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 320)
+script = ExtResource("5_xu822")
+index = 42
 
-[node name="Cell43" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell43" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 320)
+script = ExtResource("5_xu822")
+index = 43
 
-[node name="Cell44" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell44" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 320)
+script = ExtResource("5_xu822")
+index = 44
 
-[node name="Cell45" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell45" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 320)
+script = ExtResource("5_xu822")
+index = 45
 
-[node name="Cell46" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell46" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 320)
+script = ExtResource("5_xu822")
+index = 46
 
-[node name="Cell47" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell47" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 320)
+script = ExtResource("5_xu822")
+index = 47
 
-[node name="Cell48" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell48" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 384)
+script = ExtResource("5_xu822")
+index = 48
 
-[node name="Cell49" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell49" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 384)
+script = ExtResource("5_xu822")
+index = 49
 
-[node name="Cell50" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell50" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 384)
+script = ExtResource("5_xu822")
+index = 50
 
-[node name="Cell51" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell51" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 384)
+script = ExtResource("5_xu822")
+index = 51
 
-[node name="Cell52" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell52" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 384)
+script = ExtResource("5_xu822")
+index = 52
 
-[node name="Cell53" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell53" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 384)
+script = ExtResource("5_xu822")
+index = 53
 
-[node name="Cell54" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell54" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 384)
+script = ExtResource("5_xu822")
+index = 54
 
-[node name="Cell55" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell55" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 384)
+script = ExtResource("5_xu822")
+index = 55
 
-[node name="Cell56" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell56" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(0, 448)
+script = ExtResource("5_xu822")
+index = 56
 
-[node name="Cell57" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell57" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(64, 448)
+script = ExtResource("5_xu822")
+index = 57
 
-[node name="Cell58" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell58" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 448)
+script = ExtResource("5_xu822")
+index = 58
 
-[node name="Cell59" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell59" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 448)
+script = ExtResource("5_xu822")
+index = 59
 
-[node name="Cell60" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell60" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 448)
+script = ExtResource("5_xu822")
+index = 60
 
-[node name="Cell61" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell61" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 448)
+script = ExtResource("5_xu822")
+index = 61
 
-[node name="Cell62" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell62" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 448)
+script = ExtResource("5_xu822")
+index = 62
 
-[node name="Cell63" parent="Cells" instance=ExtResource("1_52xkg")]
+[node name="Cell63" type="Node2D" parent="Cells" instance=ExtResource("1_52xkg")]
 position = Vector2(448, 448)
+script = ExtResource("5_xu822")
+index = 63
