@@ -82,6 +82,48 @@ func get_default_counter(size: Vector2i, x_pos: int, y_pos: int) -> BoardCell.Co
 
 	return BoardCell.CounterPresence.NONE
 
+func _compute_neighbours(idx: int, step: int) -> Array[int]:
+	var neighbours: Array[int] = [
+		idx - step * _size.x, # above
+		idx - step * (_size.x + 1), # above-right
+		idx + step, # right
+		idx + step * (_size.x + 1), # below-right
+		idx + step * _size.x, # below
+		idx + step * (_size.x - 1), # below-left
+		idx - step, # left
+		idx - step * (_size.x - 1), # above-left
+	]
+
+	var existent_neighbours: Array[int] = []
+
+	for n_idx in neighbours:
+		if n_idx >= 0 and n_idx < _cells.size():
+			existent_neighbours.append(n_idx)
+
+	return existent_neighbours
+
+func _compute_valid_neighbours(idx: int, step: int) -> Array[int]:
+	var cell := _cells[idx]
+	var neighbours := _compute_neighbours(idx, step)
+
+	var valid_neighbours: Array[int] = []
+
+	for n_idx in neighbours:
+		var next_colour := cell.next_colour as BoardCell.CounterPresence
+		var n_presence := _cells[n_idx].counter_presence
+
+		# TODO: check that the following are also true:
+		# 1. continuing past the valid neighbour, there is another cell C occupied by the same colour as our colour
+		# 2. all cells between this one and C are occupied
+
+		if next_colour == BoardCell.CounterPresence.BLACK and n_presence == BoardCell.CounterPresence.WHITE:
+			valid_neighbours.append(n_idx)
+
+		if next_colour == BoardCell.CounterPresence.WHITE and n_presence == BoardCell.CounterPresence.BLACK:
+			valid_neighbours.append(n_idx)
+
+	return valid_neighbours
+
 func can_place(idx: int) -> bool:
 	if _cells.size() <= idx:
 		return false
@@ -90,31 +132,15 @@ func can_place(idx: int) -> bool:
 	if cell.counter_presence != BoardCell.CounterPresence.NONE:
 		return false
 
-	var neighbours: Array[int] = [
-		idx - _size.x, # above
-		idx - _size.x + 1, # above-right
-		idx + 1, # right
-		idx + _size.x + 1, # below-right
-		idx + _size.x, # below
-		idx + _size.x - 1, # below-left
-		idx - 1, # left
-		idx - _size.x - 1, # above-left
-	]
+	var valid_neighbours := _compute_valid_neighbours(idx, 1)
 
-	for n_idx in neighbours:
-		if n_idx < 0 or n_idx >= _cells.size():
-			continue
+	var result := valid_neighbours.size() > 0
 
-		var next_colour := cell.next_colour as BoardCell.CounterPresence
-		var n_presence := _cells[n_idx].counter_presence
+	# TODO: if there is a valid neighbour C, we can check its immediate
+	# neighbour in the same direction D. If D is occupied with a different
+	# colour to C, then we would have a trivial BWB or WBW sequence, so the
+	# placement is valid. However its colour is the same as C, we need to keep
+	# checking neighbours in that direction until we hit a different colour.
+	# Only then would the placement be valid.
 
-		if next_colour == BoardCell.CounterPresence.BLACK and n_presence == BoardCell.CounterPresence.WHITE:
-			return true
-
-		if next_colour == BoardCell.CounterPresence.WHITE and n_presence == BoardCell.CounterPresence.BLACK:
-			return true
-
-	# TODO: check that the following are also true:
-	# 1. continuing past the valid neighbour, there is another cell C occupied by the same colour as our colour
-	# 2. all cells between this one and C are occupied
-	return false
+	return result
