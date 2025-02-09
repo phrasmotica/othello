@@ -11,6 +11,9 @@ var _missing_cell_code := "N"
 func provide_size(size: Vector2i) -> void:
 	_size = size
 
+# HIGH: create a function that returns the indexes of all the other cells
+# in the rays for a given cell, so that we can flip their counters over
+
 func get_rays(idx: int) -> Array[String]:
 	var pos := _get_idx_as_pos(idx)
 
