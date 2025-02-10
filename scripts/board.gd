@@ -26,6 +26,11 @@ var starting_colour := BoardCell.CounterType.BLACK:
 			if board_creator:
 				board_creator.set_next_colour(starting_colour)
 
+@export_group("UI Dependencies")
+
+@export
+var score_ui: ScoreUI
+
 @onready
 var board_creator: BoardCreator = %BoardCreator
 
@@ -41,11 +46,17 @@ func _ready() -> void:
 		board_state.score_changed.connect(score_changed.emit)
 		board_creator.turn_ended.connect(_handle_turn_ended)
 
+	if score_ui:
+		score_ui.ready.connect(_handle_score_ui_ready)
+
 	_refresh()
 
 func _refresh() -> void:
 	if board_creator:
 		board_creator.render_board(size, self)
+
+func _handle_score_ui_ready() -> void:
+	board_state.update_score()
 
 func _handle_turn_ended() -> void:
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardCell.CounterType

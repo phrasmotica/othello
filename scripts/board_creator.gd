@@ -58,8 +58,11 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		var y_pos := int(float(idx) / float(size.x))
 
 		current_cell.position = CELL_SPRITE_SIZE * Vector2(x_pos, y_pos)
-		current_cell.counter_presence = get_default_counter(size, x_pos, y_pos)
 		current_cell.index = idx
+
+		current_cell.counter_presence = get_default_counter(size, x_pos, y_pos)
+		if current_cell.counter_presence != BoardCell.CounterPresence.NONE:
+			cell_counter_changed.emit(idx, current_cell.counter_presence)
 
 		if is_new:
 			cells_parent.add_child(current_cell)
