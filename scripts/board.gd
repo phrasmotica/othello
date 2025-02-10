@@ -64,3 +64,9 @@ func _handle_turn_ended() -> void:
 	print("Turn ended, now it's %d turn" % _next_turn_colour)
 
 	board_creator.set_next_colour(_next_turn_colour)
+
+	# HIGH: if there are no possible plays, force the player to click a
+	# "continue" button. Play then should pass back to the other player.
+	# If this happens consecutively for both players, the game must end
+
+	# HIGH: if the board becomes full, the game must end
