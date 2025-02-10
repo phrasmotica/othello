@@ -24,6 +24,8 @@ func _update_score() -> void:
 	score_changed.emit(black_score, white_score)
 
 func _handle_cell_counter_changed(index: int, type: BoardCell.CounterPresence) -> void:
+	# BUG: this doesn't seem to always be correct?
+
 	_counters[index] = type
 
 	_update_score()
