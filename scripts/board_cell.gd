@@ -9,7 +9,6 @@ var counter_presence := CounterPresence.NONE:
 	set(value):
 		if counter_presence != value:
 			counter_presence = value
-			counter_changed.emit(counter_presence)
 
 			_refresh()
 
@@ -57,7 +56,12 @@ var mouse_area_button: Button = %MouseAreaButton
 @onready
 var index_label: Label = %IndexLabel
 
+## Signal to emit when a player places a counter in this cell.
 signal counter_changed(presence: CounterPresence)
+
+## Signal to emit when a cell's counter is flipped after a player has placed a
+## counter elsewhere.
+signal counter_flipped(presence: CounterPresence)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -69,6 +73,18 @@ func _ready() -> void:
 
 	_handle_mouse_exited()
 	_refresh()
+
+func flip_counter() -> void:
+	if counter_presence == CounterPresence.NONE:
+		return
+
+	if counter_presence == CounterPresence.BLACK:
+		counter_presence = CounterPresence.WHITE
+		counter_flipped.emit(counter_presence)
+
+	elif counter_presence == CounterPresence.WHITE:
+		counter_presence = CounterPresence.BLACK
+		counter_flipped.emit(counter_presence)
 
 func _handle_toggled_debug_mode(is_debug: bool) -> void:
 	debug_mode = is_debug
@@ -112,5 +128,6 @@ func _handle_pressed() -> void:
 		return
 
 	counter_presence = next_colour as CounterPresence
+	counter_changed.emit(counter_presence)
 
 	counter_preview.hide()

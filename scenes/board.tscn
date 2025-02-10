@@ -140,7 +140,6 @@ cannot_place = true
 [node name="Cell20" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 128)
 index = 20
-cannot_place = true
 
 [node name="Cell21" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 128)
@@ -187,7 +186,6 @@ cannot_place = true
 [node name="Cell29" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 192)
 index = 29
-cannot_place = true
 
 [node name="Cell30" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 192)
@@ -212,7 +210,6 @@ cannot_place = true
 [node name="Cell34" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 256)
 index = 34
-cannot_place = true
 
 [node name="Cell35" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 256)
@@ -259,7 +256,6 @@ cannot_place = true
 [node name="Cell43" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 320)
 index = 43
-cannot_place = true
 
 [node name="Cell44" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 320)

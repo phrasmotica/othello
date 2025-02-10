@@ -38,7 +38,8 @@ signal score_changed(black_score: int, white_score: int)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		board_state.score_changed.connect(_handle_score_changed)
+		board_state.score_changed.connect(score_changed.emit)
+		board_creator.turn_ended.connect(_handle_turn_ended)
 
 	_refresh()
 
@@ -46,12 +47,9 @@ func _refresh() -> void:
 	if board_creator:
 		board_creator.render_board(size, self)
 
-func _handle_score_changed(black_score: int, white_score: int) -> void:
-	if (black_score + white_score) % 2 == 0:
-		_next_turn_colour = starting_colour
-	else:
-		_next_turn_colour = ((starting_colour + 1) % 2) as BoardCell.CounterType
+func _handle_turn_ended() -> void:
+	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardCell.CounterType
+
+	print("Turn ended, now it's %d turn" % _next_turn_colour)
 
 	board_creator.set_next_colour(_next_turn_colour)
-
-	score_changed.emit(black_score, white_score)

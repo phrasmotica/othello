@@ -20,6 +20,11 @@ var board_cell_scene: PackedScene
 const CELL_SPRITE_SIZE: int = 64
 
 signal cell_counter_changed(index: int, type: BoardCell.CounterPresence)
+signal turn_ended
+
+func _ready() -> void:
+	if ray_calculator:
+		ray_calculator.requested_flips.connect(_handle_requested_flips)
 
 func set_next_colour(type: BoardCell.CounterType) -> void:
 	for idx in cells_manager.count():
@@ -65,7 +70,13 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		if current_cell.counter_changed.get_connections().size() <= 0:
 			current_cell.counter_changed.connect(
 				func(type: BoardCell.CounterPresence) -> void:
-					cell_counter_changed.emit(idx, type)
+					_handle_counter_changed(idx, type, true)
+			)
+
+		if current_cell.counter_flipped.get_connections().size() <= 0:
+			current_cell.counter_flipped.connect(
+				func(type: BoardCell.CounterPresence) -> void:
+					_handle_counter_changed(idx, type, false)
 			)
 
 	var remaining_cells := child_cells.slice(size.x * size.y)
@@ -74,6 +85,12 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 
 	# check place-ability now that we have all of the cells
 	placement_calculator.refresh()
+
+func _handle_counter_changed(idx: int, type: BoardCell.CounterPresence, compute_flips: bool) -> void:
+	cell_counter_changed.emit(idx, type)
+
+	if compute_flips and ray_calculator:
+		ray_calculator.compute_flips(idx)
 
 func get_default_counter(size: Vector2i, x_pos: int, y_pos: int) -> BoardCell.CounterPresence:
 	var half_x := int(float(size.x) / 2)
@@ -87,3 +104,10 @@ func get_default_counter(size: Vector2i, x_pos: int, y_pos: int) -> BoardCell.Co
 		return BoardCell.CounterPresence.BLACK
 
 	return BoardCell.CounterPresence.NONE
+
+func _handle_requested_flips(indexes: Array[int]) -> void:
+	for i in indexes:
+		var cell := cells_manager.get_cell(i)
+		cell.flip_counter()
+
+	turn_ended.emit()
