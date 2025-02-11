@@ -6,9 +6,10 @@
 
 [node name="Game" type="Node2D"]
 
-[node name="Board" parent="." node_paths=PackedStringArray("score_ui") instance=ExtResource("1_8kvr6")]
+[node name="Board" parent="." node_paths=PackedStringArray("score_ui", "game_buttons") instance=ExtResource("1_8kvr6")]
 position = Vector2(320, 68)
 score_ui = NodePath("../UICanvas/MarginContainer/ScoreUI")
+game_buttons = NodePath("../UICanvas/MarginContainer/GameButtons")
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 

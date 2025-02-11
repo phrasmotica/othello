@@ -2,10 +2,17 @@
 class_name PlacementCalculator extends Node
 
 @export
+var board_creator: BoardCreator
+
+@export
 var cells_manager: CellsManager
 
 @export
 var ray_calculator: RayCalculator
+
+func _ready() -> void:
+	if board_creator:
+		board_creator.board_reset.connect(_handle_board_reset)
 
 func refresh() -> void:
 	# check place-ability under the assumption that we have all of the cells
@@ -31,3 +38,6 @@ func _can_place(idx: int) -> bool:
 	# on the colour of this cell. 0 represents a black counter, 1 a white one.
 	var rays := ray_calculator.get_rays(idx, cell)
 	return rays.size() > 0
+
+func _handle_board_reset() -> void:
+	refresh()

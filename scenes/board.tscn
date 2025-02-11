@@ -25,9 +25,10 @@ unique_name_in_owner = true
 script = ExtResource("4_sxf1f")
 board_creator = NodePath("../BoardCreator")
 
-[node name="PlacementCalculator" type="Node" parent="." node_paths=PackedStringArray("cells_manager", "ray_calculator")]
+[node name="PlacementCalculator" type="Node" parent="." node_paths=PackedStringArray("board_creator", "cells_manager", "ray_calculator")]
 unique_name_in_owner = true
 script = ExtResource("5_espqj")
+board_creator = NodePath("../BoardCreator")
 cells_manager = NodePath("../CellsManager")
 ray_calculator = NodePath("../RayCalculator")
 

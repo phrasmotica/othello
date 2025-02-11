@@ -31,6 +31,9 @@ var starting_colour := BoardCell.CounterType.BLACK:
 @export
 var score_ui: ScoreUI
 
+@export
+var game_buttons: GameButtons
+
 @onready
 var board_creator: BoardCreator = %BoardCreator
 
@@ -46,8 +49,11 @@ func _ready() -> void:
 		board_state.score_changed.connect(score_changed.emit)
 		board_creator.turn_ended.connect(_handle_turn_ended)
 
-	if score_ui:
-		score_ui.ready.connect(_handle_score_ui_ready)
+		if score_ui:
+			score_ui.ready.connect(_handle_score_ui_ready)
+
+		if game_buttons:
+			game_buttons.restarted.connect(_handle_restarted)
 
 	_refresh()
 
@@ -57,6 +63,10 @@ func _refresh() -> void:
 
 func _handle_score_ui_ready() -> void:
 	board_state.update_score()
+
+func _handle_restarted() -> void:
+	if board_creator:
+		board_creator.reset_board()
 
 func _handle_turn_ended() -> void:
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardCell.CounterType

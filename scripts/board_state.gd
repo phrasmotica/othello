@@ -11,6 +11,7 @@ signal score_changed(black_score: int, white_score: int)
 func _ready() -> void:
 	if board_creator:
 		board_creator.cell_counter_changed.connect(_handle_cell_counter_changed)
+		board_creator.board_reset.connect(_handle_board_reset)
 
 func update_score() -> void:
 	var black_score := 0
@@ -26,5 +27,10 @@ func update_score() -> void:
 
 func _handle_cell_counter_changed(index: int, type: BoardCell.CounterPresence) -> void:
 	_counters[index] = type
+
+	update_score()
+
+func _handle_board_reset() -> void:
+	_counters.clear()
 
 	update_score()
