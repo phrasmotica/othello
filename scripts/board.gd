@@ -54,12 +54,13 @@ signal score_changed(black_score: int, white_score: int)
 signal game_ended
 
 func _ready() -> void:
-	if not Engine.is_editor_hint():
-		board_state.score_changed.connect(score_changed.emit)
-		board_creator.turn_ended.connect(_handle_turn_ended)
+	if score_ui:
+		score_ui.ready.connect(_handle_score_ui_ready)
 
-		if score_ui:
-			score_ui.ready.connect(_handle_score_ui_ready)
+	board_state.score_changed.connect(score_changed.emit)
+
+	if not Engine.is_editor_hint():
+		board_creator.turn_ended.connect(_handle_turn_ended)
 
 		if game_buttons:
 			game_buttons.restarted.connect(_handle_restarted)
