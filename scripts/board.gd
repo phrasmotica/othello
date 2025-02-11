@@ -23,8 +23,7 @@ var starting_colour := BoardCell.CounterType.BLACK:
 		if starting_colour != value:
 			starting_colour = value
 
-			if board_creator:
-				board_creator.set_next_colour(starting_colour)
+			_refresh()
 
 @export_group("External Dependencies")
 
@@ -42,6 +41,9 @@ var board_creator: BoardCreator = %BoardCreator
 
 @onready
 var board_state: BoardState = %BoardState
+
+@onready
+var cell_data_pool: CellDataPool = %CellDataPool
 
 @onready
 var placement_calculator: PlacementCalculator = %PlacementCalculator
@@ -68,8 +70,14 @@ func _ready() -> void:
 	_refresh()
 
 func _refresh() -> void:
+	_next_turn_colour = starting_colour
+
 	if board_creator:
 		board_creator.render_board(size, self)
+		board_creator.set_next_colour(starting_colour)
+
+	if cell_data_pool:
+		cell_data_pool.next_colour = starting_colour
 
 func _handle_score_ui_ready() -> void:
 	board_state.update_score()
