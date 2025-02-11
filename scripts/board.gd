@@ -18,6 +18,14 @@ var size: Vector2i = Vector2i(MAX_WIDTH, MAX_HEIGHT):
 			_refresh()
 
 @export
+var initial_state: BoardStateData:
+	set(value):
+		if initial_state != value:
+			initial_state = value
+
+			_refresh()
+
+@export
 var starting_colour := BoardCell.CounterType.BLACK:
 	set(value):
 		if starting_colour != value:
@@ -75,10 +83,22 @@ func _refresh() -> void:
 
 	if board_creator:
 		board_creator.render_board(size, self)
+
+		_connect_initial_state()
+
 		board_creator.set_next_colour(starting_colour)
 
 	if cell_data_pool:
 		cell_data_pool.next_colour = starting_colour
+
+func _connect_initial_state() -> void:
+	if initial_state and initial_state.changed.get_connections().size() <= 0:
+		initial_state.changed.connect(
+			func() -> void:
+				board_creator.inject(initial_state)
+		)
+
+	board_creator.inject(initial_state)
 
 func _handle_score_ui_ready() -> void:
 	board_state.update_score()

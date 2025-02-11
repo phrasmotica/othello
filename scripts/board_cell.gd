@@ -82,7 +82,7 @@ func _refresh() -> void:
 		counter.is_white = cell_data.is_white() if cell_data else false
 
 	if counter_preview:
-		if cell_data.has_counter():
+		if cell_data and cell_data.has_counter():
 			counter_preview.visible = false
 
 		counter_preview.is_white = next_colour == CounterType.WHITE

@@ -99,6 +99,25 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 	# check place-ability now that we have all of the cells
 	placement_calculator.refresh()
 
+func inject(state: BoardStateData) -> void:
+	if state:
+		print("Injecting data for %d cell(s)" % state.cells_data.size())
+	else:
+		print("Clearing initial state")
+
+	var cell_count := cells_manager.count()
+
+	for i in cell_count:
+		var data := cell_data_pool.empty
+
+		if state and state.cells_data.has(i):
+			data = state.cells_data[i]
+
+		var cell := cells_manager.get_cell(i)
+		cell.cell_data = data
+
+		cell_counter_changed.emit(i, data)
+
 func play_random() -> void:
 	var cell := cells_manager.get_random_placeable_cell()
 
