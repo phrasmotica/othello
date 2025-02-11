@@ -40,9 +40,13 @@ var board_creator: BoardCreator = %BoardCreator
 @onready
 var board_state: BoardState = %BoardState
 
+@onready
+var placement_calculator: PlacementCalculator = %PlacementCalculator
+
 var _next_turn_colour := starting_colour
 
 signal score_changed(black_score: int, white_score: int)
+signal game_ended
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -68,15 +72,26 @@ func _handle_restarted() -> void:
 	if board_creator:
 		board_creator.reset_board()
 
-func _handle_turn_ended() -> void:
+func _go_to_next_turn(last_turn_passed: bool) -> void:
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardCell.CounterType
 
 	print("Turn ended, now it's %d turn" % _next_turn_colour)
 
 	board_creator.set_next_colour(_next_turn_colour)
 
-	# HIGH: if there are no possible plays, force the player to click a
-	# "continue" button. Play then should pass back to the other player.
-	# If this happens consecutively for both players, the game must end
+	var available_play_count := placement_calculator.get_plays()
 
-	# HIGH: if the board becomes full, the game must end
+	if available_play_count <= 0:
+		print("No plays available for %d" % _next_turn_colour)
+
+		if last_turn_passed:
+			print("Game ended!")
+			game_ended.emit()
+		else:
+			# MEDIUM: if there are no possible plays, force the current player to click a
+			# "continue" button
+			print("Skipping turn")
+			_go_to_next_turn(true)
+
+func _handle_turn_ended() -> void:
+	_go_to_next_turn(false)

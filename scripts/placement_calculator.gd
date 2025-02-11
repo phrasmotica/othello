@@ -25,6 +25,15 @@ func refresh_one(idx: int) -> void:
 	if cell:
 		cell.cannot_place = not _can_place(idx)
 
+func get_plays() -> int:
+	var count := 0
+
+	for idx in cells_manager.count():
+		if _can_place(idx):
+			count += 1
+
+	return count
+
 func _can_place(idx: int) -> bool:
 	if cells_manager.count() <= idx:
 		return false
