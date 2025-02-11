@@ -127,6 +127,9 @@ func _handle_pressed() -> void:
 	if cannot_place:
 		return
 
+	place_counter()
+
+func place_counter() -> void:
 	counter_presence = next_colour as CounterPresence
 	counter_changed.emit(counter_presence)
 

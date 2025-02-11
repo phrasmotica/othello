@@ -25,6 +25,20 @@ func get_cell_at(x_pos: int, y_pos: int) -> BoardCell:
 	var idx := y_pos * width() + x_pos
 	return get_cell(idx)
 
+func get_random_placeable_cell() -> BoardCell:
+	var indexes: Array[int] = []
+
+	for idx in count():
+		var cell := get_cell(idx)
+		if not cell.cannot_place:
+			indexes.append(idx)
+
+	if indexes.size() < 0:
+		return null
+
+	var r: int = indexes.pick_random()
+	return get_cell(r)
+
 func cell_exists(x_pos: int, y_pos: int) -> bool:
 	return x_pos >= 0 and x_pos < width() and y_pos >= 0 and y_pos < _height()
 

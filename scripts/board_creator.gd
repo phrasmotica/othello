@@ -94,6 +94,12 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 	# check place-ability now that we have all of the cells
 	placement_calculator.refresh()
 
+func play_random() -> void:
+	var cell := cells_manager.get_random_placeable_cell()
+
+	if cell:
+		cell.place_counter()
+
 func reset_board() -> void:
 	var starting_counter_cells: Array[int] = []
 

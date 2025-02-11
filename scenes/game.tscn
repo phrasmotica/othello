@@ -1,15 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://dskbe0sonplca"]
+[gd_scene load_steps=5 format=3 uid="uid://dskbe0sonplca"]
 
 [ext_resource type="PackedScene" uid="uid://c5cc76vukx7db" path="res://scenes/board.tscn" id="1_8kvr6"]
+[ext_resource type="Script" path="res://scripts/debug_handler.gd" id="1_bl16d"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="2_b5ltn"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="3_cbeyc"]
 
 [node name="Game" type="Node2D"]
 
-[node name="Board" parent="." node_paths=PackedStringArray("score_ui", "game_buttons") instance=ExtResource("1_8kvr6")]
+[node name="DebugHandler" type="Node" parent="."]
+script = ExtResource("1_bl16d")
+
+[node name="Board" parent="." node_paths=PackedStringArray("score_ui", "game_buttons", "debug_handler") instance=ExtResource("1_8kvr6")]
 position = Vector2(320, 68)
 score_ui = NodePath("../UICanvas/MarginContainer/ScoreUI")
 game_buttons = NodePath("../UICanvas/MarginContainer/GameButtons")
+debug_handler = NodePath("../DebugHandler")
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 
