@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5cc76vukx7db"]
+[gd_scene load_steps=12 format=3 uid="uid://c5cc76vukx7db"]
 
 [ext_resource type="Script" path="res://scripts/board.gd" id="1_2oqc0"]
 [ext_resource type="PackedScene" uid="uid://flkpinjhixfv" path="res://scenes/board_cell.tscn" id="1_52xkg"]
@@ -153,6 +153,7 @@ cannot_place = true
 [node name="Cell20" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 128)
 index = 20
+cannot_place = true
 
 [node name="Cell21" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 128)
@@ -186,19 +187,20 @@ cannot_place = true
 
 [node name="Cell27" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 192)
-counter_presence = 0
+cell_data = ExtResource("8_nakpy")
 index = 27
 cannot_place = true
 
 [node name="Cell28" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 192)
-counter_presence = 1
+cell_data = ExtResource("9_7f813")
 index = 28
 cannot_place = true
 
 [node name="Cell29" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(320, 192)
 index = 29
+cannot_place = true
 
 [node name="Cell30" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(384, 192)
@@ -223,16 +225,17 @@ cannot_place = true
 [node name="Cell34" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(128, 256)
 index = 34
+cannot_place = true
 
 [node name="Cell35" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 256)
-counter_presence = 1
+cell_data = ExtResource("9_7f813")
 index = 35
 cannot_place = true
 
 [node name="Cell36" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 256)
-counter_presence = 0
+cell_data = ExtResource("8_nakpy")
 index = 36
 cannot_place = true
 
@@ -269,6 +272,7 @@ cannot_place = true
 [node name="Cell43" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(192, 320)
 index = 43
+cannot_place = true
 
 [node name="Cell44" parent="CellsManager" instance=ExtResource("1_52xkg")]
 position = Vector2(256, 320)

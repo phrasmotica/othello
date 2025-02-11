@@ -17,16 +17,16 @@ func update_score() -> void:
 	var black_score := 0
 	var white_score := 0
 
-	for v in _counters.values():
-		if v == BoardCell.CounterPresence.WHITE:
+	for v: BoardCellData in _counters.values():
+		if v.is_white():
 			white_score += 1
-		elif v == BoardCell.CounterPresence.BLACK:
+		elif v.is_black():
 			black_score += 1
 
 	score_changed.emit(black_score, white_score)
 
-func _handle_cell_counter_changed(index: int, type: BoardCell.CounterPresence) -> void:
-	_counters[index] = type
+func _handle_cell_counter_changed(index: int, data: BoardCellData) -> void:
+	_counters[index] = data
 
 	update_score()
 

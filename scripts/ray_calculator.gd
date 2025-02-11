@@ -69,7 +69,15 @@ func compute_flips(idx: int) -> void:
 
 	# use counter presence as the key here, because that's the colour that
 	# has already been put into the cell
-	var regex: RegEx = _placement_checkers[cell.counter_presence]
+	if _placement_checkers.has(cell.cell_data.counter_presence):
+		var regex: RegEx = _placement_checkers[cell.cell_data.counter_presence]
+		indexes = _compute_indexes(pos, offsets, regex)
+
+	if indexes.size() > 0:
+		requested_flips.emit(indexes)
+
+func _compute_indexes(pos: Vector2i, offsets: Array[Vector2i], regex: RegEx) -> Array[int]:
+	var indexes: Array[int] = []
 
 	for o in offsets:
 		var encoded_ray_cells := _encode_ray_cells(pos, o.x, o.y)
@@ -89,8 +97,7 @@ func compute_flips(idx: int) -> void:
 
 			indexes.append_array(ray_cells)
 
-	if indexes.size() > 0:
-		requested_flips.emit(indexes)
+	return indexes
 
 func _compute_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> Array[int]:
 	var indexes: Array[int] = []
@@ -127,10 +134,10 @@ func _encode_cell(idx: int) -> String:
 	if not cell:
 		return _missing_cell_code
 
-	if cell.counter_presence == BoardCell.CounterPresence.NONE:
+	if not cell.cell_data.has_counter():
 		return _empty_cell_code
 
-	return str(cell.counter_presence)
+	return str(cell.cell_data.counter_presence)
 
 func _get_idx_as_pos(idx: int) -> Vector2i:
 	var x_pos := idx % _size.x

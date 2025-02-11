@@ -39,7 +39,7 @@ func _can_place(idx: int) -> bool:
 		return false
 
 	var cell := cells_manager.get_cell(idx)
-	if cell.counter_presence != BoardCell.CounterPresence.NONE:
+	if cell.cell_data.has_counter():
 		return false
 
 	# cast eight "rays" outwards and check whether the cells that each ray

@@ -1,16 +1,14 @@
 @tool
 class_name BoardCell extends Node2D
 
-enum CounterPresence { BLACK, WHITE, NONE }
 enum CounterType { BLACK, WHITE }
 
 @export
-var counter_presence := CounterPresence.NONE:
+var cell_data: BoardCellData:
 	set(value):
-		if counter_presence != value:
-			counter_presence = value
+		cell_data = value
 
-			_refresh()
+		_refresh()
 
 @export
 var next_colour := CounterType.BLACK:
@@ -56,12 +54,8 @@ var mouse_area_button: Button = %MouseAreaButton
 @onready
 var index_label: Label = %IndexLabel
 
-## Signal to emit when a player places a counter in this cell.
-signal counter_changed(presence: CounterPresence)
-
-## Signal to emit when a cell's counter is flipped after a player has placed a
-## counter elsewhere.
-signal counter_flipped(presence: CounterPresence)
+signal cell_pressed()
+signal counter_changed(data: BoardCellData)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -74,18 +68,6 @@ func _ready() -> void:
 	_handle_mouse_exited()
 	_refresh()
 
-func flip_counter() -> void:
-	if counter_presence == CounterPresence.NONE:
-		return
-
-	if counter_presence == CounterPresence.BLACK:
-		counter_presence = CounterPresence.WHITE
-		counter_flipped.emit(counter_presence)
-
-	elif counter_presence == CounterPresence.WHITE:
-		counter_presence = CounterPresence.BLACK
-		counter_flipped.emit(counter_presence)
-
 func _handle_toggled_debug_mode(is_debug: bool) -> void:
 	debug_mode = is_debug
 
@@ -96,10 +78,13 @@ func _refresh() -> void:
 		modulate = Color.WHITE
 
 	if counter:
-		counter.visible = counter_presence != CounterPresence.NONE
-		counter.is_white = counter_presence == CounterPresence.WHITE
+		counter.visible = cell_data.has_counter() if cell_data else false
+		counter.is_white = cell_data.is_white() if cell_data else false
 
 	if counter_preview:
+		if cell_data.has_counter():
+			counter_preview.visible = false
+
 		counter_preview.is_white = next_colour == CounterType.WHITE
 
 	if mouse_area_button:
@@ -127,10 +112,10 @@ func _handle_pressed() -> void:
 	if cannot_place:
 		return
 
-	place_counter()
+	cell_pressed.emit()
 
-func place_counter() -> void:
-	counter_presence = next_colour as CounterPresence
-	counter_changed.emit(counter_presence)
+func place_counter(data: BoardCellData) -> void:
+	cell_data = data
+	counter_changed.emit(cell_data)
 
 	counter_preview.hide()

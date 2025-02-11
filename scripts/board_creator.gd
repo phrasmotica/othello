@@ -14,6 +14,9 @@ var placement_calculator: PlacementCalculator
 var ray_calculator: RayCalculator
 
 @export
+var cell_data_pool: CellDataPool
+
+@export
 var board_cell_scene: PackedScene
 
 # TODO: get this from the board cell scene
@@ -21,7 +24,7 @@ const CELL_SPRITE_SIZE: int = 64
 
 var _size: Vector2i
 
-signal cell_counter_changed(index: int, type: BoardCell.CounterPresence)
+signal cell_counter_changed(index: int, data: BoardCellData)
 signal turn_ended
 signal board_reset
 
@@ -30,6 +33,8 @@ func _ready() -> void:
 		ray_calculator.requested_flips.connect(_handle_requested_flips)
 
 func set_next_colour(type: BoardCell.CounterType) -> void:
+	cell_data_pool.next_colour = type
+
 	for idx in cells_manager.count():
 		var cell := cells_manager.get_cell(idx)
 		cell.next_colour = type
@@ -65,9 +70,9 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		current_cell.position = CELL_SPRITE_SIZE * Vector2(x_pos, y_pos)
 		current_cell.index = idx
 
-		current_cell.counter_presence = get_default_counter(x_pos, y_pos)
-		if current_cell.counter_presence != BoardCell.CounterPresence.NONE:
-			cell_counter_changed.emit(idx, current_cell.counter_presence)
+		current_cell.cell_data = cell_data_pool.get_default_counter(_size, x_pos, y_pos)
+		if current_cell.cell_data.has_counter():
+			cell_counter_changed.emit(idx, current_cell.cell_data)
 
 		if is_new:
 			cells_parent.add_child(current_cell)
@@ -75,16 +80,16 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 
 		cells_manager.add(current_cell)
 
-		if current_cell.counter_changed.get_connections().size() <= 0:
-			current_cell.counter_changed.connect(
-				func(type: BoardCell.CounterPresence) -> void:
-					_handle_counter_changed(idx, type, true)
+		if current_cell.cell_pressed.get_connections().size() <= 0:
+			current_cell.cell_pressed.connect(
+				func() -> void:
+					_handle_cell_pressed(idx)
 			)
 
-		if current_cell.counter_flipped.get_connections().size() <= 0:
-			current_cell.counter_flipped.connect(
-				func(type: BoardCell.CounterPresence) -> void:
-					_handle_counter_changed(idx, type, false)
+		if current_cell.counter_changed.get_connections().size() <= 0:
+			current_cell.counter_changed.connect(
+				func(data: BoardCellData) -> void:
+					_handle_counter_changed(idx, data)
 			)
 
 	var remaining_cells := child_cells.slice(size.x * size.y)
@@ -98,7 +103,7 @@ func play_random() -> void:
 	var cell := cells_manager.get_random_placeable_cell()
 
 	if cell:
-		cell.place_counter()
+		cell.place_counter(cell_data_pool.get_next())
 
 func reset_board() -> void:
 	var starting_counter_cells: Array[int] = []
@@ -109,9 +114,8 @@ func reset_board() -> void:
 		var x_pos := idx % _size.x
 		var y_pos := int(float(idx) / float(_size.x))
 
-		cell.counter_presence = get_default_counter(x_pos, y_pos)
-
-		if cell.counter_presence != BoardCell.CounterPresence.NONE:
+		cell.cell_data = cell_data_pool.get_default_counter(_size, x_pos, y_pos)
+		if cell.cell_data.has_counter():
 			starting_counter_cells.append(idx)
 
 	board_reset.emit()
@@ -120,30 +124,23 @@ func reset_board() -> void:
 	# so that the placement calculator updates each cell correctly
 	for idx in starting_counter_cells:
 		var cell := cells_manager.get_cell(idx)
-		cell_counter_changed.emit(idx, cell.counter_presence)
+		cell_counter_changed.emit(idx, cell.cell_data)
 
-func _handle_counter_changed(idx: int, type: BoardCell.CounterPresence, compute_flips: bool) -> void:
-	cell_counter_changed.emit(idx, type)
+func _handle_cell_pressed(idx: int) -> void:
+	var cell := cells_manager.get_cell(idx)
+	cell.place_counter(cell_data_pool.get_next())
 
-	if compute_flips and ray_calculator:
+func _handle_counter_changed(idx: int, data: BoardCellData) -> void:
+	cell_counter_changed.emit(idx, data)
+
+	if ray_calculator:
 		ray_calculator.compute_flips(idx)
-
-func get_default_counter(x_pos: int, y_pos: int) -> BoardCell.CounterPresence:
-	var half_x := int(float(_size.x) / 2)
-	var half_y := int(float(_size.y) / 2)
-
-	var starts_filled := [half_x, half_x - 1].has(x_pos) and [half_y, half_y - 1].has(y_pos)
-	if starts_filled:
-		if (x_pos + y_pos) % 2 != 0:
-			return BoardCell.CounterPresence.WHITE
-
-		return BoardCell.CounterPresence.BLACK
-
-	return BoardCell.CounterPresence.NONE
 
 func _handle_requested_flips(indexes: Array[int]) -> void:
 	for i in indexes:
 		var cell := cells_manager.get_cell(i)
-		cell.flip_counter()
+		cell.cell_data = cell_data_pool.flip(cell.cell_data)
+
+		cell_counter_changed.emit(i, cell.cell_data)
 
 	turn_ended.emit()
