@@ -7,17 +7,22 @@
 [ext_resource type="Script" path="res://scripts/placement_calculator.gd" id="5_espqj"]
 [ext_resource type="Script" path="res://scripts/cells_manager.gd" id="6_5xf7n"]
 [ext_resource type="Script" path="res://scripts/ray_calculator.gd" id="6_b7nog"]
+[ext_resource type="Script" path="res://scripts/cell_data_pool.gd" id="7_2w0dq"]
+[ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="8_nakpy"]
+[ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="9_7f813"]
+[ext_resource type="Resource" uid="uid://c5gfjl10d81hu" path="res://resources/empty_counter_data.tres" id="10_n2kpv"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_2oqc0")
 
-[node name="BoardCreator" type="Node" parent="." node_paths=PackedStringArray("cells_parent", "cells_manager", "placement_calculator", "ray_calculator")]
+[node name="BoardCreator" type="Node" parent="." node_paths=PackedStringArray("cells_parent", "cells_manager", "placement_calculator", "ray_calculator", "cell_data_pool")]
 unique_name_in_owner = true
 script = ExtResource("4_0bgla")
 cells_parent = NodePath("../CellsManager")
 cells_manager = NodePath("../CellsManager")
 placement_calculator = NodePath("../PlacementCalculator")
 ray_calculator = NodePath("../RayCalculator")
+cell_data_pool = NodePath("../CellDataPool")
 board_cell_scene = ExtResource("1_52xkg")
 
 [node name="BoardState" type="Node" parent="." node_paths=PackedStringArray("board_creator")]
@@ -36,6 +41,13 @@ ray_calculator = NodePath("../RayCalculator")
 unique_name_in_owner = true
 script = ExtResource("6_b7nog")
 cells_manager = NodePath("../CellsManager")
+
+[node name="CellDataPool" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_2w0dq")
+black_counter = ExtResource("8_nakpy")
+white_counter = ExtResource("9_7f813")
+empty = ExtResource("10_n2kpv")
 
 [node name="CellsManager" type="Node2D" parent="."]
 script = ExtResource("6_5xf7n")
