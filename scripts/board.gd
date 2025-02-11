@@ -25,15 +25,10 @@ var initial_state: BoardStateData:
 
 			_refresh()
 
-@export
-var starting_colour := BoardCell.CounterType.BLACK:
-	set(value):
-		if starting_colour != value:
-			starting_colour = value
-
-			_refresh()
-
 @export_group("External Dependencies")
+
+@export
+var turn_tracker: TurnTracker
 
 @export
 var score_ui: ScoreUI
@@ -56,12 +51,15 @@ var cell_data_pool: CellDataPool = %CellDataPool
 @onready
 var placement_calculator: PlacementCalculator = %PlacementCalculator
 
-var _next_turn_colour := starting_colour
+var _next_turn_colour: BoardCell.CounterType
 
 signal score_changed(black_score: int, white_score: int)
 signal game_ended
 
 func _ready() -> void:
+	if turn_tracker:
+		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
+
 	if score_ui:
 		score_ui.ready.connect(_handle_score_ui_ready)
 
@@ -79,17 +77,10 @@ func _ready() -> void:
 	_refresh()
 
 func _refresh() -> void:
-	_next_turn_colour = starting_colour
-
 	if board_creator:
 		board_creator.render_board(size, self)
 
 		_connect_initial_state()
-
-		board_creator.set_next_colour(starting_colour)
-
-	if cell_data_pool:
-		cell_data_pool.next_colour = starting_colour
 
 func _connect_initial_state() -> void:
 	if initial_state and initial_state.changed.get_connections().size() <= 0:
@@ -99,6 +90,15 @@ func _connect_initial_state() -> void:
 		)
 
 	board_creator.inject(initial_state)
+
+func _handle_starting_colour_changed(colour: BoardCell.CounterType) -> void:
+	_next_turn_colour = colour
+
+	if board_creator:
+		board_creator.set_next_colour(colour)
+
+	if cell_data_pool:
+		cell_data_pool.next_colour = colour
 
 func _handle_score_ui_ready() -> void:
 	board_state.update_score()
