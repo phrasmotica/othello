@@ -33,7 +33,7 @@ func get_random_placeable_cell() -> BoardCell:
 		if not cell.cannot_place:
 			indexes.append(idx)
 
-	if indexes.size() < 0:
+	if indexes.size() <= 0:
 		return null
 
 	var r: int = indexes.pick_random()
