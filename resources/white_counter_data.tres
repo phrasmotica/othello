@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BoardCellData" load_steps=2 format=3 uid="uid://bkeyonx1jyci4"]
+
+[ext_resource type="Script" path="res://scripts/board_cell_data.gd" id="1_laduc"]
+
+[resource]
+script = ExtResource("1_laduc")
+counter_presence = 1
