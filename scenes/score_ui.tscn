@@ -53,3 +53,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 8
 theme_override_font_sizes/font_size = 24
 text = "White"
+
+[node name="InfoLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "It is Black's turn..."
+horizontal_alignment = 1

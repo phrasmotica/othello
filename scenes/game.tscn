@@ -16,7 +16,7 @@ script = ExtResource("2_qmtkb")
 board = NodePath("../Board")
 
 [node name="Board" parent="." node_paths=PackedStringArray("turn_tracker", "score_ui", "game_buttons", "debug_handler") instance=ExtResource("1_8kvr6")]
-position = Vector2(320, 68)
+position = Vector2(384, 140)
 turn_tracker = NodePath("../TurnTracker")
 score_ui = NodePath("../UICanvas/MarginContainer/ScoreUI")
 game_buttons = NodePath("../UICanvas/MarginContainer/GameButtons")
