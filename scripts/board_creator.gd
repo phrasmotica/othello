@@ -70,10 +70,6 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		current_cell.position = CELL_SPRITE_SIZE * Vector2(x_pos, y_pos)
 		current_cell.index = idx
 
-		current_cell.cell_data = cell_data_pool.get_default_counter(_size, x_pos, y_pos)
-		if current_cell.cell_data.has_counter():
-			cell_counter_changed.emit(idx, current_cell.cell_data)
-
 		if is_new:
 			cells_parent.add_child(current_cell)
 			current_cell.owner = scene_root
@@ -101,7 +97,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 
 func inject(state: BoardStateData) -> void:
 	if state:
-		print("Injecting data for %d cell(s)" % state.cells_data.size())
+		print("Injecting data for %d cell(s) from %s" % [state.cells_data.size(), state.resource_path])
 	else:
 		print("Clearing initial state")
 
@@ -125,25 +121,7 @@ func play_random() -> void:
 		cell.place_counter(cell_data_pool.get_next())
 
 func reset_board() -> void:
-	var starting_counter_cells: Array[int] = []
-
-	for idx in cells_manager.count():
-		var cell := cells_manager.get_cell(idx)
-
-		var x_pos := idx % _size.x
-		var y_pos := int(float(idx) / float(_size.x))
-
-		cell.cell_data = cell_data_pool.get_default_counter(_size, x_pos, y_pos)
-		if cell.cell_data.has_counter():
-			starting_counter_cells.append(idx)
-
 	board_reset.emit()
-
-	# need to do this after the cell manager knows about the starting counters,
-	# so that the placement calculator updates each cell correctly
-	for idx in starting_counter_cells:
-		var cell := cells_manager.get_cell(idx)
-		cell_counter_changed.emit(idx, cell.cell_data)
 
 func _handle_cell_pressed(idx: int) -> void:
 	var cell := cells_manager.get_cell(idx)
