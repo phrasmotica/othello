@@ -73,8 +73,7 @@ func compute_flips(idx: int) -> void:
 		var regex: RegEx = _placement_checkers[cell.cell_data.counter_presence]
 		indexes = _compute_indexes(pos, offsets, regex)
 
-	if indexes.size() > 0:
-		requested_flips.emit(indexes)
+	requested_flips.emit(indexes)
 
 func _compute_indexes(pos: Vector2i, offsets: Array[Vector2i], regex: RegEx) -> Array[int]:
 	var indexes: Array[int] = []
