@@ -32,10 +32,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("board") instance=ExtResource("2_b5ltn")]
+[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("board", "turn_tracker") instance=ExtResource("2_b5ltn")]
 layout_mode = 2
 size_flags_vertical = 0
 board = NodePath("../../../Board")
+turn_tracker = NodePath("../../../TurnTracker")
 
 [node name="GameButtons" parent="UICanvas/MarginContainer" instance=ExtResource("3_cbeyc")]
 layout_mode = 2

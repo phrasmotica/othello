@@ -39,6 +39,8 @@ func _go_to_next_turn() -> void:
 
 	print("Turn ended, now it's %d turn" % _next_turn_colour)
 
+	# HIGH: don't emit this if the game has ended. This is being emitted twice
+	# after the game has already ended, for some reason...
 	next_colour_changed.emit(_next_turn_colour)
 
 func _handle_no_plays_available(_colour: BoardCell.CounterType) -> void:
