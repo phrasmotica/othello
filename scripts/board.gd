@@ -51,14 +51,14 @@ var cell_data_pool: CellDataPool = %CellDataPool
 @onready
 var placement_calculator: PlacementCalculator = %PlacementCalculator
 
-var _next_turn_colour: BoardCell.CounterType
-
 signal score_changed(black_score: int, white_score: int)
-signal game_ended
+signal no_plays_available(colour: BoardCell.CounterType)
+signal board_reset
 
 func _ready() -> void:
 	if turn_tracker:
 		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
+		turn_tracker.next_colour_changed.connect(_handle_next_colour_changed)
 
 	if score_ui:
 		score_ui.ready.connect(_handle_score_ui_ready)
@@ -66,7 +66,8 @@ func _ready() -> void:
 	board_state.score_changed.connect(score_changed.emit)
 
 	if not Engine.is_editor_hint():
-		board_creator.turn_ended.connect(_handle_turn_ended)
+		if turn_tracker:
+			board_creator.turn_ended.connect(turn_tracker.next)
 
 		if game_buttons:
 			game_buttons.restarted.connect(_handle_restarted)
@@ -92,8 +93,18 @@ func _connect_initial_state() -> void:
 	board_creator.inject(initial_state)
 
 func _handle_starting_colour_changed(colour: BoardCell.CounterType) -> void:
-	_next_turn_colour = colour
+	_accept_next_colour(colour)
 
+func _handle_next_colour_changed(colour: BoardCell.CounterType) -> void:
+	_accept_next_colour(colour)
+
+	var available_play_count := placement_calculator.get_plays()
+
+	if available_play_count <= 0:
+		print("No plays available for %d" % colour)
+		no_plays_available.emit(colour)
+
+func _accept_next_colour(colour: BoardCell.CounterType) -> void:
 	if board_creator:
 		board_creator.set_next_colour(colour)
 
@@ -104,33 +115,16 @@ func _handle_score_ui_ready() -> void:
 	board_state.update_score()
 
 func _handle_restarted() -> void:
+	if board_state:
+		board_state.reset_board()
+
 	if board_creator:
-		board_creator.reset_board()
+		board_creator.inject(initial_state)
+
+	placement_calculator.refresh()
+
+	board_reset.emit()
 
 func _handle_play_random() -> void:
 	if board_creator:
 		board_creator.play_random()
-
-func _go_to_next_turn(last_turn_passed: bool) -> void:
-	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardCell.CounterType
-
-	print("Turn ended, now it's %d turn" % _next_turn_colour)
-
-	board_creator.set_next_colour(_next_turn_colour)
-
-	var available_play_count := placement_calculator.get_plays()
-
-	if available_play_count <= 0:
-		print("No plays available for %d" % _next_turn_colour)
-
-		if last_turn_passed:
-			print("Game ended!")
-			game_ended.emit()
-		else:
-			# MEDIUM: if there are no possible plays, force the current player to click a
-			# "continue" button
-			print("Skipping turn")
-			_go_to_next_turn(true)
-
-func _handle_turn_ended() -> void:
-	_go_to_next_turn(false)

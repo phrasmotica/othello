@@ -26,7 +26,6 @@ var _size: Vector2i
 
 signal cell_counter_changed(index: int, data: BoardCellData)
 signal turn_ended
-signal board_reset
 
 func _ready() -> void:
 	if ray_calculator:
@@ -119,9 +118,6 @@ func play_random() -> void:
 
 	if cell:
 		cell.place_counter(cell_data_pool.get_next())
-
-func reset_board() -> void:
-	board_reset.emit()
 
 func _handle_cell_pressed(idx: int) -> void:
 	var cell := cells_manager.get_cell(idx)
