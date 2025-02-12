@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BoardStateData" load_steps=4 format=3 uid="uid://dt5o011yj8wx6"]
+
+[ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="1_oy5cu"]
+[ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="2_baa8g"]
+[ext_resource type="Script" path="res://scripts/board_state_data.gd" id="3_qlavd"]
+
+[resource]
+script = ExtResource("3_qlavd")
+cells_data = {
+27: ExtResource("1_oy5cu"),
+28: ExtResource("2_baa8g"),
+35: ExtResource("1_oy5cu"),
+36: ExtResource("1_oy5cu")
+}
