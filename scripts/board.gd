@@ -101,7 +101,6 @@ func _handle_next_colour_changed(colour: BoardCell.CounterType) -> void:
 	var available_play_count := placement_calculator.get_plays()
 
 	if available_play_count <= 0:
-		print("No plays available for %d" % colour)
 		no_plays_available.emit(colour)
 
 func _accept_next_colour(colour: BoardCell.CounterType) -> void:
