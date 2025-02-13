@@ -20,6 +20,7 @@ signal computed_plays_available(plays: Dictionary)
 func _ready() -> void:
 	if board:
 		board.state_changed.connect(_handle_state_changed)
+		board.flips_finished.connect(_handle_flips_finished)
 
 	if turn_tracker:
 		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
@@ -40,12 +41,21 @@ func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> voi
 func _handle_next_colour_changed(_colour: BoardStateData.CounterType) -> void:
 	refresh()
 
-	var black_play_count := get_plays_for(BoardStateData.CounterType.BLACK)
-	var white_play_count := get_plays_for(BoardStateData.CounterType.WHITE)
+func _handle_flips_finished(_indexes: Array[int]) -> void:
+	compute_plays()
+
+func compute_plays() -> void:
+	for k: int in _board_state.cells_data:
+		var data: BoardCellData = _board_state.cells_data[k]
+		if data.has_counter():
+			print("%d = %d" % [k, data.counter_presence])
+
+	var black_plays := get_plays_for(BoardStateData.CounterType.BLACK)
+	var white_plays := get_plays_for(BoardStateData.CounterType.WHITE)
 
 	computed_plays_available.emit({
-		BoardStateData.CounterType.BLACK: black_play_count,
-		BoardStateData.CounterType.WHITE: white_play_count,
+		BoardStateData.CounterType.BLACK: black_plays,
+		BoardStateData.CounterType.WHITE: white_plays,
 	})
 
 func refresh() -> void:
@@ -59,14 +69,14 @@ func refresh_one(idx: int) -> void:
 	if board:
 		board.enable_cell(idx, can_place)
 
-func get_plays_for(colour: BoardStateData.CounterType) -> int:
-	var count := 0
+func get_plays_for(colour: BoardStateData.CounterType) -> Array[int]:
+	var plays: Array[int] = []
 
 	for idx: int in _board_state.cells_data.keys():
 		if _can_place(idx, colour):
-			count += 1
+			plays.append(idx)
 
-	return count
+	return plays
 
 func _can_place(idx: int, colour: BoardStateData.CounterType) -> bool:
 	var cell_data: BoardCellData = _board_state.cells_data[idx]

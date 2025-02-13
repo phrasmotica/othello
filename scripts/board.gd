@@ -37,6 +37,7 @@ var cell_data_pool: CellDataPool = %CellDataPool
 
 signal cell_changed(index: int, data: BoardCellData)
 signal state_changed(data: BoardStateData)
+signal flips_finished(indexes: Array[int])
 signal board_reset
 
 func _ready() -> void:
@@ -46,6 +47,7 @@ func _ready() -> void:
 
 	if ray_calculator:
 		ray_calculator.requested_flips.connect(board_creator.perform_flips)
+		ray_calculator.requested_flips.connect(flips_finished.emit)
 
 	if score_ui:
 		score_ui.ready.connect(_handle_score_ui_ready)

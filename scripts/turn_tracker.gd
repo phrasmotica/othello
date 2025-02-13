@@ -48,7 +48,7 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 	var colours_that_can_play: Array[BoardStateData.CounterType] = []
 
 	for key: BoardStateData.CounterType in plays.keys():
-		if plays[key] > 0:
+		if plays[key].size() > 0:
 			colours_that_can_play.append(key)
 
 	if colours_that_can_play.size() <= 0:
