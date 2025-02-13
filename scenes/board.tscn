@@ -15,13 +15,12 @@
 script = ExtResource("1_2oqc0")
 initial_state = ExtResource("2_dkars")
 
-[node name="BoardCreator" type="Node" parent="." node_paths=PackedStringArray("cells_parent", "cells_manager", "cell_data_pool", "board_state")]
+[node name="BoardCreator" type="Node" parent="." node_paths=PackedStringArray("cells_parent", "cells_manager", "cell_data_pool")]
 unique_name_in_owner = true
 script = ExtResource("4_0bgla")
 cells_parent = NodePath("../CellsManager")
 cells_manager = NodePath("../CellsManager")
 cell_data_pool = NodePath("../CellDataPool")
-board_state = NodePath("../BoardState")
 board_cell_scene = ExtResource("1_52xkg")
 
 [node name="BoardState" type="Node" parent="." node_paths=PackedStringArray("board_creator")]

@@ -11,9 +11,6 @@ var cells_manager: CellsManager
 var cell_data_pool: CellDataPool
 
 @export
-var board_state: BoardState
-
-@export
 var board_cell_scene: PackedScene
 
 # TODO: get this from the board cell scene
@@ -75,7 +72,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		if current_cell.counter_changed.get_connections().size() <= 0:
 			current_cell.counter_changed.connect(
 				func(data: BoardCellData) -> void:
-					board_state.set_cell(idx, data, false)
+					cell_injected.emit(idx, data)
 			)
 
 	var remaining_cells := child_cells.slice(size.x * size.y)
