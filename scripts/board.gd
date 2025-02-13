@@ -51,7 +51,7 @@ var cell_data_pool: CellDataPool = %CellDataPool
 @onready
 var placement_calculator: PlacementCalculator = %PlacementCalculator
 
-signal score_changed(black_score: int, white_score: int)
+signal state_changed(data: BoardStateData)
 signal no_plays_available(colour: BoardCell.CounterType)
 signal board_reset
 
@@ -63,7 +63,7 @@ func _ready() -> void:
 	if score_ui:
 		score_ui.ready.connect(_handle_score_ui_ready)
 
-	board_state.score_changed.connect(score_changed.emit)
+	board_state.state_changed.connect(state_changed.emit)
 
 	if not Engine.is_editor_hint():
 		if turn_tracker:
@@ -111,12 +111,10 @@ func _accept_next_colour(colour: BoardCell.CounterType) -> void:
 		cell_data_pool.next_colour = colour
 
 func _handle_score_ui_ready() -> void:
-	board_state.update_score()
+	if board_state:
+		board_state.broadcast()
 
 func _handle_restarted() -> void:
-	if board_state:
-		board_state.reset_board()
-
 	if board_creator:
 		board_creator.inject(initial_state)
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dskbe0sonplca"]
+[gd_scene load_steps=7 format=3 uid="uid://dskbe0sonplca"]
 
 [ext_resource type="PackedScene" uid="uid://c5cc76vukx7db" path="res://scenes/board.tscn" id="1_8kvr6"]
 [ext_resource type="Script" path="res://scripts/debug_handler.gd" id="1_bl16d"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="2_b5ltn"]
 [ext_resource type="Script" path="res://scripts/turn_tracker.gd" id="2_qmtkb"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="3_cbeyc"]
+[ext_resource type="Script" path="res://scripts/othello_score.gd" id="3_rlcrk"]
 
 [node name="Game" type="Node2D"]
 
@@ -13,6 +14,10 @@ script = ExtResource("1_bl16d")
 
 [node name="TurnTracker" type="Node" parent="." node_paths=PackedStringArray("board")]
 script = ExtResource("2_qmtkb")
+board = NodePath("../Board")
+
+[node name="OthelloScore" type="Node" parent="." node_paths=PackedStringArray("board")]
+script = ExtResource("3_rlcrk")
 board = NodePath("../Board")
 
 [node name="Board" parent="." node_paths=PackedStringArray("turn_tracker", "score_ui", "game_buttons", "debug_handler") instance=ExtResource("1_8kvr6")]
@@ -32,10 +37,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("board", "turn_tracker") instance=ExtResource("2_b5ltn")]
+[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("score", "turn_tracker") instance=ExtResource("2_b5ltn")]
 layout_mode = 2
 size_flags_vertical = 0
-board = NodePath("../../../Board")
+score = NodePath("../../../OthelloScore")
 turn_tracker = NodePath("../../../TurnTracker")
 
 [node name="GameButtons" parent="UICanvas/MarginContainer" instance=ExtResource("3_cbeyc")]

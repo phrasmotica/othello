@@ -4,32 +4,20 @@ class_name BoardState extends Node
 @export
 var board_creator: BoardCreator
 
-var _counters := {}
+var _current_state: BoardStateData
 
-signal score_changed(black_score: int, white_score: int)
+signal state_changed(data: BoardStateData)
 
 func _ready() -> void:
+	_current_state = BoardStateData.new()
+
 	if board_creator:
 		board_creator.cell_counter_changed.connect(_handle_cell_counter_changed)
 
-func update_score() -> void:
-	var black_score := 0
-	var white_score := 0
-
-	for v: BoardCellData in _counters.values():
-		if v.is_white():
-			white_score += 1
-		elif v.is_black():
-			black_score += 1
-
-	score_changed.emit(black_score, white_score)
-
 func _handle_cell_counter_changed(index: int, data: BoardCellData) -> void:
-	_counters[index] = data
+	_current_state.set_cell(index, data)
 
-	update_score()
+	broadcast()
 
-func reset_board() -> void:
-	_counters.clear()
-
-	update_score()
+func broadcast() -> void:
+	state_changed.emit(_current_state)
