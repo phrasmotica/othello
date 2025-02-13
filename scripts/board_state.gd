@@ -14,7 +14,6 @@ func _ready() -> void:
 
 	if board_creator:
 		board_creator.cell_changed.connect(_handle_cell_changed)
-		board_creator.cell_flipped.connect(_handle_cell_flipped)
 		board_creator.cell_injected.connect(_handle_cell_injected)
 
 func set_next_colour(type: BoardStateData.CounterType) -> void:
@@ -23,9 +22,6 @@ func set_next_colour(type: BoardStateData.CounterType) -> void:
 
 func _handle_cell_changed(index: int, data: BoardCellData) -> void:
 	set_cell(index, data, true)
-
-func _handle_cell_flipped(index: int, data: BoardCellData) -> void:
-	set_cell(index, data, false)
 
 func _handle_cell_injected(index: int, data: BoardCellData) -> void:
 	set_cell(index, data, false)

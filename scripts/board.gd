@@ -68,12 +68,25 @@ func restart() -> void:
 	board_reset.emit()
 
 func play_random() -> void:
-	if board_creator:
-		board_creator.play_random()
+	var cell := cells_manager.get_random_placeable_cell()
+
+	if cell:
+		cell.place_counter(cell_data_pool.get_next())
+
+		cell_changed.emit(cell.index, cell.cell_data)
 
 func perform_flips(indexes: Array[int]) -> void:
-	board_creator.perform_flips(indexes)
+	if indexes.size() < 0:
+		return
+
+	for i in indexes:
+		var cell := cells_manager.get_cell(i)
+		cell.cell_data = cell_data_pool.flip(cell.cell_data)
+
+		board_state.set_cell(i, cell.cell_data, false)
+
 	flips_finished.emit(indexes)
 
 func enable_cell(idx: int, enabled: bool) -> void:
-	board_creator.enable_cell(idx, enabled)
+	var cell := cells_manager.get_cell(idx)
+	cell.cannot_place = not enabled

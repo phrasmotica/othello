@@ -19,7 +19,6 @@ const CELL_SPRITE_SIZE: int = 64
 var _size: Vector2i
 
 signal cell_changed(index: int, data: BoardCellData)
-signal cell_flipped(index: int, data: BoardCellData)
 signal cell_injected(index: int, data: BoardCellData)
 
 func render_board(size: Vector2i, scene_root: Node) -> void:
@@ -91,30 +90,8 @@ func inject(state: BoardStateData) -> void:
 
 		cell_injected.emit(i, data)
 
-func play_random() -> void:
-	var cell := cells_manager.get_random_placeable_cell()
-
-	if cell:
-		cell.place_counter(cell_data_pool.get_next())
-
-		cell_changed.emit(cell.index, cell.cell_data)
-
 func _handle_cell_pressed(idx: int) -> void:
 	var cell := cells_manager.get_cell(idx)
 	cell.place_counter(cell_data_pool.get_next())
 
 	cell_changed.emit(idx, cell.cell_data)
-
-func perform_flips(indexes: Array[int]) -> void:
-	if indexes.size() < 0:
-		return
-
-	for i in indexes:
-		var cell := cells_manager.get_cell(i)
-		cell.cell_data = cell_data_pool.flip(cell.cell_data)
-
-		cell_flipped.emit(i, cell.cell_data)
-
-func enable_cell(idx: int, enabled: bool) -> void:
-	var cell := cells_manager.get_cell(idx)
-	cell.cannot_place = not enabled
