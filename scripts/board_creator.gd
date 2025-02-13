@@ -82,9 +82,6 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 	for cell in remaining_cells:
 		cell.queue_free()
 
-	# check place-ability now that we have all of the cells
-	# placement_calculator.refresh()
-
 func inject(state: BoardStateData) -> void:
 	if state:
 		print("Injecting data for %d cell(s) from %s" % [state.cells_data.size(), state.resource_path])
