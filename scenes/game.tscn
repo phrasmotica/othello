@@ -11,8 +11,9 @@
 
 [node name="Game" type="Node2D"]
 
-[node name="DebugHandler" type="Node" parent="."]
+[node name="DebugHandler" type="Node" parent="." node_paths=PackedStringArray("board")]
 script = ExtResource("1_bl16d")
+board = NodePath("../Board")
 
 [node name="OthelloGameLogic" type="Node" parent="."]
 
@@ -36,13 +37,8 @@ game_buttons = NodePath("../../UICanvas/MarginContainer/GameButtons")
 script = ExtResource("5_b3j6m")
 board = NodePath("../../Board")
 
-[node name="Board" parent="." node_paths=PackedStringArray("turn_tracker", "ray_calculator", "score_ui", "game_buttons", "debug_handler") instance=ExtResource("1_8kvr6")]
+[node name="Board" parent="." instance=ExtResource("1_8kvr6")]
 position = Vector2(384, 140)
-turn_tracker = NodePath("../OthelloGameLogic/TurnTracker")
-ray_calculator = NodePath("../OthelloGameLogic/RayCalculator")
-score_ui = NodePath("../UICanvas/MarginContainer/ScoreUI")
-game_buttons = NodePath("../UICanvas/MarginContainer/GameButtons")
-debug_handler = NodePath("../DebugHandler")
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 
@@ -54,11 +50,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("score", "turn_tracker") instance=ExtResource("2_b5ltn")]
+[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("score", "turn_tracker", "board") instance=ExtResource("2_b5ltn")]
 layout_mode = 2
 size_flags_vertical = 0
 score = NodePath("../../../OthelloGameLogic/ScoreTracker")
 turn_tracker = NodePath("../../../OthelloGameLogic/TurnTracker")
+board = NodePath("../../../Board")
 
-[node name="GameButtons" parent="UICanvas/MarginContainer" instance=ExtResource("3_cbeyc")]
+[node name="GameButtons" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("board") instance=ExtResource("3_cbeyc")]
 layout_mode = 2
+board = NodePath("../../../Board")

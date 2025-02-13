@@ -9,23 +9,6 @@ var initial_state: BoardStateData:
 
 			_initialise()
 
-@export_group("External Dependencies")
-
-@export
-var turn_tracker: TurnTracker
-
-@export
-var ray_calculator: RayCalculator
-
-@export
-var score_ui: ScoreUI
-
-@export
-var game_buttons: GameButtons
-
-@export
-var debug_handler: DebugHandler
-
 @onready
 var board_creator: BoardCreator = %BoardCreator
 
@@ -41,26 +24,8 @@ signal flips_finished(indexes: Array[int])
 signal board_reset
 
 func _ready() -> void:
-	if turn_tracker:
-		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
-		turn_tracker.next_colour_changed.connect(_handle_next_colour_changed)
-
-	if ray_calculator:
-		ray_calculator.requested_flips.connect(board_creator.perform_flips)
-		ray_calculator.requested_flips.connect(flips_finished.emit)
-
-	if score_ui:
-		score_ui.ready.connect(_handle_score_ui_ready)
-
 	board_state.cell_changed.connect(cell_changed.emit)
 	board_state.state_changed.connect(state_changed.emit)
-
-	if not Engine.is_editor_hint():
-		if game_buttons:
-			game_buttons.restarted.connect(_handle_restarted)
-
-		if debug_handler:
-			debug_handler.play_random.connect(_handle_play_random)
 
 	_initialise()
 
@@ -79,13 +44,7 @@ func _connect_initial_state() -> void:
 
 	board_creator.inject(initial_state)
 
-func _handle_starting_colour_changed(colour: BoardStateData.CounterType) -> void:
-	_accept_next_colour(colour)
-
-func _handle_next_colour_changed(colour: BoardStateData.CounterType) -> void:
-	_accept_next_colour(colour)
-
-func _accept_next_colour(colour: BoardStateData.CounterType) -> void:
+func set_next_colour(colour: BoardStateData.CounterType) -> void:
 	if board_creator:
 		board_creator.set_next_colour(colour)
 
@@ -95,19 +54,23 @@ func _accept_next_colour(colour: BoardStateData.CounterType) -> void:
 	if cell_data_pool:
 		cell_data_pool.next_colour = colour
 
-func _handle_score_ui_ready() -> void:
+func broadcast_state() -> void:
 	if board_state:
 		board_state.broadcast()
 
-func _handle_restarted() -> void:
+func restart() -> void:
 	if board_creator:
 		board_creator.inject(initial_state)
 
 	board_reset.emit()
 
-func _handle_play_random() -> void:
+func play_random() -> void:
 	if board_creator:
 		board_creator.play_random()
+
+func perform_flips(indexes: Array[int]) -> void:
+	board_creator.perform_flips(indexes)
+	flips_finished.emit(indexes)
 
 func enable_cell(idx: int, enabled: bool) -> void:
 	board_creator.enable_cell(idx, enabled)

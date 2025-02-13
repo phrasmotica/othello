@@ -1,6 +1,7 @@
 class_name DebugHandler extends Node
 
-signal play_random
+@export
+var board: Board
 
 var _is_debug := false
 
@@ -12,7 +13,8 @@ func _process(_delta: float) -> void:
 		return
 
 	if Input.is_action_just_pressed("place_counter_debug"):
-		play_random.emit()
+		if board:
+			board.play_random()
 
 func _handle_toggled_debug_mode(is_debug: bool) -> void:
 	_is_debug = is_debug

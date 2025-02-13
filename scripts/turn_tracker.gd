@@ -18,7 +18,6 @@ var board: Board
 var placement_calculator: PlacementCalculator
 
 var _next_turn_colour: BoardStateData.CounterType
-var _last_turn_passed := false
 
 signal starting_colour_changed(colour: BoardStateData.CounterType)
 signal next_colour_changed(colour: BoardStateData.CounterType)
@@ -35,12 +34,18 @@ func _ready() -> void:
 		placement_calculator.computed_plays_available.connect(_handle_computed_plays_available)
 
 func _emit() -> void:
+	if board:
+		board.set_next_colour(starting_colour)
+
 	starting_colour_changed.emit(starting_colour)
 
 func _go_to_next_turn() -> void:
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
 
 	print("Turn ended, %d plays next" % _next_turn_colour)
+
+	if board:
+		board.set_next_colour(_next_turn_colour)
 
 	next_colour_changed.emit(_next_turn_colour)
 
@@ -76,6 +81,8 @@ func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
 
 func _handle_board_reset() -> void:
 	_next_turn_colour = starting_colour
-	next_colour_changed.emit(_next_turn_colour)
 
-	_last_turn_passed = false
+	if board:
+		board.set_next_colour(_next_turn_colour)
+
+	next_colour_changed.emit(_next_turn_colour)

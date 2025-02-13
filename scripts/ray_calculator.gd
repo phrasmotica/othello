@@ -17,8 +17,6 @@ var _placement_checkers := {
 	BoardStateData.CounterType.WHITE: _regex_w,
 }
 
-signal requested_flips(indexes: Array[int])
-
 func _ready() -> void:
 	if board:
 		board.cell_changed.connect(_handle_cell_changed)
@@ -81,7 +79,8 @@ func compute_flips(idx: int) -> void:
 		var regex: RegEx = _placement_checkers[cell_data.counter_presence]
 		indexes = _compute_indexes(pos, offsets, regex)
 
-	requested_flips.emit(indexes)
+	if board:
+		board.perform_flips(indexes)
 
 func _compute_indexes(pos: Vector2i, offsets: Array[Vector2i], regex: RegEx) -> Array[int]:
 	var indexes: Array[int] = []

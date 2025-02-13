@@ -7,6 +7,9 @@ var score: OthelloScore
 @export
 var turn_tracker: TurnTracker
 
+@export
+var board: Board
+
 @onready
 var black_score_label: Label = %BlackScoreLabel
 
@@ -28,6 +31,9 @@ func _ready() -> void:
 	if turn_tracker:
 		turn_tracker.next_colour_changed.connect(_handle_next_colour_changed)
 		turn_tracker.game_ended.connect(_handle_game_ended)
+
+	if board:
+		board.broadcast_state()
 
 func _update_ui(black_score: int, white_score: int) -> void:
 	black_score_label.text = str(black_score)
