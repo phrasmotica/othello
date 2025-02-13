@@ -2,7 +2,7 @@
 class_name CellDataPool extends Node
 
 @export
-var next_colour: BoardCell.CounterType
+var next_colour: BoardStateData.CounterType
 
 @export
 var black_counter: BoardCellData
@@ -14,7 +14,7 @@ var white_counter: BoardCellData
 var empty: BoardCellData
 
 func get_next() -> BoardCellData:
-	if next_colour == BoardCell.CounterType.BLACK:
+	if next_colour == BoardStateData.CounterType.BLACK:
 		return black_counter
 
 	return white_counter

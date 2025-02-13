@@ -1,8 +1,6 @@
 @tool
 class_name BoardCell extends Node2D
 
-enum CounterType { BLACK, WHITE }
-
 @export
 var cell_data: BoardCellData:
 	set(value):
@@ -11,7 +9,7 @@ var cell_data: BoardCellData:
 		_refresh()
 
 @export
-var next_colour := CounterType.BLACK:
+var next_colour := BoardStateData.CounterType.BLACK:
 	set(value):
 		if next_colour != value:
 			next_colour = value
@@ -85,7 +83,7 @@ func _refresh() -> void:
 		if cell_data and cell_data.has_counter():
 			counter_preview.visible = false
 
-		counter_preview.is_white = next_colour == CounterType.WHITE
+		counter_preview.is_white = next_colour == BoardStateData.CounterType.WHITE
 
 	if mouse_area_button:
 		if cannot_place:

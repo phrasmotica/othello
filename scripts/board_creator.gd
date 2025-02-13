@@ -8,13 +8,10 @@ var cells_parent: Node2D
 var cells_manager: CellsManager
 
 @export
-var placement_calculator: PlacementCalculator
-
-@export
-var ray_calculator: RayCalculator
-
-@export
 var cell_data_pool: CellDataPool
+
+@export
+var board_state: BoardState
 
 @export
 var board_cell_scene: PackedScene
@@ -24,21 +21,17 @@ const CELL_SPRITE_SIZE: int = 64
 
 var _size: Vector2i
 
-signal cell_counter_changed(index: int, data: BoardCellData)
+signal cell_changed(index: int, data: BoardCellData)
+signal cell_flipped(index: int, data: BoardCellData)
+signal cell_injected(index: int, data: BoardCellData)
 signal turn_ended
 
-func _ready() -> void:
-	if ray_calculator:
-		ray_calculator.requested_flips.connect(_handle_requested_flips)
-
-func set_next_colour(type: BoardCell.CounterType) -> void:
+func set_next_colour(type: BoardStateData.CounterType) -> void:
 	cell_data_pool.next_colour = type
 
 	for idx in cells_manager.count():
 		var cell := cells_manager.get_cell(idx)
 		cell.next_colour = type
-
-		placement_calculator.refresh_one(idx)
 
 func render_board(size: Vector2i, scene_root: Node) -> void:
 	if not cells_parent:
@@ -47,7 +40,6 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 	_size = size
 
 	cells_manager.clear(size)
-	ray_calculator.provide_size(size)
 
 	var child_cells := cells_parent.get_children()
 
@@ -84,7 +76,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		if current_cell.counter_changed.get_connections().size() <= 0:
 			current_cell.counter_changed.connect(
 				func(data: BoardCellData) -> void:
-					_handle_counter_changed(idx, data)
+					board_state.set_cell(idx, data, false)
 			)
 
 	var remaining_cells := child_cells.slice(size.x * size.y)
@@ -92,7 +84,7 @@ func render_board(size: Vector2i, scene_root: Node) -> void:
 		cell.queue_free()
 
 	# check place-ability now that we have all of the cells
-	placement_calculator.refresh()
+	# placement_calculator.refresh()
 
 func inject(state: BoardStateData) -> void:
 	if state:
@@ -111,7 +103,7 @@ func inject(state: BoardStateData) -> void:
 		var cell := cells_manager.get_cell(i)
 		cell.cell_data = data
 
-		cell_counter_changed.emit(i, data)
+		cell_injected.emit(i, data)
 
 func play_random() -> void:
 	var cell := cells_manager.get_random_placeable_cell()
@@ -119,21 +111,26 @@ func play_random() -> void:
 	if cell:
 		cell.place_counter(cell_data_pool.get_next())
 
+		cell_changed.emit(cell.index, cell.cell_data)
+
 func _handle_cell_pressed(idx: int) -> void:
 	var cell := cells_manager.get_cell(idx)
 	cell.place_counter(cell_data_pool.get_next())
 
-func _handle_counter_changed(idx: int, data: BoardCellData) -> void:
-	cell_counter_changed.emit(idx, data)
+	cell_changed.emit(idx, cell.cell_data)
 
-	if ray_calculator:
-		ray_calculator.compute_flips(idx)
+func perform_flips(indexes: Array[int]) -> void:
+	if indexes.size() < 0:
+		return
 
-func _handle_requested_flips(indexes: Array[int]) -> void:
 	for i in indexes:
 		var cell := cells_manager.get_cell(i)
 		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
-		cell_counter_changed.emit(i, cell.cell_data)
+		cell_flipped.emit(i, cell.cell_data)
 
 	turn_ended.emit()
+
+func enable_cell(idx: int, enabled: bool) -> void:
+	var cell := cells_manager.get_cell(idx)
+	cell.cannot_place = not enabled

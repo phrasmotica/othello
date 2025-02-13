@@ -2,7 +2,7 @@
 class_name TurnTracker extends Node
 
 @export
-var starting_colour := BoardCell.CounterType.BLACK:
+var starting_colour := BoardStateData.CounterType.BLACK:
 	set(value):
 		if starting_colour != value:
 			starting_colour = value
@@ -14,19 +14,24 @@ var starting_colour := BoardCell.CounterType.BLACK:
 @export
 var board: Board
 
-var _next_turn_colour: BoardCell.CounterType
+@export
+var placement_calculator: PlacementCalculator
+
+var _next_turn_colour: BoardStateData.CounterType
 var _last_turn_passed := false
 
-signal starting_colour_changed(colour: BoardCell.CounterType)
-signal next_colour_changed(colour: BoardCell.CounterType)
+signal starting_colour_changed(colour: BoardStateData.CounterType)
+signal next_colour_changed(colour: BoardStateData.CounterType)
 signal game_ended
 
 func _ready() -> void:
 	get_tree().root.ready.connect(_emit)
 
 	if board:
-		board.no_plays_available.connect(_handle_no_plays_available)
 		board.board_reset.connect(_handle_board_reset)
+
+	if placement_calculator:
+		placement_calculator.no_plays_available.connect(_handle_no_plays_available)
 
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
@@ -35,13 +40,13 @@ func next() -> void:
 	_go_to_next_turn()
 
 func _go_to_next_turn() -> void:
-	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardCell.CounterType
+	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
 
 	print("Turn ended, now it's %d turn" % _next_turn_colour)
 
 	next_colour_changed.emit(_next_turn_colour)
 
-func _handle_no_plays_available(colour: BoardCell.CounterType) -> void:
+func _handle_no_plays_available(colour: BoardStateData.CounterType) -> void:
 	print("No plays available for %d" % colour)
 
 	if _last_turn_passed:
