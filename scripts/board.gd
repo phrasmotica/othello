@@ -54,9 +54,6 @@ func _ready() -> void:
 	board_state.state_changed.connect(state_changed.emit)
 
 	if not Engine.is_editor_hint():
-		if turn_tracker:
-			board_creator.turn_ended.connect(turn_tracker.next)
-
 		if game_buttons:
 			game_buttons.restarted.connect(_handle_restarted)
 

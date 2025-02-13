@@ -28,6 +28,7 @@ func _ready() -> void:
 	get_tree().root.ready.connect(_emit)
 
 	if board:
+		board.cell_changed.connect(_handle_cell_changed)
 		board.board_reset.connect(_handle_board_reset)
 
 	if placement_calculator:
@@ -35,9 +36,6 @@ func _ready() -> void:
 
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
-
-func next() -> void:
-	_go_to_next_turn()
 
 func _go_to_next_turn() -> void:
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
@@ -72,6 +70,9 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 func _end_game() -> void:
 	print("Game ended!")
 	game_ended.emit()
+
+func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
+	_go_to_next_turn()
 
 func _handle_board_reset() -> void:
 	_next_turn_colour = starting_colour

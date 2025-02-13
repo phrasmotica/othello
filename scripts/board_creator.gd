@@ -24,7 +24,6 @@ var _size: Vector2i
 signal cell_changed(index: int, data: BoardCellData)
 signal cell_flipped(index: int, data: BoardCellData)
 signal cell_injected(index: int, data: BoardCellData)
-signal turn_ended
 
 func set_next_colour(type: BoardStateData.CounterType) -> void:
 	cell_data_pool.next_colour = type
@@ -128,8 +127,6 @@ func perform_flips(indexes: Array[int]) -> void:
 		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
 		cell_flipped.emit(i, cell.cell_data)
-
-	turn_ended.emit()
 
 func enable_cell(idx: int, enabled: bool) -> void:
 	var cell := cells_manager.get_cell(idx)
