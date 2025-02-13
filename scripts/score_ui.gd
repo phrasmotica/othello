@@ -34,9 +34,7 @@ func _update_ui(black_score: int, white_score: int) -> void:
 	white_score_label.text = str(white_score)
 
 func _handle_next_colour_changed(colour: BoardStateData.CounterType) -> void:
-	print("ScoreUI _handle_next_colour_changed")
 	info_label.text = "It is %s's turn..." % _colour_names[colour]
 
 func _handle_game_ended() -> void:
-	print("ScoreUI _handle_game_ended")
 	info_label.text = "The game is finished!"

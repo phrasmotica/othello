@@ -15,7 +15,7 @@ var game_buttons: GameButtons
 
 var _board_state: BoardStateData
 
-signal no_plays_available(colour: BoardStateData.CounterType)
+signal computed_plays_available(plays: Dictionary)
 
 func _ready() -> void:
 	if board:
@@ -37,13 +37,16 @@ func _handle_state_changed(data: BoardStateData) -> void:
 func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> void:
 	refresh()
 
-func _handle_next_colour_changed(colour: BoardStateData.CounterType) -> void:
+func _handle_next_colour_changed(_colour: BoardStateData.CounterType) -> void:
 	refresh()
 
-	var available_play_count := get_plays()
+	var black_play_count := get_plays_for(BoardStateData.CounterType.BLACK)
+	var white_play_count := get_plays_for(BoardStateData.CounterType.WHITE)
 
-	if available_play_count <= 0:
-		no_plays_available.emit(colour)
+	computed_plays_available.emit({
+		BoardStateData.CounterType.BLACK: black_play_count,
+		BoardStateData.CounterType.WHITE: white_play_count,
+	})
 
 func refresh() -> void:
 	# check place-ability under the assumption that we have all of the cells
@@ -51,21 +54,21 @@ func refresh() -> void:
 		refresh_one(idx)
 
 func refresh_one(idx: int) -> void:
-	var can_place := _can_place(idx)
+	var can_place := _can_place(idx, _board_state.next_colour)
 
 	if board:
 		board.enable_cell(idx, can_place)
 
-func get_plays() -> int:
+func get_plays_for(colour: BoardStateData.CounterType) -> int:
 	var count := 0
 
 	for idx: int in _board_state.cells_data.keys():
-		if _can_place(idx):
+		if _can_place(idx, colour):
 			count += 1
 
 	return count
 
-func _can_place(idx: int) -> bool:
+func _can_place(idx: int, colour: BoardStateData.CounterType) -> bool:
 	var cell_data: BoardCellData = _board_state.cells_data[idx]
 	if cell_data.has_counter():
 		return false
@@ -73,5 +76,5 @@ func _can_place(idx: int) -> bool:
 	# cast eight "rays" outwards and check whether the cells that each ray
 	# passes through match the regular expressions defined at the top, depending
 	# on the colour of this cell. 0 represents a black counter, 1 a white one.
-	var rays := ray_calculator.get_rays(idx, _board_state.next_colour)
+	var rays := ray_calculator.get_rays(idx, colour)
 	return rays.size() > 0
