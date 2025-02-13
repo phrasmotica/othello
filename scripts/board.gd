@@ -16,6 +16,9 @@ var board_creator: BoardCreator = %BoardCreator
 var board_state: BoardState = %BoardState
 
 @onready
+var cells_manager: CellsManager = %CellsManager
+
+@onready
 var cell_data_pool: CellDataPool = %CellDataPool
 
 signal cell_changed(index: int, data: BoardCellData)
@@ -45,8 +48,8 @@ func _connect_initial_state() -> void:
 	board_creator.inject(initial_state)
 
 func set_next_colour(colour: BoardStateData.CounterType) -> void:
-	if board_creator:
-		board_creator.set_next_colour(colour)
+	if cells_manager:
+		cells_manager.set_next_colour(colour)
 
 	if board_state:
 		board_state.set_next_colour(colour)

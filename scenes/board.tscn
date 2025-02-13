@@ -36,6 +36,7 @@ white_counter = ExtResource("9_7f813")
 empty = ExtResource("10_n2kpv")
 
 [node name="CellsManager" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("6_5xf7n")
 
 [node name="Cell0" parent="CellsManager" instance=ExtResource("1_52xkg")]

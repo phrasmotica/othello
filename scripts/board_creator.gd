@@ -22,13 +22,6 @@ signal cell_changed(index: int, data: BoardCellData)
 signal cell_flipped(index: int, data: BoardCellData)
 signal cell_injected(index: int, data: BoardCellData)
 
-func set_next_colour(type: BoardStateData.CounterType) -> void:
-	cell_data_pool.next_colour = type
-
-	for idx in cells_manager.count():
-		var cell := cells_manager.get_cell(idx)
-		cell.next_colour = type
-
 func render_board(size: Vector2i, scene_root: Node) -> void:
 	if not cells_parent:
 		return

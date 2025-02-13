@@ -12,6 +12,11 @@ func clear(size: Vector2i) -> void:
 func add(cell: BoardCell) -> void:
 	_cells.append(cell)
 
+func set_next_colour(colour: BoardStateData.CounterType) -> void:
+	for idx in count():
+		var cell := get_cell(idx)
+		cell.next_colour = colour
+
 func get_cell(idx: int) -> BoardCell:
 	if idx < 0 or idx >= _cells.size():
 		return null
