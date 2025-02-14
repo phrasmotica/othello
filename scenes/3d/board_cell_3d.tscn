@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://8js6lj7t2xty"]
+
+[ext_resource type="BoxMesh" uid="uid://b0ox50vh30b3s" path="res://meshes/board_cell_3d_even_mesh.tres" id="1_4aa8d"]
+[ext_resource type="Script" path="res://scripts/3d/board_cell_3d.gd" id="2_ki133"]
+[ext_resource type="BoxMesh" uid="uid://cwg8i1xfo2qje" path="res://meshes/board_cell_3d_odd_mesh.tres" id="3_guavf"]
+[ext_resource type="PackedScene" uid="uid://cfqujlwguvw4b" path="res://scenes/3d/counter_3d.tscn" id="6_w0ctw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_epjjd"]
+size = Vector3(1, 0.5, 1)
+
+[node name="Cell3D" type="Node3D"]
+script = ExtResource("2_ki133")
+even_tile_mesh = ExtResource("1_4aa8d")
+odd_tile_mesh = ExtResource("3_guavf")
+
+[node name="TileBody" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.25, 0.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TileBody"]
+shape = SubResource("BoxShape3D_epjjd")
+
+[node name="TileMesh" type="MeshInstance3D" parent="TileBody"]
+unique_name_in_owner = true
+mesh = ExtResource("3_guavf")
+skeleton = NodePath("../../..")
+
+[node name="IndexLabel3D" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.51, 0)
+visible = false
+text = "0"
+font_size = 48
+outline_size = 0
+horizontal_alignment = 0
+vertical_alignment = 0
+
+[node name="Counter" parent="." instance=ExtResource("6_w0ctw")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.75, 0.5)
+visible = false

@@ -31,6 +31,10 @@ func get_cell_at(x_pos: int, y_pos: int) -> BoardCell:
 	return get_cell(idx)
 
 func get_random_placeable_cell() -> BoardCell:
+	var r := _get_random_index()
+	return get_cell(r) if r >= 0 else null
+
+func _get_random_index() -> int:
 	var indexes: Array[int] = []
 
 	for idx in count():
@@ -39,10 +43,10 @@ func get_random_placeable_cell() -> BoardCell:
 			indexes.append(idx)
 
 	if indexes.size() <= 0:
-		return null
+		return -1
 
 	var r: int = indexes.pick_random()
-	return get_cell(r)
+	return r
 
 func cell_exists(x_pos: int, y_pos: int) -> bool:
 	return x_pos >= 0 and x_pos < width() and y_pos >= 0 and y_pos < _height()

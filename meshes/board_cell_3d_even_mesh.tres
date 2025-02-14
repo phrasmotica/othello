@@ -1,0 +1,7 @@
+[gd_resource type="BoxMesh" load_steps=2 format=3 uid="uid://b0ox50vh30b3s"]
+
+[ext_resource type="Material" uid="uid://cm0s2e7bhfpcv" path="res://materials/board_cell_3d_even_mat.tres" id="1_mpcy2"]
+
+[resource]
+material = ExtResource("1_mpcy2")
+size = Vector3(1, 0.5, 1)

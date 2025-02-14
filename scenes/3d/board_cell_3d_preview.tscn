@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdd8srmioq4gw"]
+
+[ext_resource type="PackedScene" uid="uid://8js6lj7t2xty" path="res://scenes/3d/board_cell_3d.tscn" id="1_q42oy"]
+
+[node name="BoardCell3DPreview" type="Node3D"]
+
+[node name="Cell3D" parent="." instance=ExtResource("1_q42oy")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.92388, 0.382683, 0, -0.382683, 0.92388, 0, 1.5, 3)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3, 0)
