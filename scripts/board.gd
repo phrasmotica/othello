@@ -33,19 +33,18 @@ func _ready() -> void:
 	_initialise()
 
 func _initialise() -> void:
-	if board_creator:
-		board_creator.render_board(initial_state.board_size, self)
+	_inject_state()
 
+	if Engine.is_editor_hint():
 		_connect_initial_state()
+
+func _inject_state() -> void:
+	if board_creator:
+		board_creator.inject(initial_state, self)
 
 func _connect_initial_state() -> void:
 	if initial_state and initial_state.changed.get_connections().size() <= 0:
-		initial_state.changed.connect(
-			func() -> void:
-				board_creator.inject(initial_state)
-		)
-
-	board_creator.inject(initial_state)
+		initial_state.changed.connect(_inject_state)
 
 func set_next_colour(colour: BoardStateData.CounterType) -> void:
 	if cells_manager:
@@ -63,7 +62,7 @@ func broadcast_state() -> void:
 
 func restart() -> void:
 	if board_creator:
-		board_creator.inject(initial_state)
+		board_creator.inject(initial_state, self)
 
 	board_reset.emit()
 

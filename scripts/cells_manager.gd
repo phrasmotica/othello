@@ -1,5 +1,5 @@
 @tool
-class_name CellsManager extends Node2D
+class_name CellsManager extends Node
 
 var _size: Vector2i
 var _cells: Array[BoardCell] = []
