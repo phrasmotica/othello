@@ -1,13 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dskbe0sonplca"]
+[gd_scene load_steps=6 format=3 uid="uid://dskbe0sonplca"]
 
 [ext_resource type="PackedScene" uid="uid://c5cc76vukx7db" path="res://scenes/board.tscn" id="1_8kvr6"]
 [ext_resource type="Script" path="res://scripts/debug_handler.gd" id="1_bl16d"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="2_b5ltn"]
-[ext_resource type="Script" path="res://scripts/turn_tracker.gd" id="2_qmtkb"]
+[ext_resource type="PackedScene" uid="uid://l8exhvs5m3fa" path="res://scenes/othello_game_logic.tscn" id="2_ca2xx"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="3_cbeyc"]
-[ext_resource type="Script" path="res://scripts/othello_score.gd" id="3_rlcrk"]
-[ext_resource type="Script" path="res://scripts/placement_calculator.gd" id="4_qil6b"]
-[ext_resource type="Script" path="res://scripts/ray_calculator.gd" id="5_b3j6m"]
 
 [node name="Game" type="Node2D"]
 
@@ -15,27 +12,8 @@
 script = ExtResource("1_bl16d")
 board = NodePath("../Board")
 
-[node name="OthelloGameLogic" type="Node" parent="."]
-
-[node name="TurnTracker" type="Node" parent="OthelloGameLogic" node_paths=PackedStringArray("board", "placement_calculator")]
-script = ExtResource("2_qmtkb")
-board = NodePath("../../Board")
-placement_calculator = NodePath("../PlacementCalculator")
-
-[node name="ScoreTracker" type="Node" parent="OthelloGameLogic" node_paths=PackedStringArray("board")]
-script = ExtResource("3_rlcrk")
-board = NodePath("../../Board")
-
-[node name="PlacementCalculator" type="Node" parent="OthelloGameLogic" node_paths=PackedStringArray("board", "turn_tracker", "ray_calculator", "game_buttons")]
-script = ExtResource("4_qil6b")
-board = NodePath("../../Board")
-turn_tracker = NodePath("../TurnTracker")
-ray_calculator = NodePath("../RayCalculator")
-game_buttons = NodePath("../../UICanvas/MarginContainer/GameButtons")
-
-[node name="RayCalculator" type="Node" parent="OthelloGameLogic" node_paths=PackedStringArray("board")]
-script = ExtResource("5_b3j6m")
-board = NodePath("../../Board")
+[node name="OthelloGameLogic" parent="." node_paths=PackedStringArray("board") instance=ExtResource("2_ca2xx")]
+board = NodePath("../Board")
 
 [node name="Board" parent="." instance=ExtResource("1_8kvr6")]
 position = Vector2(384, 140)
@@ -50,13 +28,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("score", "turn_tracker", "board") instance=ExtResource("2_b5ltn")]
+[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic", "board") instance=ExtResource("2_b5ltn")]
 layout_mode = 2
 size_flags_vertical = 0
-score = NodePath("../../../OthelloGameLogic/ScoreTracker")
-turn_tracker = NodePath("../../../OthelloGameLogic/TurnTracker")
+game_logic = NodePath("../../../OthelloGameLogic")
 board = NodePath("../../../Board")
 
-[node name="GameButtons" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("board") instance=ExtResource("3_cbeyc")]
+[node name="GameButtons" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic", "board") instance=ExtResource("3_cbeyc")]
 layout_mode = 2
+game_logic = NodePath("../../../OthelloGameLogic")
 board = NodePath("../../../Board")

@@ -2,33 +2,26 @@
 class_name PlacementCalculator extends Node
 
 @export
-var board: Board
-
-@export
 var turn_tracker: TurnTracker
 
 @export
 var ray_calculator: RayCalculator
 
-@export
-var game_buttons: GameButtons
-
 var _board_state: BoardStateData
 
+signal refreshed_cell(idx: int, can_place: bool)
 signal computed_plays_available(plays: Dictionary)
 
 func _ready() -> void:
-	if board:
-		board.state_changed.connect(_handle_state_changed)
-		board.flips_finished.connect(_handle_flips_finished)
-
 	if turn_tracker:
 		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
 		turn_tracker.next_colour_changed.connect(_handle_next_colour_changed)
 
-	if not Engine.is_editor_hint():
-		if game_buttons:
-			game_buttons.restarted.connect(refresh)
+func connect_to_board(board: Board) -> void:
+	board.state_changed.connect(_handle_state_changed)
+	board.flips_finished.connect(_handle_flips_finished)
+
+	refreshed_cell.connect(board.enable_cell)
 
 func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
@@ -66,8 +59,7 @@ func refresh() -> void:
 func refresh_one(idx: int) -> void:
 	var can_place := _can_place(idx, _board_state.next_colour)
 
-	if board:
-		board.enable_cell(idx, can_place)
+	refreshed_cell.emit(idx, can_place)
 
 func get_plays_for(colour: BoardStateData.CounterType) -> Array[int]:
 	var plays: Array[int] = []
@@ -83,8 +75,5 @@ func _can_place(idx: int, colour: BoardStateData.CounterType) -> bool:
 	if cell_data.has_counter():
 		return false
 
-	# cast eight "rays" outwards and check whether the cells that each ray
-	# passes through match the regular expressions defined at the top, depending
-	# on the colour of this cell. 0 represents a black counter, 1 a white one.
 	var rays := ray_calculator.get_rays(idx, colour)
 	return rays.size() > 0

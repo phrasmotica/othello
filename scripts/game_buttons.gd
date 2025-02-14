@@ -1,6 +1,9 @@
 class_name GameButtons extends VBoxContainer
 
 @export
+var game_logic: OthelloGameLogic
+
+@export
 var board: Board
 
 @onready
@@ -16,6 +19,9 @@ func _ready() -> void:
 	quit_button.pressed.connect(_handle_quit)
 
 func _handle_restarted() -> void:
+	if game_logic:
+		game_logic.restart_game()
+
 	if board:
 		board.restart()
 

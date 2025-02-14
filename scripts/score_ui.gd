@@ -2,10 +2,7 @@
 class_name ScoreUI extends VBoxContainer
 
 @export
-var score: OthelloScore
-
-@export
-var turn_tracker: TurnTracker
+var game_logic: OthelloGameLogic
 
 @export
 var board: Board
@@ -25,12 +22,10 @@ var _colour_names := {
 }
 
 func _ready() -> void:
-	if score:
-		score.score_changed.connect(_update_ui)
-
-	if turn_tracker:
-		turn_tracker.next_colour_changed.connect(_handle_next_colour_changed)
-		turn_tracker.game_ended.connect(_handle_game_ended)
+	if game_logic:
+		game_logic.score_changed.connect(_update_ui)
+		game_logic.next_colour_changed.connect(_handle_next_colour_changed)
+		game_logic.game_ended.connect(_handle_game_ended)
 
 	if board:
 		board.broadcast_state()

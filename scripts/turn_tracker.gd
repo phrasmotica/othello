@@ -9,11 +9,6 @@ var starting_colour := BoardStateData.CounterType.BLACK:
 
 			_emit()
 
-@export_group("External Dependencies")
-
-@export
-var board: Board
-
 @export
 var placement_calculator: PlacementCalculator
 
@@ -26,26 +21,23 @@ signal game_ended
 func _ready() -> void:
 	get_tree().root.ready.connect(_emit)
 
-	if board:
-		board.cell_changed.connect(_handle_cell_changed)
-		board.board_reset.connect(_handle_board_reset)
-
 	if placement_calculator:
 		placement_calculator.computed_plays_available.connect(_handle_computed_plays_available)
 
-func _emit() -> void:
-	if board:
-		board.set_next_colour(starting_colour)
+func connect_to_board(board: Board) -> void:
+	board.cell_changed.connect(_handle_cell_changed)
+	board.board_reset.connect(_handle_board_reset)
 
+	starting_colour_changed.connect(board.set_next_colour)
+	next_colour_changed.connect(board.set_next_colour)
+
+func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
 
 func _go_to_next_turn() -> void:
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
 
 	print("Turn ended, %d plays next" % _next_turn_colour)
-
-	if board:
-		board.set_next_colour(_next_turn_colour)
 
 	next_colour_changed.emit(_next_turn_colour)
 
@@ -81,8 +73,5 @@ func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
 
 func _handle_board_reset() -> void:
 	_next_turn_colour = starting_colour
-
-	if board:
-		board.set_next_colour(_next_turn_colour)
 
 	next_colour_changed.emit(_next_turn_colour)

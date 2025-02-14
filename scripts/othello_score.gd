@@ -1,14 +1,10 @@
 @tool
 class_name OthelloScore extends Node
 
-@export
-var board: Board
-
 signal score_changed(black_score: int, white_score: int)
 
-func _ready() -> void:
-	if board:
-		board.state_changed.connect(_handle_state_changed)
+func connect_to_board(board: Board) -> void:
+	board.state_changed.connect(_handle_state_changed)
 
 func update_score(data: BoardStateData) -> void:
 	var black_score := 0

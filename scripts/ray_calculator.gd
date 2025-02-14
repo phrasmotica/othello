@@ -1,9 +1,6 @@
 @tool
 class_name RayCalculator extends Node
 
-@export
-var board: Board
-
 var _board_state: BoardStateData
 
 var _empty_cell_code := "E"
@@ -17,13 +14,17 @@ var _placement_checkers := {
 	BoardStateData.CounterType.WHITE: _regex_w,
 }
 
-func _ready() -> void:
-	if board:
-		board.cell_changed.connect(_handle_cell_changed)
-		board.state_changed.connect(_handle_state_changed)
+signal computed_flips(indexes: Array[int])
 
+func _ready() -> void:
 	_regex_b.compile("^1+0")
 	_regex_w.compile("^0+1")
+
+func connect_to_board(board: Board) -> void:
+	board.cell_changed.connect(_handle_cell_changed)
+	board.state_changed.connect(_handle_state_changed)
+
+	computed_flips.connect(board.perform_flips)
 
 func _handle_cell_changed(index: int, _data: BoardCellData) -> void:
 	compute_flips(index)
@@ -32,6 +33,10 @@ func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
 
 func get_rays(idx: int, next_colour: BoardStateData.CounterType) -> Array[String]:
+	# cast eight "rays" outwards and check whether the cells that each ray
+	# passes through match the regular expressions defined at the top, depending
+	# on the colour of this cell. 0 represents a black counter, 1 a white one.
+
 	var pos := _get_idx_as_pos(idx)
 
 	var strings := [
@@ -79,8 +84,7 @@ func compute_flips(idx: int) -> void:
 		var regex: RegEx = _placement_checkers[cell_data.counter_presence]
 		indexes = _compute_indexes(pos, offsets, regex)
 
-	if board:
-		board.perform_flips(indexes)
+	computed_flips.emit(indexes)
 
 func _compute_indexes(pos: Vector2i, offsets: Array[Vector2i], regex: RegEx) -> Array[int]:
 	var indexes: Array[int] = []
