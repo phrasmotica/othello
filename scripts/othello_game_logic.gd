@@ -20,7 +20,7 @@ var placement_calculator: PlacementCalculator = %PlacementCalculator
 @onready
 var ray_calculator: RayCalculator = %RayCalculator
 
-signal score_changed(black_score: int, white_score: int)
+signal score_changed(black_score: int, white_score: int, result: OthelloScore.GameResult)
 signal next_colour_changed(colour: BoardStateData.CounterType)
 signal game_ended
 
