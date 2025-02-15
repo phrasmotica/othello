@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfqujlwguvw4b"]
+[gd_scene load_steps=4 format=3 uid="uid://cfqujlwguvw4b"]
 
 [ext_resource type="Script" path="res://scripts/3d/counter_3d.gd" id="1_dcfqh"]
+[ext_resource type="PackedScene" uid="uid://bkt1f3hgpfwi1" path="res://scenes/3d/counter_halves.tscn" id="2_61rnl"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijrpa"]
 height = 0.125
@@ -15,15 +16,5 @@ script = ExtResource("1_dcfqh")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_ijrpa")
 
-[node name="CounterHalves" type="Node3D" parent="."]
+[node name="CounterHalves" parent="." instance=ExtResource("2_61rnl")]
 unique_name_in_owner = true
-
-[node name="CounterMeshBlack" type="MeshInstance3D" parent="CounterHalves"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.031, 0)
-mesh = ExtResource("1_froc0")
-skeleton = NodePath("../..")
-
-[node name="CounterMeshWhite" type="MeshInstance3D" parent="CounterHalves"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.031, 0)
-mesh = ExtResource("3_w4u8o")
-skeleton = NodePath("../..")

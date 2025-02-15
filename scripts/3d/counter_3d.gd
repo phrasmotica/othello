@@ -15,7 +15,7 @@ var is_white: bool:
 var prevent_tweening := false
 
 @onready
-var counter_halves: Node3D = %CounterHalves
+var counter_halves: CounterHalves = %CounterHalves
 
 var _rotated_to_white := false
 
@@ -34,8 +34,9 @@ func _setup_rigidbody() -> void:
 
 func _refresh() -> void:
 	if counter_halves:
-		counter_halves.rotation_degrees.x = 180 if is_white else 0
-		_rotated_to_white = is_white
+		counter_halves.is_white = is_white
+
+	_rotated_to_white = is_white
 
 func flip_if_needed() -> void:
 	if Engine.is_editor_hint() or not Globals.init_finished or prevent_tweening:
@@ -44,16 +45,16 @@ func flip_if_needed() -> void:
 		_rotate_tween()
 
 func _rotate_tween() -> void:
-	if not counter_halves:
-		return
-
 	if _rotated_to_white == is_white:
 		return
 
+	if not counter_halves:
+		return
+
+	counter_halves.set_meta("debug_name", "%sCounterHalves" % debug_name)
+
 	gravity_scale = 0
 	contact_monitor = false
-
-	var final_rotation := int(counter_halves.rotation_degrees.x + 180) % 360
 
 	var tween := create_tween()
 
@@ -64,20 +65,11 @@ func _rotate_tween() -> void:
 		0.5
 	)
 
-	tween.tween_property(
-		counter_halves,
-		"rotation_degrees:x",
-		final_rotation,
-		0.5
-	)
+	counter_halves.rotate_tween(tween)
 
 	tween.finished.connect(
 		func() -> void:
-			counter_halves.rotation_degrees.x = final_rotation
 			_rotated_to_white = is_white
-
-			print("Finished rotating %s to %.1f" % [debug_name, final_rotation])
-
 			gravity_scale = 1
 			contact_monitor = true
 	)

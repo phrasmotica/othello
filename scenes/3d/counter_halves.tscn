@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkt1f3hgpfwi1"]
+
+[ext_resource type="CylinderMesh" uid="uid://bnhdorgfwot3l" path="res://meshes/counter_3d_black_mesh.tres" id="1_4rek1"]
+[ext_resource type="Script" path="res://scripts/3d/counter_halves.gd" id="1_pld12"]
+[ext_resource type="CylinderMesh" uid="uid://bqssxu8kjeyu6" path="res://meshes/counter_3d_white_mesh.tres" id="2_syv1i"]
+[ext_resource type="CylinderMesh" uid="uid://bjkfumtmwoicm" path="res://meshes/counter_3d_black_preview_mesh.tres" id="3_lncwc"]
+[ext_resource type="CylinderMesh" uid="uid://170kjhbjbl04" path="res://meshes/counter_3d_white_preview_mesh.tres" id="4_ec5hy"]
+
+[node name="CounterHalves" type="Node3D"]
+script = ExtResource("1_pld12")
+
+[node name="Main" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CounterMeshBlack" type="MeshInstance3D" parent="Main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.031, 0)
+mesh = ExtResource("1_4rek1")
+skeleton = NodePath("../../..")
+
+[node name="CounterMeshWhite" type="MeshInstance3D" parent="Main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.031, 0)
+mesh = ExtResource("2_syv1i")
+skeleton = NodePath("../../..")
+
+[node name="Preview" type="Node3D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="CounterMeshBlackPreview" type="MeshInstance3D" parent="Preview"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.031, 0)
+transparency = 0.05
+mesh = ExtResource("3_lncwc")
+skeleton = NodePath("../../..")
+
+[node name="CounterMeshWhitePreview" type="MeshInstance3D" parent="Preview"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.031, 0)
+transparency = 0.7
+mesh = ExtResource("4_ec5hy")
+skeleton = NodePath("../../..")
