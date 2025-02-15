@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://flkpinjhixfv" path="res://scenes/board_cell.tscn" id="1_52xkg"]
 [ext_resource type="Resource" uid="uid://w8ur2oaq7rpo" path="res://resources/initial_state_default.tres" id="2_dkars"]
 [ext_resource type="Script" path="res://scripts/board_creator.gd" id="4_0bgla"]
-[ext_resource type="Script" path="res://scripts/board_state.gd" id="4_sxf1f"]
+[ext_resource type="PackedScene" uid="uid://crcg846yilqdv" path="res://scenes/board_state.tscn" id="4_tlmts"]
 [ext_resource type="Script" path="res://scripts/cells_manager.gd" id="6_5xf7n"]
 [ext_resource type="Script" path="res://scripts/cell_data_pool.gd" id="7_2w0dq"]
 [ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="8_nakpy"]
@@ -23,9 +23,8 @@ cells_parent = NodePath("../CellsParent")
 cells_manager = NodePath("../CellsManager")
 cell_data_pool = NodePath("../CellDataPool")
 
-[node name="BoardState" type="Node" parent="." node_paths=PackedStringArray("board_creator")]
+[node name="BoardState" parent="." node_paths=PackedStringArray("board_creator") instance=ExtResource("4_tlmts")]
 unique_name_in_owner = true
-script = ExtResource("4_sxf1f")
 board_creator = NodePath("../BoardCreator")
 
 [node name="CellDataPool" type="Node" parent="."]
