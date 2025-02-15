@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_epjjd"]
 size = Vector3(1, 0.5, 1)
 
-[node name="Cell3D" type="Node3D"]
+[node name="BoardCell3D" type="Node3D"]
 script = ExtResource("2_ki133")
 even_tile_mesh = ExtResource("1_4aa8d")
 odd_tile_mesh = ExtResource("3_guavf")

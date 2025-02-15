@@ -58,12 +58,17 @@ var counter: Counter3D = %Counter
 var _col := 0
 var _row := 0
 
+var _counter_initial_pos: Vector3
+
 signal cell_pressed
 signal counter_changed(data: BoardCellData)
 
 func _ready():
 	if not Engine.is_editor_hint():
 		Globals.toggled_debug_mode.connect(_handle_toggled_debug_mode)
+
+	if counter:
+		_counter_initial_pos = counter.position
 
 	_refresh()
 
@@ -110,4 +115,8 @@ func _refresh() -> void:
 
 func place_counter(data: BoardCellData) -> void:
 	cell_data = data
+
+	if counter:
+		counter.position = _counter_initial_pos
+
 	counter_changed.emit(cell_data)
