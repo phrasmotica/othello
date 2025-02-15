@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=5 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_2hvj3"]
+[ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 
 [node name="Game3D" type="Node3D"]
@@ -12,6 +13,10 @@ board = NodePath("../Board3D")
 
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
+
+[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("2_11kum")
+camera = NodePath("../Board3D/Camera3D")
 
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
 
