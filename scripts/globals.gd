@@ -2,6 +2,8 @@ extends Node
 
 var _debug_mode := false
 
+var init_finished := false
+
 signal toggled_debug_mode(is_debug: bool)
 
 func _process(_delta: float) -> void:

@@ -38,7 +38,7 @@ var debug_mode := false:
 		if debug_mode != value:
 			debug_mode = value
 
-			_refresh()
+			_refresh_debug()
 
 @export
 var even_tile_mesh: BoxMesh
@@ -81,17 +81,22 @@ func set_pos(col: int, row: int) -> void:
 
 	_refresh()
 
-func _refresh() -> void:
+func _refresh_debug() -> void:
 	# if debug_mode and cannot_place:
 	# 	modulate = Color.DIM_GRAY
 	# else:
 	# 	modulate = Color.WHITE
 
+	if index_label:
+		index_label.visible = debug_mode
+
+func _refresh() -> void:
 	if tile_mesh_instance:
 		var is_odd := (_col + _row) % 2 == 0
 		tile_mesh_instance.mesh = odd_tile_mesh if is_odd else even_tile_mesh
 
 	if counter:
+		counter.debug_name = "Counter%d" % index
 		counter.visible = cell_data.has_counter() if cell_data else false
 		counter.is_white = cell_data.is_white() if cell_data else false
 
@@ -110,11 +115,15 @@ func _refresh() -> void:
 	# 		mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 	if index_label:
-		index_label.visible = debug_mode
 		index_label.text = str(index)
 
 func place_counter(data: BoardCellData) -> void:
+	if counter:
+		counter.prevent_tweening = true
+
 	cell_data = data
+
+	counter.prevent_tweening = false
 
 	if counter:
 		counter.position = _counter_initial_pos

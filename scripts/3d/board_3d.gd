@@ -32,6 +32,10 @@ func _ready() -> void:
 
 	_initialise()
 
+	if not Engine.is_editor_hint():
+		Globals.init_finished = true
+		print("Init finished")
+
 func _initialise() -> void:
 	_inject_state()
 
