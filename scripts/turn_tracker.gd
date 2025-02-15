@@ -31,6 +31,13 @@ func connect_to_board(board: Board) -> void:
 	starting_colour_changed.connect(board.set_next_colour)
 	next_colour_changed.connect(board.set_next_colour)
 
+func connect_to_board_3d(board_3d: Board3D) -> void:
+	board_3d.cell_changed.connect(_handle_cell_changed)
+	board_3d.board_reset.connect(_handle_board_reset)
+
+	starting_colour_changed.connect(board_3d.set_next_colour)
+	next_colour_changed.connect(board_3d.set_next_colour)
+
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
 

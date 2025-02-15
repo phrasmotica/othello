@@ -23,6 +23,12 @@ func connect_to_board(board: Board) -> void:
 
 	refreshed_cell.connect(board.enable_cell)
 
+func connect_to_board_3d(board_3d: Board3D) -> void:
+	board_3d.state_changed.connect(_handle_state_changed)
+	board_3d.flips_finished.connect(_handle_flips_finished)
+
+	refreshed_cell.connect(board_3d.enable_cell)
+
 func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
 
@@ -52,6 +58,9 @@ func compute_plays() -> void:
 	})
 
 func refresh() -> void:
+	if not _board_state:
+		return
+
 	# check place-ability under the assumption that we have all of the cells
 	for idx: int in _board_state.cells_data.keys():
 		refresh_one(idx)

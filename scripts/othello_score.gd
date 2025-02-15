@@ -8,6 +8,9 @@ signal score_changed(black_score: int, white_score: int, result: GameResult)
 func connect_to_board(board: Board) -> void:
 	board.state_changed.connect(_handle_state_changed)
 
+func connect_to_board_3d(board_3d: Board3D) -> void:
+	board_3d.state_changed.connect(_handle_state_changed)
+
 func update_score(data: BoardStateData) -> void:
 	var black_score := 0
 	var white_score := 0

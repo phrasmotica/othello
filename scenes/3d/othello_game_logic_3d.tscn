@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3axiqvovsmhd"]
+
+[ext_resource type="Script" path="res://scripts/3d/othello_game_logic_3d.gd" id="1_npf6s"]
+[ext_resource type="Script" path="res://scripts/turn_tracker.gd" id="2_1f8ag"]
+[ext_resource type="Script" path="res://scripts/othello_score.gd" id="3_3w053"]
+[ext_resource type="Script" path="res://scripts/placement_calculator.gd" id="4_gvn6k"]
+[ext_resource type="Script" path="res://scripts/ray_calculator.gd" id="5_o23kq"]
+
+[node name="OthelloGameLogic3D" type="Node"]
+script = ExtResource("1_npf6s")
+
+[node name="TurnTracker" type="Node" parent="." node_paths=PackedStringArray("placement_calculator")]
+unique_name_in_owner = true
+script = ExtResource("2_1f8ag")
+placement_calculator = NodePath("../PlacementCalculator")
+
+[node name="ScoreTracker" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_3w053")
+
+[node name="PlacementCalculator" type="Node" parent="." node_paths=PackedStringArray("turn_tracker", "ray_calculator")]
+unique_name_in_owner = true
+script = ExtResource("4_gvn6k")
+turn_tracker = NodePath("../TurnTracker")
+ray_calculator = NodePath("../RayCalculator")
+
+[node name="RayCalculator" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_o23kq")

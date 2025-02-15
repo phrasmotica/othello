@@ -26,6 +26,12 @@ func connect_to_board(board: Board) -> void:
 
 	computed_flips.connect(board.perform_flips)
 
+func connect_to_board_3d(board_3d: Board3D) -> void:
+	board_3d.cell_changed.connect(_handle_cell_changed)
+	board_3d.state_changed.connect(_handle_state_changed)
+
+	computed_flips.connect(board_3d.perform_flips)
+
 func _handle_cell_changed(index: int, _data: BoardCellData) -> void:
 	compute_flips(index)
 
@@ -62,6 +68,9 @@ func get_rays(idx: int, next_colour: BoardStateData.CounterType) -> Array[String
 
 func compute_flips(idx: int) -> void:
 	var cell_data := _get_cell_data(idx)
+
+	if not cell_data:
+		return
 
 	var indexes: Array[int] = []
 
