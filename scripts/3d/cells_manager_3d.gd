@@ -11,6 +11,11 @@ func clear(size: Vector2i) -> void:
 func add_3d(cell: BoardCell3D) -> void:
 	_cells_3d.append(cell)
 
+func set_next_colour(colour: BoardStateData.CounterType) -> void:
+	for idx in count():
+		var cell := get_cell_3d(idx)
+		cell.next_colour = colour
+
 func get_cell_3d(idx: int) -> BoardCell3D:
 	if idx < 0 or idx >= count():
 		return null

@@ -9,6 +9,14 @@ var cell_data: BoardCellData:
 		_refresh()
 
 @export
+var next_colour := BoardStateData.CounterType.BLACK:
+	set(value):
+		if next_colour != value:
+			next_colour = value
+
+			_refresh()
+
+@export
 var index: int = 0:
 	set(value):
 		if index != value:

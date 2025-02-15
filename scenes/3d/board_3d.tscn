@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://2ryiy7bbn55i"]
+[gd_scene load_steps=12 format=3 uid="uid://2ryiy7bbn55i"]
 
 [ext_resource type="PackedScene" uid="uid://8js6lj7t2xty" path="res://scenes/3d/board_cell_3d.tscn" id="1_80kwy"]
 [ext_resource type="Script" path="res://scripts/3d/cells_parent_3d.gd" id="1_ebh4i"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/3d/board_creator_3d.gd" id="1_wf7qt"]
 [ext_resource type="Script" path="res://scripts/3d/cells_manager_3d.gd" id="2_1qqbh"]
 [ext_resource type="Resource" uid="uid://w8ur2oaq7rpo" path="res://resources/initial_state_default.tres" id="2_i7pd3"]
+[ext_resource type="PackedScene" uid="uid://crcg846yilqdv" path="res://scenes/board_state.tscn" id="4_ch6ci"]
 [ext_resource type="PackedScene" uid="uid://crn1w7viex67d" path="res://scenes/cell_data_pool.tscn" id="4_q7gkl"]
 [ext_resource type="Resource" uid="uid://c5gfjl10d81hu" path="res://resources/empty_counter_data.tres" id="9_i6vqj"]
 [ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="12_ls45f"]
@@ -21,6 +22,10 @@ script = ExtResource("1_wf7qt")
 cells_parent_3d = NodePath("../CellsParent3D")
 cells_manager_3d = NodePath("../CellsManager3D")
 cell_data_pool = NodePath("../CellDataPool")
+
+[node name="BoardState" parent="." node_paths=PackedStringArray("board_creator") instance=ExtResource("4_ch6ci")]
+unique_name_in_owner = true
+board_creator = NodePath("../BoardCreator3D")
 
 [node name="CellDataPool" parent="." instance=ExtResource("4_q7gkl")]
 unique_name_in_owner = true
