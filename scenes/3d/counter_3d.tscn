@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfqujlwguvw4b"]
+[gd_scene load_steps=3 format=3 uid="uid://cfqujlwguvw4b"]
 
 [ext_resource type="Script" path="res://scripts/3d/counter_3d.gd" id="1_dcfqh"]
-[ext_resource type="CylinderMesh" uid="uid://bnhdorgfwot3l" path="res://meshes/counter_3d_black_mesh.tres" id="1_froc0"]
-[ext_resource type="CylinderMesh" uid="uid://bqssxu8kjeyu6" path="res://meshes/counter_3d_white_mesh.tres" id="3_w4u8o"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijrpa"]
 height = 0.125
@@ -13,8 +11,6 @@ collision_mask = 2
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_dcfqh")
-black_counter_mesh = ExtResource("1_froc0")
-white_counter_mesh = ExtResource("3_w4u8o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_ijrpa")

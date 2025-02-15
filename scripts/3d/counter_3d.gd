@@ -2,6 +2,9 @@
 class_name Counter3D extends RigidBody3D
 
 @export
+var debug_name := ""
+
+@export
 var is_white: bool:
 	set(value):
 		is_white = value
@@ -9,16 +12,7 @@ var is_white: bool:
 		flip_if_needed()
 
 @export
-var debug_name := ""
-
-@export
 var prevent_tweening := false
-
-@export
-var black_counter_mesh: CylinderMesh
-
-@export
-var white_counter_mesh: CylinderMesh
 
 @onready
 var counter_halves: Node3D = %CounterHalves
