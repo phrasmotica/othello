@@ -9,6 +9,7 @@ height = 0.125
 radius = 0.4
 
 [node name="Counter3D" type="RigidBody3D"]
+collision_mask = 2
 script = ExtResource("1_dcfqh")
 black_counter_mesh = ExtResource("1_froc0")
 white_counter_mesh = ExtResource("3_w4u8o")

@@ -9,7 +9,7 @@ var cells_manager_3d: CellsManager3D
 
 func _ready() -> void:
 	if cells_parent_3d:
-		cells_parent_3d.cell_injected.connect(cell_injected.emit)
+		cells_parent_3d.cell_confirmed.connect(_handle_cell_confirmed)
 		cells_parent_3d.cell_pressed.connect(_handle_cell_pressed)
 
 func inject(state: BoardStateData, scene_root: Node) -> void:

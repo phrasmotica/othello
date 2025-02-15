@@ -74,8 +74,6 @@ func play_random() -> void:
 
 		cell.place_counter(cell_data_pool.get_next())
 
-		cell_changed.emit(cell.index, cell.cell_data)
-
 func perform_flips(indexes: Array[int]) -> void:
 	if indexes.size() < 0:
 		return

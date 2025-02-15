@@ -5,7 +5,7 @@ class_name CellsParent3D extends Node3D
 var board_cell_scene: PackedScene
 
 signal cell_pressed(idx: int)
-signal cell_injected(index: int, data: BoardCellData)
+signal cell_confirmed(index: int, data: BoardCellData)
 
 func render_cell(size: Vector2i, scene_root: Node, idx: int) -> BoardCell3D:
 	var child_cells := get_children()
@@ -36,10 +36,10 @@ func render_cell(size: Vector2i, scene_root: Node, idx: int) -> BoardCell3D:
 	if current_cell.cell_pressed.get_connections().size() <= 0:
 		current_cell.cell_pressed.connect(cell_pressed.emit.bind(idx))
 
-	if current_cell.counter_changed.get_connections().size() <= 0:
-		current_cell.counter_changed.connect(
+	if current_cell.counter_confirmed.get_connections().size() <= 0:
+		current_cell.counter_confirmed.connect(
 			func(data: BoardCellData) -> void:
-				cell_injected.emit(idx, data)
+				cell_confirmed.emit(idx, data)
 		)
 
 	return current_cell

@@ -10,7 +10,7 @@ var cells_manager: CellsManager
 @export
 var cell_data_pool: CellDataPool
 
-signal cell_changed(index: int, data: BoardCellData)
+signal cell_confirmed(index: int, data: BoardCellData)
 signal cell_injected(index: int, data: BoardCellData)
 
 func _ready() -> void:
@@ -55,4 +55,7 @@ func _handle_cell_pressed(idx: int) -> void:
 	var cell := cells_manager.get_cell(idx)
 	cell.place_counter(cell_data_pool.get_next())
 
-	cell_changed.emit(idx, cell.cell_data)
+	cell_confirmed.emit(idx, cell.cell_data)
+
+func _handle_cell_confirmed(index: int, data: BoardCellData) -> void:
+	cell_confirmed.emit(index, data)

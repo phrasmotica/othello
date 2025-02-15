@@ -61,7 +61,7 @@ var _row := 0
 var _counter_initial_pos: Vector3
 
 signal cell_pressed
-signal counter_changed(data: BoardCellData)
+signal counter_confirmed(data: BoardCellData)
 
 func _ready():
 	if not Engine.is_editor_hint():
@@ -118,5 +118,6 @@ func place_counter(data: BoardCellData) -> void:
 
 	if counter:
 		counter.position = _counter_initial_pos
-
-	counter_changed.emit(cell_data)
+		counter.landed_on_board.connect(counter_confirmed.emit.bind(cell_data), CONNECT_ONE_SHOT)
+	else:
+		counter_confirmed.emit(cell_data)

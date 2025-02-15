@@ -13,14 +13,14 @@ func _ready() -> void:
 	_current_state = BoardStateData.new()
 
 	if board_creator:
-		board_creator.cell_changed.connect(_handle_cell_changed)
+		board_creator.cell_confirmed.connect(_handle_cell_confirmed)
 		board_creator.cell_injected.connect(_handle_cell_injected)
 
 func set_next_colour(type: BoardStateData.CounterType) -> void:
 	_current_state.next_colour = type
 	broadcast()
 
-func _handle_cell_changed(index: int, data: BoardCellData) -> void:
+func _handle_cell_confirmed(index: int, data: BoardCellData) -> void:
 	set_cell(index, data, true)
 
 func _handle_cell_injected(index: int, data: BoardCellData) -> void:
