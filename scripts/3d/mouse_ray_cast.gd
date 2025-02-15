@@ -3,6 +3,9 @@ extends Node3D
 @export
 var camera: Camera3D
 
+@export
+var board: Board3D
+
 const RAY_LENGTH = 1000.0
 
 var _hovered_cell: BoardCell3D
@@ -10,10 +13,16 @@ var _hovered_cell: BoardCell3D
 func _physics_process(_delta: float) -> void:
 	var cell := _get_hovered_cell()
 
-	if cell and _hovered_cell != cell:
-		_hovered_cell = cell
+	if cell:
+		if _hovered_cell != cell:
+			_hovered_cell = cell
 
-		print("Now hovering over cell %d" % cell.index)
+			print("Now hovering over cell %d" % cell.index)
+
+			if board:
+				board.highlight_cell(cell.index)
+	elif board:
+		board.highlight_cell(-1)
 
 func _get_hovered_cell() -> BoardCell3D:
 	if not camera:

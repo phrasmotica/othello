@@ -93,3 +93,8 @@ func perform_flips(indexes: Array[int]) -> void:
 func enable_cell(idx: int, enabled: bool) -> void:
 	var cell := cells_manager_3d.get_cell_3d(idx)
 	cell.cannot_place = not enabled
+
+func highlight_cell(idx: int) -> void:
+	for i in cells_manager_3d.count():
+		var cell := cells_manager_3d.get_cell_3d(i)
+		cell.show_preview = cell.index == idx
