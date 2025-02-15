@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://8js6lj7t2xty"]
+[gd_scene load_steps=8 format=3 uid="uid://8js6lj7t2xty"]
 
 [ext_resource type="BoxMesh" uid="uid://b0ox50vh30b3s" path="res://meshes/board_cell_3d_even_mesh.tres" id="1_4aa8d"]
 [ext_resource type="Script" path="res://scripts/3d/board_cell_3d.gd" id="2_ki133"]
 [ext_resource type="BoxMesh" uid="uid://cwg8i1xfo2qje" path="res://meshes/board_cell_3d_odd_mesh.tres" id="3_guavf"]
 [ext_resource type="BoxMesh" uid="uid://beyul1hqs6e88" path="res://meshes/board_cell_3d_disabled_mesh.tres" id="4_fei78"]
+[ext_resource type="PackedScene" uid="uid://c2ke0x3qy3hhy" path="res://scenes/3d/counter_preview_3d.tscn" id="6_ql6xe"]
 [ext_resource type="PackedScene" uid="uid://cfqujlwguvw4b" path="res://scenes/3d/counter_3d.tscn" id="6_w0ctw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_epjjd"]
@@ -36,8 +37,14 @@ outline_size = 0
 horizontal_alignment = 0
 vertical_alignment = 0
 
-[node name="Counter" parent="." instance=ExtResource("6_w0ctw")]
-unique_name_in_owner = true
+[node name="Counters" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.75, 0.5)
+
+[node name="Counter" parent="Counters" instance=ExtResource("6_w0ctw")]
+unique_name_in_owner = true
 visible = false
 debug_name = "Counter0"
+
+[node name="CounterPreview" parent="Counters" instance=ExtResource("6_ql6xe")]
+unique_name_in_owner = true
+visible = false

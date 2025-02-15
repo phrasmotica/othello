@@ -33,6 +33,14 @@ var cannot_place := false:
 			_refresh()
 
 @export
+var show_preview := false:
+	set(value):
+		if show_preview != value:
+			show_preview = value
+
+			_refresh()
+
+@export
 var debug_mode := false:
 	set(value):
 		if debug_mode != value:
@@ -57,6 +65,9 @@ var index_label: Label3D = %IndexLabel3D
 
 @onready
 var counter: Counter3D = %Counter
+
+@onready
+var counter_preview: CounterPreview3D = %CounterPreview
 
 var _col := 0
 var _row := 0
@@ -98,19 +109,13 @@ func _refresh() -> void:
 		counter.visible = cell_data.has_counter() if cell_data else false
 		counter.is_white = cell_data.is_white() if cell_data else false
 
-	# if counter_preview:
-	# 	if cell_data and cell_data.has_counter():
-	# 		counter_preview.visible = false
+	if counter_preview:
+		counter_preview.visible = show_preview
 
-	# 	counter_preview.is_white = next_colour == BoardStateData.CounterType.WHITE
+		if cell_data and cell_data.has_counter():
+			counter_preview.visible = false
 
-	# if mouse_area_button:
-	# 	if cannot_place:
-	# 		mouse_area_button.disabled = true
-	# 		mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_ARROW
-	# 	else:
-	# 		mouse_area_button.disabled = false
-	# 		mouse_area_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		counter_preview.is_white = next_colour == BoardStateData.CounterType.WHITE
 
 	if index_label:
 		index_label.text = str(index)
