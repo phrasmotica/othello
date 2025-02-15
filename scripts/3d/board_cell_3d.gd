@@ -46,6 +46,9 @@ var even_tile_mesh: BoxMesh
 @export
 var odd_tile_mesh: BoxMesh
 
+@export
+var disabled_tile_mesh: BoxMesh
+
 @onready
 var tile_mesh_instance: MeshInstance3D = %TileMesh
 
@@ -82,18 +85,13 @@ func set_pos(col: int, row: int) -> void:
 	_refresh()
 
 func _refresh_debug() -> void:
-	# if debug_mode and cannot_place:
-	# 	modulate = Color.DIM_GRAY
-	# else:
-	# 	modulate = Color.WHITE
+	_refresh_tile_mesh()
 
 	if index_label:
 		index_label.visible = debug_mode
 
 func _refresh() -> void:
-	if tile_mesh_instance:
-		var is_odd := (_col + _row) % 2 == 0
-		tile_mesh_instance.mesh = odd_tile_mesh if is_odd else even_tile_mesh
+	_refresh_tile_mesh()
 
 	if counter:
 		counter.debug_name = "Counter%d" % index
@@ -116,6 +114,14 @@ func _refresh() -> void:
 
 	if index_label:
 		index_label.text = str(index)
+
+func _refresh_tile_mesh() -> void:
+	if tile_mesh_instance:
+		if debug_mode and cannot_place:
+			tile_mesh_instance.mesh = disabled_tile_mesh
+		else:
+			var is_odd := (_col + _row) % 2 == 0
+			tile_mesh_instance.mesh = odd_tile_mesh if is_odd else even_tile_mesh
 
 func place_counter(data: BoardCellData) -> void:
 	if counter:
