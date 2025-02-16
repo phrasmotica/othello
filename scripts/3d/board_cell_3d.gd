@@ -80,6 +80,7 @@ var _row := 0
 var _counter_initial_pos: Vector3
 
 signal counter_confirmed(data: BoardCellData)
+signal counter_flip_finished
 
 func _ready():
 	if not Engine.is_editor_hint():
@@ -113,6 +114,10 @@ func _refresh() -> void:
 		counter.visible = cell_data.has_counter() if cell_data else false
 
 		counter.flip_delay = flip_delay
+
+		if counter.flip_finished.get_connections().size() <= 0:
+			counter.flip_finished.connect(counter_flip_finished.emit)
+
 		counter.is_white = cell_data.is_white() if cell_data else false
 		counter.update_gravity(cell_data)
 

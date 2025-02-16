@@ -32,6 +32,7 @@ var _rotated_to_white := false
 var _is_flipping := false
 
 signal landed_on_board
+signal flip_finished
 
 func _ready() -> void:
 	rigid_body.body_entered.connect(_handle_body_entered)
@@ -99,6 +100,8 @@ func _rotate_tween() -> void:
 
 			rigid_body.gravity_scale = 1
 			rigid_body.contact_monitor = true
+
+			flip_finished.emit()
 	)
 
 func _handle_body_entered(_body: Node) -> void:

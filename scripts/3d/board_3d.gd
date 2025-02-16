@@ -103,9 +103,15 @@ func perform_flips(indexes: Array[int]) -> void:
 		var cell := cells_manager_3d.get_cell_3d(i)
 
 		cell.flip_delay = flip_delay_factor * count
-		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
-		board_state.set_cell(i, cell.cell_data, false)
+		# MEDIUM: instead, do this once the counter lands on the board again
+		if cell.counter_flip_finished.get_connections().size() <= 0:
+			cell.counter_flip_finished.connect(
+				func() -> void:
+					board_state.set_cell(i, cell.cell_data, false)
+			)
+
+		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
 		count += 1
 
