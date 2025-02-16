@@ -12,9 +12,11 @@ collision_mask = 2
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_dcfqh")
+lift_duration = 0.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_ijrpa")
 
 [node name="CounterHalves" parent="." instance=ExtResource("2_61rnl")]
 unique_name_in_owner = true
+flip_duration = null

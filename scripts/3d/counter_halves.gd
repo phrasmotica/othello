@@ -15,6 +15,11 @@ var is_white := false:
 
 		_refresh()
 
+@export_group("Animation")
+
+@export_range(0.1, 0.5)
+var flip_duration := 0.5
+
 @onready
 var main: Node3D = %Main
 
@@ -40,7 +45,7 @@ func rotate_tween(tween: Tween) -> void:
 		self,
 		"rotation_degrees:x",
 		final_rotation,
-		0.5
+		flip_duration
 	)
 
 	tween.tween_callback(

@@ -11,8 +11,13 @@ var is_white: bool:
 
 		flip_if_needed()
 
+@export_group("Animation")
+
 @export
 var prevent_tweening := false
+
+@export_range(0.1, 0.5)
+var lift_duration := 0.5
 
 @onready
 var counter_halves: CounterHalves = %CounterHalves
@@ -70,7 +75,7 @@ func _rotate_tween() -> void:
 		self,
 		"position:y",
 		position.y + 0.5,
-		0.5
+		lift_duration
 	)
 
 	counter_halves.rotate_tween(tween)
