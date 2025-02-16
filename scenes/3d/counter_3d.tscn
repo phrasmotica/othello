@@ -7,15 +7,18 @@
 height = 0.125
 radius = 0.4
 
-[node name="Counter3D" type="RigidBody3D"]
-collision_mask = 2
-contact_monitor = true
-max_contacts_reported = 10
+[node name="Counter3D" type="Node3D" groups=["counters3d"]]
 script = ExtResource("1_dcfqh")
 lift_duration = 0.2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+unique_name_in_owner = true
+collision_mask = 2
+contact_monitor = true
+max_contacts_reported = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("CylinderShape3D_ijrpa")
 
-[node name="CounterHalves" parent="." instance=ExtResource("2_61rnl")]
+[node name="CounterHalves" parent="RigidBody3D" instance=ExtResource("2_61rnl")]
 unique_name_in_owner = true

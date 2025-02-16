@@ -1,5 +1,5 @@
 @tool
-class_name Counter3D extends RigidBody3D
+class_name Counter3D extends Node3D
 
 @export
 var debug_name := ""
@@ -23,6 +23,9 @@ var flip_delay := 0.0
 var lift_duration := 0.5
 
 @onready
+var rigid_body: RigidBody3D = %RigidBody3D
+
+@onready
 var counter_halves: CounterHalves = %CounterHalves
 
 var _rotated_to_white := false
@@ -31,15 +34,20 @@ var _is_flipping := false
 signal landed_on_board
 
 func _ready() -> void:
-	body_entered.connect(_handle_body_entered)
+	rigid_body.body_entered.connect(_handle_body_entered)
 
-	_setup_rigidbody()
+	enable_rigid_body()
 
 	_refresh()
 
-func _setup_rigidbody() -> void:
-	contact_monitor = true
-	max_contacts_reported = 10
+func disable_rigid_body() -> void:
+	if rigid_body:
+		rigid_body.freeze = true
+
+func enable_rigid_body() -> void:
+	rigid_body.contact_monitor = true
+	rigid_body.max_contacts_reported = 10
+	rigid_body.freeze = false
 
 func _refresh() -> void:
 	if counter_halves:
@@ -57,7 +65,7 @@ func update_gravity(cell_data: BoardCellData) -> void:
 	# don't make the counter suddenly fall back to the board if it's in the
 	# middle of the flipping animation
 	if not _is_flipping:
-		gravity_scale = 1 if cell_data and cell_data.has_counter() else 0
+		rigid_body.gravity_scale = 1 if cell_data and cell_data.has_counter() else 0
 
 func _rotate_tween() -> void:
 	if _rotated_to_white == is_white:
@@ -68,9 +76,10 @@ func _rotate_tween() -> void:
 
 	counter_halves.set_meta("debug_name", "%sCounterHalves" % debug_name)
 
-	gravity_scale = 0
 	_is_flipping = true
-	contact_monitor = false
+
+	rigid_body.gravity_scale = 0
+	rigid_body.contact_monitor = false
 
 	var tween := create_tween()
 
@@ -86,9 +95,10 @@ func _rotate_tween() -> void:
 	tween.finished.connect(
 		func() -> void:
 			_rotated_to_white = is_white
-			gravity_scale = 1
 			_is_flipping = false
-			contact_monitor = true
+
+			rigid_body.gravity_scale = 1
+			rigid_body.contact_monitor = true
 	)
 
 func _handle_body_entered(_body: Node) -> void:
