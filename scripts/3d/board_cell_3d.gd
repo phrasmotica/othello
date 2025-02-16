@@ -145,6 +145,10 @@ func place_counter(data: BoardCellData) -> void:
 
 	if counter:
 		counter.position = _counter_initial_pos
-		counter.landed_on_board.connect(counter_confirmed.emit.bind(cell_data), CONNECT_ONE_SHOT)
+
+		var callable := counter_confirmed.emit.bind(cell_data)
+
+		if not counter.landed_on_board.is_connected(callable):
+			counter.landed_on_board.connect(callable, CONNECT_ONE_SHOT)
 	else:
 		counter_confirmed.emit(cell_data)
