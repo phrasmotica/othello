@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=11 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_2hvj3"]
 [ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
+[ext_resource type="Script" path="res://scripts/3d/board_3d_entrance_animation.gd" id="2_756rn"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
@@ -12,6 +13,13 @@
 
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
+
+[node name="Board3DEntranceAnimation" type="Node" parent="." node_paths=PackedStringArray("board", "camera_rig", "game_ui")]
+unique_name_in_owner = true
+script = ExtResource("2_756rn")
+board = NodePath("../Board3D")
+camera_rig = NodePath("../Board3D/CameraRig")
+game_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer")
 
 [node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board")]
 script = ExtResource("1_r07sb")
