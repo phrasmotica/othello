@@ -74,7 +74,6 @@ var _row := 0
 
 var _counter_initial_pos: Vector3
 
-signal cell_pressed
 signal counter_confirmed(data: BoardCellData)
 
 func _ready():
