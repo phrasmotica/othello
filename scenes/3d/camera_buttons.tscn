@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7xpuvgvkpxf8"]
+
+[ext_resource type="Script" path="res://scripts/3d/camera_buttons.gd" id="1_1cv3g"]
+
+[node name="CameraButtons" type="HBoxContainer"]
+custom_minimum_size = Vector2(512, 40)
+size_flags_vertical = 4
+script = ExtResource("1_1cv3g")
+
+[node name="LeftButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Camera Left"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Camera Right"

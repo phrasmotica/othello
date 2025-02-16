@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+class_name CameraRig extends Node3D
 
 @export_range(30, 180)
 var y_interval_degrees := 90.0:
