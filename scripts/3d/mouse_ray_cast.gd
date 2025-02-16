@@ -20,7 +20,10 @@ func _physics_process(_delta: float) -> void:
 			print("Now hovering over cell %d" % cell.index)
 
 			if board:
-				board.highlight_cell(cell.index)
+				if cell.cannot_place:
+					board.highlight_cell(-1)
+				else:
+					board.highlight_cell(cell.index)
 	elif board:
 		board.highlight_cell(-1)
 
