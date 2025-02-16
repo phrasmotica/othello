@@ -18,6 +18,7 @@ var prevent_tweening := false
 var counter_halves: CounterHalves = %CounterHalves
 
 var _rotated_to_white := false
+var _is_flipping := false
 
 signal landed_on_board
 
@@ -44,6 +45,12 @@ func flip_if_needed() -> void:
 	else:
 		_rotate_tween()
 
+func update_gravity(cell_data: BoardCellData) -> void:
+	# don't make the counter suddenly fall back to the board if it's in the
+	# middle of the flipping animation
+	if not _is_flipping:
+		gravity_scale = 1 if cell_data and cell_data.has_counter() else 0
+
 func _rotate_tween() -> void:
 	if _rotated_to_white == is_white:
 		return
@@ -54,6 +61,7 @@ func _rotate_tween() -> void:
 	counter_halves.set_meta("debug_name", "%sCounterHalves" % debug_name)
 
 	gravity_scale = 0
+	_is_flipping = true
 	contact_monitor = false
 
 	var tween := create_tween()
@@ -71,6 +79,7 @@ func _rotate_tween() -> void:
 		func() -> void:
 			_rotated_to_white = is_white
 			gravity_scale = 1
+			_is_flipping = false
 			contact_monitor = true
 	)
 

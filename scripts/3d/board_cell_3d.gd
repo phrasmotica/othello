@@ -108,6 +108,7 @@ func _refresh() -> void:
 		counter.debug_name = "Counter%d" % index
 		counter.visible = cell_data.has_counter() if cell_data else false
 		counter.is_white = cell_data.is_white() if cell_data else false
+		counter.update_gravity(cell_data)
 
 	if counter_preview:
 		counter_preview.visible = show_preview

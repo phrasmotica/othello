@@ -70,6 +70,13 @@ func restart() -> void:
 
 	board_reset.emit()
 
+func play_at(cell: BoardCell3D) -> void:
+	if cell:
+		print("Placing counter in cell %d" % cell.index)
+
+		cell.show_preview = false
+		cell.place_counter(cell_data_pool.get_next())
+
 func play_random() -> void:
 	var cell := cells_manager_3d.get_random_placeable_cell_3d()
 

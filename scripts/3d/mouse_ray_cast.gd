@@ -27,6 +27,15 @@ func _physics_process(_delta: float) -> void:
 	elif board:
 		board.highlight_cell(-1)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				print("Left button was clicked at ", event.position)
+
+				if _hovered_cell and board:
+					board.play_at(_hovered_cell)
+
 func _get_hovered_cell() -> BoardCell3D:
 	if not camera:
 		return
