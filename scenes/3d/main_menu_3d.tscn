@@ -14,12 +14,14 @@ script = ExtResource("1_s2dii")
 board_3d = NodePath("../Board3D")
 
 [node name="AutoPlayer3D" type="Node" parent="." node_paths=PackedStringArray("board")]
+unique_name_in_owner = true
 script = ExtResource("2_v5wsa")
 board = NodePath("../Board3D")
 
 [node name="Board3D" parent="." instance=ExtResource("2_ui3b4")]
 
 [node name="CameraRig" parent="Board3D" instance=ExtResource("3_job7k")]
+unique_name_in_owner = true
 camera_mode = 1
 rotation_speed = 0.2
 
