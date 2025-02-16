@@ -9,6 +9,8 @@ var camera_rig: CameraRig
 @export
 var game_ui: Control
 
+signal finished
+
 func run() -> void:
 	if board and camera_rig and game_ui:
 		_prepare_for_entrance()
@@ -25,6 +27,7 @@ func run() -> void:
 		tween.tween_callback(_after_entrance)
 
 		tween.tween_callback(game_ui.show).set_delay(1.0)
+		tween.tween_callback(finished.emit)
 
 func _prepare_for_entrance() -> void:
 	game_ui.hide()

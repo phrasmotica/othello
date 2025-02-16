@@ -28,8 +28,9 @@ board = NodePath("../Board3D")
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
 
-[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("camera", "board")]
+[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance_animation", "camera", "board")]
 script = ExtResource("2_11kum")
+entrance_animation = NodePath("../Board3DEntranceAnimation")
 camera = NodePath("../Board3D/CameraRig/Camera3D")
 board = NodePath("../Board3D")
 
