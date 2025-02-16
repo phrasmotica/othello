@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=10 format=3 uid="uid://b1motxf0wbelw"]
 
+[ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_2hvj3"]
 [ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
@@ -10,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c7xpuvgvkpxf8" path="res://scenes/3d/camera_buttons.tscn" id="7_rvo34"]
 
 [node name="Game3D" type="Node3D"]
+script = ExtResource("1_b1isx")
 
 [node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board")]
 script = ExtResource("1_r07sb")
@@ -54,5 +56,6 @@ layout_mode = 2
 camera_rig = NodePath("../../../..")
 
 [node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("6_50uei")]
+unique_name_in_owner = true
 layout_mode = 2
 game_logic = NodePath("../../../../../../OthelloGameLogic3D")

@@ -1,7 +1,7 @@
 extends Node3D
 
-@export
-var game_scene: PackedScene
+@onready
+var game_scene: PackedScene = load("res://scenes/3d/game_3d.tscn")
 
 @onready
 var ui: MainMenuUI = %MainMenuUI
