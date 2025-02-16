@@ -26,6 +26,7 @@ board = NodePath("../Board3D")
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
 
 [node name="CameraRig" parent="Board3D" instance=ExtResource("5_o4xlo")]
+use_tweening = true
 
 [node name="Camera3D" type="Camera3D" parent="Board3D/CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 6)
