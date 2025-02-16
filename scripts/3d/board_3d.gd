@@ -9,6 +9,11 @@ var initial_state: BoardStateData:
 
 			_initialise()
 
+@export_group("Animation")
+
+@export_range(0.1, 0.5)
+var flip_delay_factor := 0.1
+
 @onready
 var board_creator: BoardCreator3D = %BoardCreator3D
 
@@ -92,11 +97,17 @@ func perform_flips(indexes: Array[int]) -> void:
 	if indexes.size() < 0:
 		return
 
+	var count := 0
+
 	for i in indexes:
 		var cell := cells_manager_3d.get_cell_3d(i)
+
+		cell.flip_delay = flip_delay_factor * count
 		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
 		board_state.set_cell(i, cell.cell_data, false)
+
+		count += 1
 
 	flips_finished.emit(indexes)
 

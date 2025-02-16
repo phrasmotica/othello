@@ -19,4 +19,3 @@ shape = SubResource("CylinderShape3D_ijrpa")
 
 [node name="CounterHalves" parent="." instance=ExtResource("2_61rnl")]
 unique_name_in_owner = true
-flip_duration = null

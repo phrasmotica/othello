@@ -57,6 +57,11 @@ var odd_tile_mesh: BoxMesh
 @export
 var disabled_tile_mesh: BoxMesh
 
+@export_group("Animation")
+
+@export
+var flip_delay := 0.0
+
 @onready
 var tile_mesh_instance: MeshInstance3D = %TileMesh
 
@@ -106,6 +111,8 @@ func _refresh() -> void:
 	if counter:
 		counter.debug_name = "Counter%d" % index
 		counter.visible = cell_data.has_counter() if cell_data else false
+
+		counter.flip_delay = flip_delay
 		counter.is_white = cell_data.is_white() if cell_data else false
 		counter.update_gravity(cell_data)
 

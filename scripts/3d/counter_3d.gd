@@ -16,6 +16,9 @@ var is_white: bool:
 @export
 var prevent_tweening := false
 
+@export
+var flip_delay := 0.0
+
 @export_range(0.1, 0.5)
 var lift_duration := 0.5
 
@@ -76,7 +79,7 @@ func _rotate_tween() -> void:
 		"position:y",
 		position.y + 0.5,
 		lift_duration
-	)
+	).set_delay(flip_delay)
 
 	counter_halves.rotate_tween(tween)
 
