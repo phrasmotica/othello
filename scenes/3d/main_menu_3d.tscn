@@ -1,11 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4efr5qq1ksla"]
+[gd_scene load_steps=8 format=3 uid="uid://d4efr5qq1ksla"]
 
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="1_ejsm0"]
+[ext_resource type="Script" path="res://scripts/3d/main_menu_3d.gd" id="1_s2dii"]
+[ext_resource type="PackedScene" uid="uid://b1motxf0wbelw" path="res://scenes/3d/game_3d.tscn" id="2_sc4dv"]
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_ui3b4"]
 [ext_resource type="Script" path="res://scripts/3d/auto_player_3d.gd" id="2_v5wsa"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="3_job7k"]
+[ext_resource type="PackedScene" uid="uid://bd3rr0upsyvdk" path="res://scenes/3d/main_menu_ui.tscn" id="7_tu8ix"]
 
 [node name="MainMenu3D" type="Node3D"]
+script = ExtResource("1_s2dii")
+game_scene = ExtResource("2_sc4dv")
 
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("1_ejsm0")]
 board_3d = NodePath("../Board3D")
@@ -28,20 +33,5 @@ transform = Transform3D(1, 0, 0, 0, 0.92388, 0.382684, 0, -0.382684, 0.92388, 0,
 
 [node name="UICanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 
-[node name="MarginContainer" type="MarginContainer" parent="Board3D/CameraRig/Camera3D/UICanvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="TitleLabel" type="Label" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 64
-text = "Othello"
+[node name="MainMenuUI" parent="Board3D/CameraRig/Camera3D/UICanvas" instance=ExtResource("7_tu8ix")]
+unique_name_in_owner = true
