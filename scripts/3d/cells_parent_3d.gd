@@ -21,10 +21,20 @@ func render_cell(size: Vector2i, scene_root: Node, idx: int) -> BoardCell3D:
 	current_cell.name = "Cell3D" + str(idx)
 
 	var x_pos := idx % size.x
-	var y_pos := int(float(idx) / float(size.x))
+	var z_pos := int(float(idx) / float(size.x))
 
-	current_cell.position = Vector3(x_pos, 0, y_pos)
-	current_cell.set_pos(x_pos, y_pos)
+	# MEDIUM: get these from the cell scene
+	var cell_width := 1.0
+	var cell_depth := 1.0
+
+	var start_x := (cell_width - size.x) / 2.0
+	var start_z := (cell_depth - size.y) / 2.0
+
+	# ensures the cells are all centred around the origin
+	var start_pos := Vector3(start_x, 0, start_z)
+
+	current_cell.position = start_pos + Vector3(x_pos, 0, z_pos)
+	current_cell.set_pos(x_pos, z_pos)
 
 	current_cell.index = idx
 

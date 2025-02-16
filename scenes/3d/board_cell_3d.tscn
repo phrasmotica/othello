@@ -17,7 +17,7 @@ odd_tile_mesh = ExtResource("3_guavf")
 disabled_tile_mesh = ExtResource("4_fei78")
 
 [node name="TileBody" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.25, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TileBody"]
@@ -27,9 +27,9 @@ shape = SubResource("BoxShape3D_epjjd")
 unique_name_in_owner = true
 mesh = ExtResource("3_guavf")
 
-[node name="IndexLabel3D" type="Label3D" parent="."]
+[node name="IndexLabel3D" type="Label3D" parent="TileBody"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.51, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.5, 0.26, -0.5)
 visible = false
 text = "0"
 font_size = 48
@@ -38,11 +38,12 @@ horizontal_alignment = 0
 vertical_alignment = 0
 
 [node name="Counters" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.75, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 
 [node name="Counter" parent="Counters" instance=ExtResource("6_w0ctw")]
 unique_name_in_owner = true
 visible = false
+gravity_scale = 0.0
 debug_name = "Counter0"
 
 [node name="CounterPreview" parent="Counters" instance=ExtResource("6_ql6xe")]

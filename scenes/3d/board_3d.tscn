@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://2ryiy7bbn55i"]
+[gd_scene load_steps=16 format=3 uid="uid://2ryiy7bbn55i"]
 
 [ext_resource type="PackedScene" uid="uid://8js6lj7t2xty" path="res://scenes/3d/board_cell_3d.tscn" id="1_80kwy"]
 [ext_resource type="Script" path="res://scripts/3d/cells_parent_3d.gd" id="1_ebh4i"]
@@ -9,8 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://crcg846yilqdv" path="res://scenes/board_state.tscn" id="4_ch6ci"]
 [ext_resource type="PackedScene" uid="uid://crn1w7viex67d" path="res://scenes/cell_data_pool.tscn" id="4_q7gkl"]
 [ext_resource type="Resource" uid="uid://c5gfjl10d81hu" path="res://resources/empty_counter_data.tres" id="9_i6vqj"]
+[ext_resource type="Script" path="res://scripts/3d/board_cell_3d.gd" id="12_lc47l"]
 [ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="12_ls45f"]
+[ext_resource type="BoxMesh" uid="uid://b0ox50vh30b3s" path="res://meshes/board_cell_3d_even_mesh.tres" id="13_0u28n"]
 [ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="13_u6iyn"]
+[ext_resource type="BoxMesh" uid="uid://cwg8i1xfo2qje" path="res://meshes/board_cell_3d_odd_mesh.tres" id="14_co6xr"]
+[ext_resource type="BoxMesh" uid="uid://beyul1hqs6e88" path="res://meshes/board_cell_3d_disabled_mesh.tres" id="15_ynonu"]
 
 [node name="Board3D" type="Node3D"]
 script = ExtResource("1_sc1wp")
@@ -39,319 +43,432 @@ script = ExtResource("1_ebh4i")
 board_cell_scene = ExtResource("1_80kwy")
 
 [node name="Cell3D0" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 
 [node name="Cell3D1" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 1
 
 [node name="Cell3D2" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 2
 
 [node name="Cell3D3" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 3
 
 [node name="Cell3D4" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 4
 
 [node name="Cell3D5" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 5
 
 [node name="Cell3D6" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 6
 
 [node name="Cell3D7" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -3.5)
 cell_data = ExtResource("9_i6vqj")
 index = 7
 
 [node name="Cell3D8" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 8
 
 [node name="Cell3D9" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 9
 
 [node name="Cell3D10" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 10
 
 [node name="Cell3D11" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 11
 
 [node name="Cell3D12" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 12
 
 [node name="Cell3D13" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 13
 
 [node name="Cell3D14" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 14
 
 [node name="Cell3D15" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -2.5)
 cell_data = ExtResource("9_i6vqj")
 index = 15
 
 [node name="Cell3D16" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 16
 
 [node name="Cell3D17" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 17
 
 [node name="Cell3D18" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 18
 
 [node name="Cell3D19" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 19
 
 [node name="Cell3D20" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 20
 
 [node name="Cell3D21" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 21
 
 [node name="Cell3D22" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 22
 
 [node name="Cell3D23" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -1.5)
 cell_data = ExtResource("9_i6vqj")
 index = 23
 
 [node name="Cell3D24" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 24
 
 [node name="Cell3D25" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 25
 
 [node name="Cell3D26" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 26
 
 [node name="Cell3D27" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 cell_data = ExtResource("12_ls45f")
 index = 27
 
 [node name="Cell3D28" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
 cell_data = ExtResource("13_u6iyn")
 index = 28
 
 [node name="Cell3D29" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 29
 
 [node name="Cell3D30" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 30
 
 [node name="Cell3D31" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 31
 
 [node name="Cell3D32" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 32
 
 [node name="Cell3D33" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 33
 
 [node name="Cell3D34" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0.5)
 cell_data = ExtResource("9_i6vqj")
 index = 34
 
 [node name="Cell3D35" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
 cell_data = ExtResource("13_u6iyn")
 index = 35
 
-[node name="Cell3D36" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+[node name="Cell3D36" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("12_ls45f")
 index = 36
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D37" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
+[node name="Cell3D37" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 37
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D38" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+[node name="Cell3D38" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 38
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D39" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 4)
+[node name="Cell3D39" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 39
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D40" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+[node name="Cell3D40" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 40
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D41" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5)
+[node name="Cell3D41" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 41
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D42" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 5)
+[node name="Cell3D42" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 42
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D43" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
+[node name="Cell3D43" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 43
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D44" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
+[node name="Cell3D44" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 44
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D45" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+[node name="Cell3D45" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 45
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D46" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 5)
+[node name="Cell3D46" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 46
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D47" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 5)
+[node name="Cell3D47" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 1.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 47
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D48" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+[node name="Cell3D48" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 48
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D49" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 6)
+[node name="Cell3D49" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 49
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D50" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+[node name="Cell3D50" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 50
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D51" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 6)
+[node name="Cell3D51" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 51
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D52" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6)
+[node name="Cell3D52" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 52
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D53" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6)
+[node name="Cell3D53" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 53
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D54" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+[node name="Cell3D54" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 54
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D55" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 6)
+[node name="Cell3D55" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 2.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 55
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D56" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+[node name="Cell3D56" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 56
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D57" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 7)
+[node name="Cell3D57" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 57
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D58" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 7)
+[node name="Cell3D58" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 58
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D59" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 7)
+[node name="Cell3D59" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 59
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D60" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 7)
+[node name="Cell3D60" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 60
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D61" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7)
+[node name="Cell3D61" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 61
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D62" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 7)
+[node name="Cell3D62" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 62
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
 
-[node name="Cell3D63" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7)
+[node name="Cell3D63" type="Node3D" parent="CellsParent3D" instance=ExtResource("1_80kwy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 3.5)
+script = ExtResource("12_lc47l")
 cell_data = ExtResource("9_i6vqj")
 index = 63
+even_tile_mesh = ExtResource("13_0u28n")
+odd_tile_mesh = ExtResource("14_co6xr")
+disabled_tile_mesh = ExtResource("15_ynonu")
