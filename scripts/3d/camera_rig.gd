@@ -1,6 +1,17 @@
 @tool
 class_name CameraRig extends Node3D
 
+enum CameraMode { STATIC, MOVING }
+
+@export
+var camera_mode := CameraMode.STATIC:
+	set(value):
+		camera_mode = value
+
+		_refresh()
+
+@export_group("Static")
+
 @export_range(30, 180)
 var y_interval_degrees := 90.0:
 	set(value):
@@ -18,10 +29,25 @@ var current_position := 0:
 @export
 var use_tweening := false
 
+@export_group("Moving")
+
+@export_range(0.1, 1.0)
+var rotation_speed := 0.5
+
 func _ready() -> void:
 	_refresh()
 
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
+	if camera_mode == CameraMode.MOVING:
+		rotate_y(rotation_speed * delta)
+
 func _refresh() -> void:
+	if camera_mode == CameraMode.MOVING:
+		return
+
 	if not Engine.is_editor_hint() and use_tweening:
 		_rotate()
 	else:
