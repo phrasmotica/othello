@@ -4,9 +4,6 @@ class_name ScoreUI extends VBoxContainer
 @export
 var game_logic: OthelloGameLogic
 
-@export
-var board: Board
-
 @onready
 var black_score_label: Label = %BlackScoreLabel
 
@@ -28,9 +25,6 @@ func _ready() -> void:
 		game_logic.score_changed.connect(_update_ui)
 		game_logic.next_colour_changed.connect(_handle_next_colour_changed)
 		game_logic.game_ended.connect(_handle_game_ended)
-
-	if board:
-		board.broadcast_state()
 
 func _update_ui(black_score: int, white_score: int, result: OthelloScore.GameResult) -> void:
 	black_score_label.text = str(black_score)

@@ -28,13 +28,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic", "board") instance=ExtResource("2_b5ltn")]
+[node name="ScoreUI" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("2_b5ltn")]
 layout_mode = 2
 size_flags_vertical = 0
 game_logic = NodePath("../../../OthelloGameLogic")
-board = NodePath("../../../Board")
 
-[node name="GameButtons" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic", "board") instance=ExtResource("3_cbeyc")]
+[node name="GameButtons" parent="UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("3_cbeyc")]
 layout_mode = 2
 game_logic = NodePath("../../../OthelloGameLogic")
-board = NodePath("../../../Board")

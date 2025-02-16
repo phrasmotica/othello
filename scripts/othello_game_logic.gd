@@ -47,5 +47,8 @@ func _connect_children() -> void:
 			ray_calculator.connect_to_board(board)
 
 func restart_game() -> void:
+	if board:
+		board.restart()
+
 	if placement_calculator:
 		placement_calculator.refresh()

@@ -25,3 +25,14 @@ func _connect_children() -> void:
 
 		if ray_calculator:
 			ray_calculator.connect_to_board_3d(board_3d)
+
+func restart_game() -> void:
+	Globals.init_finished = false
+
+	if board_3d:
+		board_3d.restart()
+
+	Globals.init_finished = true
+
+	if placement_calculator:
+		placement_calculator.refresh()

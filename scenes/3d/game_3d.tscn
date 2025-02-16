@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=7 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_2hvj3"]
 [ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
+[ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
+[ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
 
 [node name="Game3D" type="Node3D"]
 
@@ -26,3 +28,22 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Board3D/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.92388, 0.382684, 0, -0.382684, 0.92388, 0, 3, 0)
+
+[node name="UICanvas" type="CanvasLayer" parent="Board3D/Camera3D"]
+
+[node name="MarginContainer" type="MarginContainer" parent="Board3D/Camera3D/UICanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ScoreUI" parent="Board3D/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("5_1k7n7")]
+layout_mode = 2
+size_flags_vertical = 0
+game_logic = NodePath("../../../../../OthelloGameLogic3D")
+
+[node name="GameButtons" parent="Board3D/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("6_50uei")]
+layout_mode = 2
+game_logic = NodePath("../../../../../OthelloGameLogic3D")

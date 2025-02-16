@@ -3,9 +3,6 @@ class_name GameButtons extends VBoxContainer
 @export
 var game_logic: OthelloGameLogic
 
-@export
-var board: Board
-
 @onready
 var restart_button: Button = %RestartButton
 
@@ -21,9 +18,6 @@ func _ready() -> void:
 func _handle_restarted() -> void:
 	if game_logic:
 		game_logic.restart_game()
-
-	if board:
-		board.restart()
 
 	restarted.emit()
 
