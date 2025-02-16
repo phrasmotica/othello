@@ -15,8 +15,6 @@ func _physics_process(_delta: float) -> void:
 
 	if cell:
 		if _hovered_cell != cell:
-			_hovered_cell = cell
-
 			print("Now hovering over cell %d" % cell.index)
 
 			if board:
@@ -24,6 +22,8 @@ func _physics_process(_delta: float) -> void:
 					board.highlight_cell(-1)
 				else:
 					board.highlight_cell(cell.index)
+
+					_hovered_cell = cell
 	elif board:
 		board.highlight_cell(-1)
 
@@ -33,7 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if event.pressed:
 				print("Left button was clicked at ", event.position)
 
-				if _hovered_cell and board:
+				if _hovered_cell and not _hovered_cell.cannot_place and board:
 					board.play_at(_hovered_cell)
 
 func _get_hovered_cell() -> BoardCell3D:
