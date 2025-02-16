@@ -22,11 +22,12 @@ board = NodePath("../Board3D")
 
 [node name="CameraRig" parent="Board3D" instance=ExtResource("3_job7k")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
 camera_mode = 1
 rotation_speed = 0.2
 
 [node name="Camera3D" type="Camera3D" parent="Board3D/CameraRig"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 6)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Board3D/CameraRig/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.92388, 0.382684, 0, -0.382684, 0.92388, 0, 3, 0)
