@@ -43,7 +43,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 [node name="Counter" parent="Counters" instance=ExtResource("6_w0ctw")]
 unique_name_in_owner = true
 visible = false
-gravity_scale = 0.0
 debug_name = "Counter0"
 
 [node name="CounterPreview" parent="Counters" instance=ExtResource("6_ql6xe")]
