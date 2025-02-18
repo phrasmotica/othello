@@ -140,6 +140,14 @@ func _refresh_tile_mesh() -> void:
 			var is_odd := (_col + _row) % 2 == 0
 			tile_mesh_instance.mesh = odd_tile_mesh if is_odd else even_tile_mesh
 
+func preview_flip() -> void:
+	if counter:
+		counter.lift()
+
+func unpreview_flip() -> void:
+	if counter:
+		counter.drop()
+
 func place_counter(data: BoardCellData) -> void:
 	if counter:
 		counter.prevent_tweening = true

@@ -26,6 +26,7 @@ var cells_manager_3d: CellsManager3D = %CellsManager3D
 @onready
 var cell_data_pool: CellDataPool = %CellDataPool
 
+signal cell_highlighted(index: int)
 signal cell_changed(index: int, data: BoardCellData)
 signal state_changed(data: BoardStateData)
 signal flips_finished(indexes: Array[int])
@@ -117,6 +118,15 @@ func perform_flips(indexes: Array[int]) -> void:
 
 	flips_finished.emit(indexes)
 
+func preview_flips(indexes: Array[int]) -> void:
+	for i in cells_manager_3d.count():
+		var cell := cells_manager_3d.get_cell_3d(i)
+
+		if indexes.has(i):
+			cell.preview_flip()
+		else:
+			cell.unpreview_flip()
+
 func enable_cell(idx: int, enabled: bool) -> void:
 	var cell := cells_manager_3d.get_cell_3d(idx)
 	cell.cannot_place = not enabled
@@ -125,3 +135,5 @@ func highlight_cell(idx: int) -> void:
 	for i in cells_manager_3d.count():
 		var cell := cells_manager_3d.get_cell_3d(i)
 		cell.show_preview = cell.index == idx
+
+	cell_highlighted.emit(idx)

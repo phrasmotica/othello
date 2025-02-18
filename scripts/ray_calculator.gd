@@ -15,6 +15,7 @@ var _placement_checkers := {
 }
 
 signal computed_flips(indexes: Array[int])
+signal previewed_flips(indexes: Array[int])
 
 func _ready() -> void:
 	_regex_b.compile("^1+0")
@@ -27,13 +28,25 @@ func connect_to_board(board: Board) -> void:
 	computed_flips.connect(board.perform_flips)
 
 func connect_to_board_3d(board_3d: Board3D) -> void:
+	board_3d.cell_highlighted.connect(_handle_cell_highlighted)
 	board_3d.cell_changed.connect(_handle_cell_changed)
 	board_3d.state_changed.connect(_handle_state_changed)
 
 	computed_flips.connect(board_3d.perform_flips)
+	previewed_flips.connect(board_3d.preview_flips)
+
+func _handle_cell_highlighted(index: int) -> void:
+	var indexes: Array[int] = []
+
+	if index >= 0:
+		indexes = _preview_flips(index)
+
+	previewed_flips.emit(indexes)
 
 func _handle_cell_changed(index: int, _data: BoardCellData) -> void:
-	compute_flips(index)
+	var indexes := _compute_flips(index)
+
+	computed_flips.emit(indexes)
 
 func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
@@ -66,11 +79,29 @@ func get_rays(idx: int, next_colour: BoardStateData.CounterType) -> Array[String
 
 	return result
 
-func compute_flips(idx: int) -> void:
+func _preview_flips(idx: int) -> Array[int]:
+	if not _board_state:
+		return []
+
+	return _compute_flips_for_colour(idx, _board_state.next_colour)
+
+func _compute_flips(idx: int) -> Array[int]:
 	var cell_data := _get_cell_data(idx)
 
 	if not cell_data:
-		return
+		return []
+
+	# use counter presence as the key here, because that's the colour that
+	# has already been put into the cell
+	var colour := cell_data.counter_presence as BoardStateData.CounterType
+
+	return _compute_flips_for_colour(idx, colour)
+
+func _compute_flips_for_colour(idx: int, colour: BoardStateData.CounterType) -> Array[int]:
+	var cell_data := _get_cell_data(idx)
+
+	if not cell_data:
+		return []
 
 	var indexes: Array[int] = []
 
@@ -87,13 +118,11 @@ func compute_flips(idx: int) -> void:
 		Vector2i(-1, -1),
 	]
 
-	# use counter presence as the key here, because that's the colour that
-	# has already been put into the cell
-	if _placement_checkers.has(cell_data.counter_presence):
-		var regex: RegEx = _placement_checkers[cell_data.counter_presence]
+	if _placement_checkers.has(colour):
+		var regex: RegEx = _placement_checkers[colour]
 		indexes = _compute_indexes(pos, offsets, regex)
 
-	computed_flips.emit(indexes)
+	return indexes
 
 func _compute_indexes(pos: Vector2i, offsets: Array[Vector2i], regex: RegEx) -> Array[int]:
 	var indexes: Array[int] = []
