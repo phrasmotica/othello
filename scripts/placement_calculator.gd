@@ -44,10 +44,10 @@ func _handle_flips_finished(_indexes: Array[int]) -> void:
 	compute_plays()
 
 func compute_plays() -> void:
-	for k: int in _board_state.cells_data:
-		var data: BoardCellData = _board_state.cells_data[k]
-		if data.has_counter():
-			print("%d = %d" % [k, data.counter_presence])
+	# for k: int in _board_state.cells_data:
+	# 	var data: BoardCellData = _board_state.cells_data[k]
+	# 	if data.has_counter():
+	# 		print("%d = %d" % [k, data.counter_presence])
 
 	var black_plays := get_plays_for(BoardStateData.CounterType.BLACK)
 	var white_plays := get_plays_for(BoardStateData.CounterType.WHITE)
