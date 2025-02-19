@@ -47,9 +47,8 @@ func disable_rigid_body() -> void:
 		rigid_body.freeze = true
 
 func enable_rigid_body() -> void:
-	rigid_body.contact_monitor = true
-	rigid_body.max_contacts_reported = 10
-	rigid_body.freeze = false
+	if rigid_body:
+		rigid_body.freeze = false
 
 func _refresh() -> void:
 	if counter_halves:
