@@ -20,6 +20,7 @@ func _ready() -> void:
 		entrance_animation.finished.connect(set_physics_process.bind(true))
 
 func _physics_process(_delta: float) -> void:
+	# HIGH: don't do this if the board is currently doing an animation
 	var cell := _get_hovered_cell()
 
 	if cell:
