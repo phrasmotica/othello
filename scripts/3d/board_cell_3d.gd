@@ -69,6 +69,12 @@ var tile_mesh_instance: MeshInstance3D = %TileMesh
 var index_label: Label3D = %IndexLabel3D
 
 @onready
+var counter_lifter: CounterLifter = %CounterLifter
+
+@onready
+var counter_flipper: CounterFlipper = %CounterFlipper
+
+@onready
 var counter: Counter3D = %Counter
 
 @onready
@@ -88,6 +94,14 @@ func _ready():
 
 	if counter:
 		_counter_initial_pos = counter.position
+
+		counter_flipper.flip_finished.connect(
+			func() -> void:
+				if counter_lifter:
+					counter_lifter.drop()
+
+				counter_flip_finished.emit()
+		)
 
 	_refresh()
 
@@ -114,10 +128,6 @@ func _refresh() -> void:
 		counter.visible = cell_data.has_counter() if cell_data else false
 
 		counter.flip_delay = flip_delay
-
-		if counter.flip_finished.get_connections().size() <= 0:
-			counter.flip_finished.connect(counter_flip_finished.emit)
-
 		counter.is_white = cell_data.is_white() if cell_data else false
 		counter.update_gravity(cell_data)
 
@@ -141,12 +151,12 @@ func _refresh_tile_mesh() -> void:
 			tile_mesh_instance.mesh = odd_tile_mesh if is_odd else even_tile_mesh
 
 func preview_flip() -> void:
-	if counter:
-		counter.lift()
+	if counter_lifter:
+		counter_lifter.lift()
 
 func unpreview_flip() -> void:
-	if counter:
-		counter.drop()
+	if counter_lifter:
+		counter_lifter.drop()
 
 func place_counter(data: BoardCellData) -> void:
 	if counter:

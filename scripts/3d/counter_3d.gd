@@ -19,21 +19,17 @@ var prevent_tweening := false
 @export
 var flip_delay := 0.0
 
-@export_range(0.1, 0.5)
-var lift_duration := 0.5
-
 @onready
 var rigid_body: RigidBody3D = %RigidBody3D
 
 @onready
 var counter_halves: CounterHalves = %CounterHalves
 
-var _rotated_to_white := false
 var _is_flipping := false
-var _is_lifted := false
 
+signal refreshed
+signal needs_flip(counter_halves: CounterHalves, flip_delay: float)
 signal landed_on_board
-signal flip_finished
 
 func _ready() -> void:
 	rigid_body.body_entered.connect(_handle_body_entered)
@@ -54,84 +50,19 @@ func _refresh() -> void:
 	if counter_halves:
 		counter_halves.is_white = is_white
 
-	_rotated_to_white = is_white
-
-func lift() -> void:
-	if _is_lifted:
-		return
-
-	_is_lifted = true
-
-	disable_rigid_body()
-
-	var tween := create_tween()
-
-	tween.tween_property(
-		self,
-		"position:y",
-		position.y + 0.5,
-		lift_duration
-	)
-
-func drop() -> void:
-	enable_rigid_body()
-
-	landed_on_board.connect(
-		func() -> void:
-			_is_lifted = false
-	, CONNECT_ONE_SHOT)
+	refreshed.emit()
 
 func flip_if_needed() -> void:
 	if Engine.is_editor_hint() or not Globals.init_finished or prevent_tweening:
 		_refresh()
 	else:
-		_rotate_tween(_is_lifted)
+		needs_flip.emit(counter_halves, flip_delay)
 
 func update_gravity(cell_data: BoardCellData) -> void:
 	# don't make the counter suddenly fall back to the board if it's in the
 	# middle of the flipping animation
 	if not _is_flipping:
 		rigid_body.gravity_scale = 1 if cell_data and cell_data.has_counter() else 0
-
-func _rotate_tween(skip_lift: bool) -> void:
-	if _rotated_to_white == is_white:
-		return
-
-	if not counter_halves:
-		return
-
-	counter_halves.set_meta("debug_name", "%sCounterHalves" % debug_name)
-
-	_is_flipping = true
-
-	rigid_body.gravity_scale = 0
-	rigid_body.contact_monitor = false
-
-	var tween := create_tween()
-
-	if not skip_lift:
-		tween.tween_property(
-			self,
-			"position:y",
-			position.y + 0.5,
-			lift_duration
-		).set_delay(flip_delay)
-
-	counter_halves.rotate_tween(tween)
-
-	tween.finished.connect(
-		func() -> void:
-			_rotated_to_white = is_white
-			_is_flipping = false
-
-			if _is_lifted:
-				drop()
-
-			rigid_body.gravity_scale = 1
-			rigid_body.contact_monitor = true
-
-			flip_finished.emit()
-	)
 
 func _handle_body_entered(_body: Node) -> void:
 	landed_on_board.emit()

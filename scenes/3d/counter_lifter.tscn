@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1ykgbup2lr1d"]
+
+[ext_resource type="Script" path="res://scripts/3d/counter_lifter.gd" id="1_28hrl"]
+
+[node name="CounterLifter" type="Node" node_paths=PackedStringArray("target_counter")]
+script = ExtResource("1_28hrl")
+target_counter = NodePath("")
+lift_duration = 0.2
