@@ -46,8 +46,9 @@ signal flips_finished(indexes: Array[int])
 signal board_reset
 
 func _ready() -> void:
-	SignalHelper.persist(board_state.cell_changed, cell_changed.emit)
-	SignalHelper.chain(board_state.state_changed, state_changed)
+	if not Engine.is_editor_hint():
+		SignalHelper.persist(board_state.cell_changed, cell_changed.emit)
+		SignalHelper.chain(board_state.state_changed, state_changed)
 
 	_initialise()
 
