@@ -56,10 +56,6 @@ func set_next_colour(colour: BoardStateData.CounterType) -> void:
 	if cell_data_pool:
 		cell_data_pool.next_colour = colour
 
-func broadcast_state() -> void:
-	if board_state:
-		board_state.broadcast()
-
 func restart() -> void:
 	if board_creator:
 		board_creator.inject(initial_state, self)

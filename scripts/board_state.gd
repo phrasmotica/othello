@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func set_next_colour(type: BoardStateData.CounterType) -> void:
 	_current_state.next_colour = type
-	broadcast()
+	_broadcast()
 
 func _handle_cell_confirmed(index: int, data: BoardCellData) -> void:
 	set_cell(index, data, true)
@@ -28,10 +28,10 @@ func _handle_cell_injected(index: int, data: BoardCellData) -> void:
 
 func set_cell(index: int, data: BoardCellData, emit_changed: bool) -> void:
 	_current_state.set_cell(index, data)
-	broadcast()
+	_broadcast()
 
 	if emit_changed:
 		cell_changed.emit(index, data)
 
-func broadcast() -> void:
+func _broadcast() -> void:
 	state_changed.emit(_current_state)
