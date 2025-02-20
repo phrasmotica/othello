@@ -69,20 +69,8 @@ game_logic = NodePath("../../../../../../OthelloGameLogic3D")
 
 [node name="DebugCanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 
-[node name="MarginContainer" type="MarginContainer" parent="Board3D/CameraRig/Camera3D/DebugCanvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="DebugUI" parent="Board3D/CameraRig/Camera3D/DebugCanvas/MarginContainer" node_paths=PackedStringArray("board") instance=ExtResource("10_mrax3")]
+[node name="DebugUI" parent="Board3D/CameraRig/Camera3D/DebugCanvas" node_paths=PackedStringArray("board") instance=ExtResource("10_mrax3")]
 unique_name_in_owner = true
-layout_mode = 2
+offset_right = 319.0
 size_flags_horizontal = 0
-board = NodePath("../../../../..")
+board = NodePath("../../../..")
