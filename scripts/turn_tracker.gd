@@ -61,7 +61,7 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 		# ensure the game is only ended after all of the next_colour_changed
 		# connections have finished, since this method is directly called from
 		# one of them...
-		get_tree().process_frame.connect(_end_game, CONNECT_ONE_SHOT)
+		SignalHelper.once_next_frame(_end_game)
 		return
 
 	if not colours_that_can_play.has(_next_turn_colour):

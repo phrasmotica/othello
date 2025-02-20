@@ -102,17 +102,20 @@ func perform_flips(indexes: Array[int]) -> void:
 		cell.flip_delay = flip_delay_factor * count
 
 		# MEDIUM: instead, do this once the counter lands on the board again
-		if cell.counter_flip_finished.get_connections().size() <= 0:
-			cell.counter_flip_finished.connect(
-				func() -> void:
-					board_state.set_cell(i, cell.cell_data, false)
-			)
+		SignalHelper.persist(
+			cell.counter_flip_finished,
+			func() -> void:
+				board_state.set_cell(i, cell.cell_data, false)
+		)
 
 		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
 		count += 1
 
 	flips_finished.emit(indexes)
+
+func _handle_counter_flip_finished(idx: int, cell_data: BoardCellData) -> void:
+	board_state.set_cell(idx, cell_data, false)
 
 func preview_flips(indexes: Array[int]) -> void:
 	for i in cells_manager_3d.count():

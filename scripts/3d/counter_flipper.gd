@@ -50,9 +50,7 @@ func _rotate_tween(flippable: Node3D, delay: float) -> void:
 	).set_delay(delay)
 
 	var callable := _handle_finished.bind(flippable, final_rotation)
-
-	if not tween.finished.is_connected(callable):
-		tween.finished.connect(callable, CONNECT_ONE_SHOT)
+	SignalHelper.once(tween.finished, callable)
 
 func _handle_finished(flippable: Node3D, final_rotation: float) -> void:
 	flippable.rotation_degrees.x = final_rotation

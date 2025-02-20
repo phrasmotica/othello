@@ -53,10 +53,7 @@ func _validate_transition(required: AnimationState, next: AnimationState) -> boo
 	return true
 
 func _set_state_on(sig: Signal, anim_state: AnimationState) -> void:
-	var callable := _set_state.bind(anim_state)
-
-	if not sig.is_connected(callable):
-		sig.connect(callable, CONNECT_ONE_SHOT)
+	SignalHelper.once(sig, _set_state.bind(anim_state))
 
 func _set_state(anim_state: AnimationState) -> void:
 	_animation_state = anim_state
