@@ -11,6 +11,7 @@ var board: Board3D
 
 const RAY_LENGTH := 100.0
 
+var _board_is_busy := false
 var _hovered_cell: BoardCell3D
 
 func _ready() -> void:
@@ -23,12 +24,12 @@ func _ready() -> void:
 		board.busy_changed.connect(_handle_board_busy_changed)
 
 func _handle_board_busy_changed(is_busy: bool) -> void:
+	_board_is_busy = is_busy
+
 	if is_busy:
 		print("Board is now busy, pausing mouse processing")
 	else:
 		print("Board is no longer busy, resuming mouse processing")
-
-	set_physics_process(not is_busy)
 
 func _physics_process(_delta: float) -> void:
 	# HIGH: don't do this if the board is currently doing an animation
@@ -39,7 +40,7 @@ func _physics_process(_delta: float) -> void:
 			_hovered_cell = cell
 
 			if board:
-				if cell.cannot_place:
+				if _board_is_busy or cell.cannot_place:
 					board.highlight_cell(-1)
 					_hovered_cell = null
 				else:
