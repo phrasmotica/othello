@@ -12,6 +12,7 @@ var starting_colour := BoardStateData.CounterType.BLACK:
 @export
 var placement_calculator: PlacementCalculator
 
+var _board_3d: Board3D
 var _next_turn_colour: BoardStateData.CounterType
 
 signal starting_colour_changed(colour: BoardStateData.CounterType)
@@ -32,6 +33,8 @@ func connect_to_board(board: Board) -> void:
 	next_colour_changed.connect(board.set_next_colour)
 
 func connect_to_board_3d(board_3d: Board3D) -> void:
+	_board_3d = board_3d
+
 	board_3d.cell_changed.connect(_handle_cell_changed)
 	board_3d.board_reset.connect(_handle_board_reset)
 
@@ -76,7 +79,10 @@ func _end_game() -> void:
 	game_ended.emit()
 
 func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
-	_go_to_next_turn()
+	if _board_3d:
+		SignalHelper.once(_board_3d.freed, _go_to_next_turn)
+	else:
+		_go_to_next_turn()
 
 func _handle_board_reset() -> void:
 	_next_turn_colour = starting_colour

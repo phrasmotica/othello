@@ -33,6 +33,8 @@ var busy_tracker: BoardBusyTracker = %BoardBusyTracker
 var cell_data_pool: CellDataPool = %CellDataPool
 
 signal busy_changed(is_busy: bool)
+signal freed(is_busy: bool)
+
 signal cell_highlighted(index: int)
 
 # TODO: this acts as a "turn_ended" signal, but we should only emit it
@@ -44,8 +46,8 @@ signal flips_finished(indexes: Array[int])
 signal board_reset
 
 func _ready() -> void:
-	board_state.cell_changed.connect(cell_changed.emit)
-	board_state.state_changed.connect(state_changed.emit)
+	SignalHelper.persist(board_state.cell_changed, cell_changed.emit)
+	SignalHelper.chain(board_state.state_changed, state_changed)
 
 	_initialise()
 
@@ -68,6 +70,7 @@ func _inject_state() -> void:
 			busy_tracker.accept_cells()
 
 			SignalHelper.chain(busy_tracker.busy_changed, busy_changed)
+			SignalHelper.chain(busy_tracker.freed, freed)
 
 func _connect_initial_state() -> void:
 	if initial_state and initial_state.changed.get_connections().size() <= 0:
