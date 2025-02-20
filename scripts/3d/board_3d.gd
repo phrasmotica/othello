@@ -24,8 +24,12 @@ var board_state: BoardState = %BoardState
 var cells_manager_3d: CellsManager3D = %CellsManager3D
 
 @onready
+var busy_tracker: BoardBusyTracker = %BoardBusyTracker
+
+@onready
 var cell_data_pool: CellDataPool = %CellDataPool
 
+signal busy_changed(is_busy: bool)
 signal cell_highlighted(index: int)
 signal cell_changed(index: int, data: BoardCellData)
 signal state_changed(data: BoardStateData)
@@ -51,6 +55,12 @@ func _initialise() -> void:
 func _inject_state() -> void:
 	if board_creator:
 		board_creator.inject(initial_state, self)
+
+	if not Engine.is_editor_hint():
+		if busy_tracker:
+			busy_tracker.accept_cells()
+
+			SignalHelper.chain(busy_tracker.busy_changed, busy_changed)
 
 func _connect_initial_state() -> void:
 	if initial_state and initial_state.changed.get_connections().size() <= 0:

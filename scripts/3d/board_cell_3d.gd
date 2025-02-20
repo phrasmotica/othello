@@ -86,24 +86,26 @@ var _row := 0
 var _counter_initial_pos: Vector3
 
 signal counter_confirmed(data: BoardCellData)
+signal counter_flip_started
 signal counter_flip_finished
 
 func _ready():
-	if not Engine.is_editor_hint():
-		Globals.toggled_debug_mode.connect(_handle_toggled_debug_mode)
-
 	if counter:
 		_counter_initial_pos = counter.position
 
-		counter_flipper.flip_finished.connect(
-			func() -> void:
-				if counter_lifter:
-					counter_lifter.drop()
+	if not Engine.is_editor_hint():
+		SignalHelper.persist(Globals.toggled_debug_mode, _handle_toggled_debug_mode)
 
-				counter_flip_finished.emit()
-		)
+		SignalHelper.chain(counter_flipper.flip_started, counter_flip_started)
+		SignalHelper.persist(counter_flipper.flip_finished, _handle_flip_finished)
 
 	_refresh()
+
+func _handle_flip_finished() -> void:
+	if counter_lifter:
+		counter_lifter.drop()
+
+	counter_flip_finished.emit()
 
 func _handle_toggled_debug_mode(is_debug: bool) -> void:
 	debug_mode = is_debug

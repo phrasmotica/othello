@@ -19,6 +19,17 @@ func _ready() -> void:
 	if entrance_animation:
 		entrance_animation.finished.connect(set_physics_process.bind(true))
 
+	if board:
+		board.busy_changed.connect(_handle_board_busy_changed)
+
+func _handle_board_busy_changed(is_busy: bool) -> void:
+	if is_busy:
+		print("Board is now busy, pausing mouse processing")
+	else:
+		print("Board is no longer busy, resuming mouse processing")
+
+	set_physics_process(not is_busy)
+
 func _physics_process(_delta: float) -> void:
 	# HIGH: don't do this if the board is currently doing an animation
 	var cell := _get_hovered_cell()

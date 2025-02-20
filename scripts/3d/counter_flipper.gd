@@ -12,6 +12,7 @@ var flip_duration := 0.5
 var _animation_state: AnimationState
 var _is_rotated_to_white := false
 
+signal flip_started
 signal flip_finished
 
 func _ready() -> void:
@@ -32,6 +33,8 @@ func _flip_counter(flippable: Node3D, flip_delay: float) -> void:
 
 	if not _validate_transition(AnimationState.IDLE, AnimationState.FLIPPING):
 		return
+
+	flip_started.emit()
 
 	flippable.set_meta("debug_name", "%sFlippable" % target_counter.debug_name)
 
