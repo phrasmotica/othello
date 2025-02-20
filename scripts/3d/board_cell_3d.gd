@@ -86,6 +86,8 @@ var _row := 0
 var _counter_initial_pos: Vector3
 
 signal counter_confirmed(data: BoardCellData)
+signal counter_lift_started
+signal counter_lift_finished
 signal counter_flip_started
 signal counter_flip_finished
 
@@ -95,6 +97,9 @@ func _ready():
 
 	if not Engine.is_editor_hint():
 		SignalHelper.persist(Globals.toggled_debug_mode, _handle_toggled_debug_mode)
+
+		SignalHelper.chain(counter_lifter.lift_started, counter_lift_started)
+		SignalHelper.chain(counter_lifter.lift_finished, counter_lift_finished)
 
 		SignalHelper.chain(counter_flipper.flip_started, counter_flip_started)
 		SignalHelper.persist(counter_flipper.flip_finished, _handle_flip_finished)

@@ -3,7 +3,8 @@ class_name BoardBusyTracker extends Node
 @export
 var cells_manager_3d: CellsManager3D
 
-var _busy_indexes: Array[int] = []
+var _busy_lifting: Array[int] = []
+var _busy_flipping: Array[int] = []
 
 signal busy_changed(is_busy: bool)
 
@@ -16,6 +17,9 @@ func accept_cells() -> void:
 	for idx in cells_manager_3d.count():
 		var cell := cells_manager_3d.get_cell_3d(idx)
 
+		cell.counter_lift_started.connect(_handle_lift_started.bind(idx))
+		cell.counter_lift_finished.connect(_handle_lift_finished.bind(idx))
+
 		cell.counter_flip_started.connect(_handle_flip_started.bind(idx))
 		cell.counter_flip_finished.connect(_handle_flip_finished.bind(idx))
 
@@ -23,17 +27,30 @@ func accept_cells() -> void:
 
 	print("BoardBusyTracker accepted %d cell(s)" % tracked_count)
 
+func _handle_lift_started(idx: int) -> void:
+	if not _busy_lifting.has(idx):
+		_busy_lifting.append(idx)
+
+		_broadcast()
+
+func _handle_lift_finished(idx: int) -> void:
+	if _busy_lifting.has(idx):
+		_busy_lifting.erase(idx)
+
+		_broadcast()
+
 func _handle_flip_started(idx: int) -> void:
-	if not _busy_indexes.has(idx):
-		_busy_indexes.append(idx)
+	if not _busy_flipping.has(idx):
+		_busy_flipping.append(idx)
 
 		_broadcast()
 
 func _handle_flip_finished(idx: int) -> void:
-	if _busy_indexes.has(idx):
-		_busy_indexes.erase(idx)
+	if _busy_flipping.has(idx):
+		_busy_flipping.erase(idx)
 
 		_broadcast()
 
 func _broadcast() -> void:
-	busy_changed.emit(_busy_indexes.size() > 0)
+	var is_busy := _busy_lifting.size() > 0 or _busy_flipping.size() > 0
+	busy_changed.emit(is_busy)
