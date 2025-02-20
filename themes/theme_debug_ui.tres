@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b3ssq6ibl7e3y"]
+
+[ext_resource type="SystemFont" uid="uid://kv0nusnuwdlt" path="res://themes/font_debug_ui.tres" id="1_wm7wn"]
+
+[resource]
+default_font = ExtResource("1_wm7wn")
+default_font_size = 32

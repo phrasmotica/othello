@@ -1,0 +1,5 @@
+[gd_resource type="SystemFont" format=3 uid="uid://kv0nusnuwdlt"]
+
+[resource]
+font_names = PackedStringArray("Menlo", "Consolas")
+subpixel_positioning = 0

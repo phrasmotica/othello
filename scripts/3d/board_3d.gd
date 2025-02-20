@@ -14,6 +14,9 @@ var initial_state: BoardStateData:
 @export_range(0.1, 0.5)
 var flip_delay_factor := 0.1
 
+@export
+var show_flip_previews := true
+
 @onready
 var board_creator: BoardCreator3D = %BoardCreator3D
 
@@ -131,7 +134,7 @@ func preview_flips(indexes: Array[int]) -> void:
 	for i in cells_manager_3d.count():
 		var cell := cells_manager_3d.get_cell_3d(i)
 
-		if indexes.has(i):
+		if show_flip_previews and indexes.has(i):
 			cell.preview_flip()
 		else:
 			cell.unpreview_flip()

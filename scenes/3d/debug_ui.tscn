@@ -1,15 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://duyv0dq1ikr5y"]
 
 [ext_resource type="Script" path="res://scripts/3d/debug_ui.gd" id="1_a6kpl"]
-
-[sub_resource type="SystemFont" id="SystemFont_t65ai"]
-font_names = PackedStringArray("Menlo", "Consolas")
-subpixel_positioning = 0
+[ext_resource type="Theme" uid="uid://b3ssq6ibl7e3y" path="res://themes/theme_debug_ui.tres" id="1_oikgs"]
 
 [node name="DebugUI" type="MarginContainer"]
 custom_minimum_size = Vector2(300, 300)
 offset_right = 300.0
 offset_bottom = 300.0
+theme = ExtResource("1_oikgs")
 script = ExtResource("1_a6kpl")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -30,6 +28,12 @@ layout_mode = 2
 [node name="BoardBusyLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_t65ai")
-theme_override_font_sizes/font_size = 32
 text = "Board busy: false"
+
+[node name="PreviewFlipsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Preview flips"
