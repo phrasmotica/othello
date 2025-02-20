@@ -1,58 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbt4l8heggobx"]
+[gd_scene load_steps=5 format=3 uid="uid://dbt4l8heggobx"]
 
+[ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_pid2x"]
 [ext_resource type="Script" path="res://scripts/score_ui.gd" id="1_uk3uu"]
+[ext_resource type="PackedScene" uid="uid://d0n6174v3afnm" path="res://scenes/black_score_panel.tscn" id="3_2wp1v"]
+[ext_resource type="PackedScene" uid="uid://d62squatyj1u" path="res://scenes/white_score_panel.tscn" id="4_odres"]
 
 [node name="ScoreUI" type="VBoxContainer"]
 custom_minimum_size = Vector2(648, 0)
 size_flags_horizontal = 4
 mouse_filter = 2
+theme = ExtResource("1_pid2x")
 script = ExtResource("1_uk3uu")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
-[node name="BlackLabel" type="Label" parent="HBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 43)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_font_sizes/font_size = 24
-text = "Black"
-horizontal_alignment = 2
-
-[node name="BlackScoreLabel" type="Label" parent="HBoxContainer/HBoxContainer"]
+[node name="BlackScorePanel" parent="HBoxContainer" instance=ExtResource("3_2wp1v")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
-[node name="WhiteScoreLabel" type="Label" parent="HBoxContainer/HBoxContainer2"]
+[node name="WhiteScorePanel" parent="HBoxContainer" instance=ExtResource("4_odres")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "0"
-horizontal_alignment = 2
-
-[node name="WhiteLabel" type="Label" parent="HBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(0, 43)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_font_sizes/font_size = 24
-text = "White"
 
 [node name="InfoLabel" type="Label" parent="."]
 unique_name_in_owner = true

@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://d62squatyj1u"]
+
+[ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_sm35s"]
+[ext_resource type="Script" path="res://scripts/score_panel.gd" id="2_pknhs"]
+
+[node name="WhiteScorePanel" type="PanelContainer"]
+custom_minimum_size = Vector2(200, 0)
+size_flags_horizontal = 3
+theme = ExtResource("1_sm35s")
+theme_type_variation = &"WhiteScorePanel"
+script = ExtResource("2_pknhs")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Spacer" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 43)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 24
+text = "White"
+horizontal_alignment = 2
+
+[node name="Spacer2" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(7, 0)
+layout_mode = 2
