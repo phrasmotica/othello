@@ -34,7 +34,11 @@ var cell_data_pool: CellDataPool = %CellDataPool
 
 signal busy_changed(is_busy: bool)
 signal cell_highlighted(index: int)
+
+# TODO: this acts as a "turn_ended" signal, but we should only emit it
+# once all the counters involved have landed back on the board...
 signal cell_changed(index: int, data: BoardCellData)
+
 signal state_changed(data: BoardStateData)
 signal flips_finished(indexes: Array[int])
 signal board_reset
