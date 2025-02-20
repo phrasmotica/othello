@@ -32,7 +32,6 @@ func _handle_board_busy_changed(is_busy: bool) -> void:
 		print("Board is no longer busy, resuming mouse processing")
 
 func _physics_process(_delta: float) -> void:
-	# HIGH: don't do this if the board is currently doing an animation
 	var cell := _get_hovered_cell()
 
 	if cell:
