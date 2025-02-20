@@ -59,7 +59,6 @@ mouse_filter = 2
 
 [node name="ScoreUI" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("5_1k7n7")]
 layout_mode = 2
-size_flags_vertical = 0
 game_logic = NodePath("../../../../../../OthelloGameLogic3D")
 
 [node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("6_50uei")]

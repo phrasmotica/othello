@@ -33,6 +33,9 @@ func _update_ui(black_score: int, white_score: int, result: OthelloScore.GameRes
 	_result = result
 
 func _handle_next_colour_changed(colour: BoardStateData.CounterType) -> void:
+	black_score_panel.is_highlighted = colour == BoardStateData.CounterType.BLACK
+	white_score_panel.is_highlighted = colour == BoardStateData.CounterType.WHITE
+
 	info_label.text = "It is %s's turn..." % _colour_names[colour]
 
 func _handle_game_ended() -> void:
