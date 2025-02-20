@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://duyv0dq1ikr5y"]
+
+[sub_resource type="SystemFont" id="SystemFont_t65ai"]
+font_names = PackedStringArray("Menlo")
+
+[node name="DebugUI" type="VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+offset_right = 300.0
+
+[node name="BoardBusyLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_t65ai")
+theme_override_font_sizes/font_size = 32
+text = "Board busy: false"

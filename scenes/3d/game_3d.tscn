@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=11 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
+[ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/debug_ui.tscn" id="10_mrax3"]
 
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
@@ -20,9 +21,10 @@ board = NodePath("../Board3D")
 camera_rig = NodePath("../Board3D/CameraRig")
 game_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer")
 
-[node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board")]
+[node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "debug_canvas")]
 script = ExtResource("1_r07sb")
 board = NodePath("../Board3D")
+debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
 
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
@@ -64,3 +66,22 @@ game_logic = NodePath("../../../../../../OthelloGameLogic3D")
 unique_name_in_owner = true
 layout_mode = 2
 game_logic = NodePath("../../../../../../OthelloGameLogic3D")
+
+[node name="DebugCanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
+
+[node name="MarginContainer" type="MarginContainer" parent="Board3D/CameraRig/Camera3D/DebugCanvas"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DebugUI" parent="Board3D/CameraRig/Camera3D/DebugCanvas/MarginContainer" instance=ExtResource("10_mrax3")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
