@@ -6,6 +6,9 @@ enum AnimationState { IDLE, FLIPPING }
 @export
 var target_counter: Counter3D
 
+@export
+var counter_lifter: CounterLifter
+
 @export_range(0.1, 0.5)
 var flip_duration := 0.5
 
@@ -34,6 +37,15 @@ func _flip_counter(flippable: Node3D, flip_delay: float) -> void:
 	if not _validate_transition(AnimationState.IDLE, AnimationState.FLIPPING):
 		return
 
+	var flip_callable := _do_flip.bind(flippable, flip_delay)
+
+	if counter_lifter:
+		SignalHelper.once(counter_lifter.is_holding, flip_callable)
+		counter_lifter.lift()
+	else:
+		flip_callable.call()
+
+func _do_flip(flippable: Node3D, flip_delay: float) -> void:
 	flip_started.emit()
 
 	flippable.set_meta("debug_name", "%sFlippable" % target_counter.debug_name)

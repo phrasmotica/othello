@@ -46,9 +46,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 unique_name_in_owner = true
 target_counter = NodePath("../Counter")
 
-[node name="CounterFlipper" parent="Counters" node_paths=PackedStringArray("target_counter") instance=ExtResource("6_uqbrq")]
+[node name="CounterFlipper" parent="Counters" node_paths=PackedStringArray("target_counter", "counter_lifter") instance=ExtResource("6_uqbrq")]
 unique_name_in_owner = true
 target_counter = NodePath("../Counter")
+counter_lifter = NodePath("../CounterLifter")
 
 [node name="Counter" parent="Counters" instance=ExtResource("6_w0ctw")]
 unique_name_in_owner = true

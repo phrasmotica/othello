@@ -56,8 +56,6 @@ func flip_if_needed() -> void:
 	if Engine.is_editor_hint() or not Globals.init_finished or prevent_tweening:
 		_refresh()
 	else:
-		# HIGH: if we're not showing flip previews, the counter also needs lifting first
-
 		needs_flip.emit(counter_halves, flip_delay)
 
 func update_gravity(cell_data: BoardCellData) -> void:

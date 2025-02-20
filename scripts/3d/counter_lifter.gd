@@ -14,6 +14,7 @@ var lift_duration := 0.5
 
 var _animation_state: AnimationState
 
+signal is_holding
 signal lift_started
 signal lift_finished
 
@@ -22,6 +23,7 @@ func lift() -> void:
 		return
 
 	if not _validate_transition(AnimationState.IDLE, AnimationState.LIFTING):
+		is_holding.emit()
 		return
 
 	lift_started.emit()
@@ -36,6 +38,8 @@ func lift() -> void:
 		target_counter.position.y + lift_height,
 		lift_duration
 	)
+
+	SignalHelper.once(tween.finished, is_holding.emit)
 
 	_set_state_on(tween.finished, AnimationState.HOLDING)
 
