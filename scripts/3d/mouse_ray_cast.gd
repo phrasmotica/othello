@@ -40,12 +40,19 @@ func _physics_process(_delta: float) -> void:
 
 			if board:
 				if _board_is_busy or cell.cannot_place:
+					MouseCursor.set_default()
+
 					board.highlight_cell(-1)
 					_hovered_cell = null
 				else:
+					MouseCursor.set_pointing()
+
 					board.highlight_cell(cell.index)
-	elif board:
-		board.highlight_cell(-1)
+	else:
+		MouseCursor.set_default()
+
+		if board:
+			board.highlight_cell(-1)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -54,6 +61,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				print("Left button was clicked at ", event.position)
 
 				if _hovered_cell and not _hovered_cell.cannot_place and board:
+					MouseCursor.set_default()
+
 					board.play_at(_hovered_cell)
 
 func _get_hovered_cell() -> BoardCell3D:
