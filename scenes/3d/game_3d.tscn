@@ -49,12 +49,6 @@ entrance = NodePath("../EntranceOrchestrator")
 camera = NodePath("../Board3D/CameraRig/Camera3D")
 board = NodePath("../Board3D")
 
-[node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
-
-[node name="CounterBox" parent="." instance=ExtResource("14_upf2v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
-disable_environment = true
-
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
@@ -102,3 +96,9 @@ unique_name_in_owner = true
 offset_right = 319.0
 size_flags_horizontal = 0
 board = NodePath("../../../..")
+
+[node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
+
+[node name="CounterBox" parent="." instance=ExtResource("14_upf2v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
+disable_environment = true
