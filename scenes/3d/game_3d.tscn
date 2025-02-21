@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=19 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -10,10 +10,72 @@
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
+[ext_resource type="Script" path="res://scripts/3d/camera_rig_to_box_animation.gd" id="5_uolml"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
+
+[sub_resource type="Animation" id="Animation_s5702"]
+resource_name = "to_box"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.785398, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p6wt0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.785398, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmppe"]
+_data = {
+"RESET": SubResource("Animation_p6wt0"),
+"to_box": SubResource("Animation_s5702")
+}
 
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
@@ -23,16 +85,22 @@ script = ExtResource("1_b1isx")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.382683, 0.92388, 0, -0.92388, 0.382683, 0, 20, 4)
 
-[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "score_ui")]
+[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "camera_rig_to_box_animation", "counter_box", "score_ui")]
 unique_name_in_owner = true
 script = ExtResource("2_a6jhs")
 board_entrance_animation = NodePath("Board3DEntranceAnimation")
+camera_rig_to_box_animation = NodePath("CameraRigToBoxAnimation")
+counter_box = NodePath("../CounterBox")
 score_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn/ScoreUI")
 
 [node name="Board3DEntranceAnimation" type="Node" parent="EntranceOrchestrator" node_paths=PackedStringArray("board", "camera_rig")]
-unique_name_in_owner = true
 script = ExtResource("2_756rn")
 board = NodePath("../../Board3D")
+camera_rig = NodePath("../../Board3D/CameraRig")
+
+[node name="CameraRigToBoxAnimation" type="Node" parent="EntranceOrchestrator" node_paths=PackedStringArray("camera_rig_animation", "camera_rig")]
+script = ExtResource("5_uolml")
+camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
 camera_rig = NodePath("../../Board3D/CameraRig")
 
 [node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "debug_canvas")]
@@ -55,6 +123,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 [node name="CameraRig" parent="Board3D" instance=ExtResource("5_o4xlo")]
 transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
 use_tweening = true
+
+[node name="CameraRigAnimation" type="AnimationPlayer" parent="Board3D/CameraRig"]
+libraries = {
+"": SubResource("AnimationLibrary_pmppe")
+}
 
 [node name="Camera3D" type="Camera3D" parent="Board3D/CameraRig"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 0)

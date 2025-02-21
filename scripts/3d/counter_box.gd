@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+class_name CounterBox extends Node3D
 
 @export
 var disable_environment := false:
@@ -22,16 +22,18 @@ var counter_spawner: CounterSpawner = %CounterSpawner
 
 var _original_environment: Environment
 
+signal spawning_finished
+
 func _ready() -> void:
 	if world_environment:
 		_original_environment = world_environment.environment
 
 	_refresh()
 
-	if Engine.is_editor_hint():
-		return
-
+func start_spawn() -> void:
 	if counter_spawner:
+		SignalHelper.chain_once(counter_spawner.finished, spawning_finished)
+
 		counter_spawner.spawn_counters()
 
 func _refresh() -> void:

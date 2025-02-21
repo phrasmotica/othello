@@ -14,6 +14,8 @@ var counter_sleep_threshold := 0.05
 
 var _counters: Array[Counter3D] = []
 
+signal finished
+
 func spawn_counters() -> void:
 	if not counter_scene:
 		return
@@ -32,11 +34,13 @@ func spawn_counters() -> void:
 
 		await get_tree().create_timer(spawn_interval).timeout
 
+	SignalHelper.chain_once(get_tree().create_timer(1.0).timeout, finished)
+
 func _physics_process(_delta: float) -> void:
 	for c in _counters:
 		var rb := c.get_child(0) as RigidBody3D
 
-		if _should_sleep(rb):
+		if not rb.sleeping and _should_sleep(rb):
 			rb.sleeping = true
 
 func _should_sleep(rb: RigidBody3D) -> bool:
