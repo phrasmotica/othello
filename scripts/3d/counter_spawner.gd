@@ -42,6 +42,9 @@ func spawn_counters() -> void:
 
 	SignalHelper.once(get_tree().create_timer(1.0).timeout, _emit_finished)
 
+func get_counters() -> Array[Counter3D]:
+	return _counters
+
 func _physics_process(_delta: float) -> void:
 	for c in _counters:
 		var rb := c.get_child(0) as RigidBody3D

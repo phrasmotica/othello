@@ -103,19 +103,21 @@ script = ExtResource("5_uolml")
 camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
 camera_rig = NodePath("../../Board3D/CameraRig")
 
-[node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "debug_canvas")]
+[node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "counter_box", "debug_canvas")]
 script = ExtResource("1_r07sb")
 board = NodePath("../Board3D")
+counter_box = NodePath("../CounterBox")
 debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
 
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
 
-[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance", "camera", "board")]
+[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance", "camera", "board", "counter_box")]
 script = ExtResource("2_11kum")
 entrance = NodePath("../EntranceOrchestrator")
 camera = NodePath("../Board3D/CameraRig/Camera3D")
 board = NodePath("../Board3D")
+counter_box = NodePath("../CounterBox")
 
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

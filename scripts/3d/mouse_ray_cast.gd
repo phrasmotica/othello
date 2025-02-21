@@ -9,6 +9,9 @@ var camera: Camera3D
 @export
 var board: Board3D
 
+@export
+var counter_box: CounterBox
+
 const RAY_LENGTH := 100.0
 
 var _board_is_busy := false
@@ -62,6 +65,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 				if _hovered_cell and not _hovered_cell.cannot_place and board:
 					MouseCursor.set_default()
+
+					if counter_box:
+						counter_box.take_top()
 
 					board.play_at(_hovered_cell)
 

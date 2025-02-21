@@ -63,6 +63,23 @@ func unpeek() -> void:
 	if animation_player and not animation_player.is_playing():
 		animation_player.play_backwards("peek")
 
+func take_top() -> void:
+	if not _is_settled:
+		return
+
+	var counters := counter_spawner.get_counters()
+
+	if counters.is_empty():
+		return
+
+	counters.sort_custom(
+		func(c: Counter3D, d: Counter3D) -> bool:
+			return c.position.y > d.position.y
+	)
+
+	var top_counter: Counter3D = counters.pop_front()
+	top_counter.queue_free()
+
 func _refresh() -> void:
 	if world_environment:
 		world_environment.environment = _get_environment()
