@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=15 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
+[ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
 
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
@@ -97,3 +98,7 @@ size_flags_horizontal = 0
 board = NodePath("../../../..")
 
 [node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
+
+[node name="CounterBox" parent="." instance=ExtResource("14_upf2v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
+disable_environment = true
