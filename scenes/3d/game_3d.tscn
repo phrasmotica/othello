@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=14 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
+[ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
@@ -45,6 +46,7 @@ camera = NodePath("../Board3D/CameraRig/Camera3D")
 board = NodePath("../Board3D")
 
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="CameraRig" parent="Board3D" instance=ExtResource("5_o4xlo")]
 transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
@@ -93,3 +95,5 @@ unique_name_in_owner = true
 offset_right = 319.0
 size_flags_horizontal = 0
 board = NodePath("../../../..")
+
+[node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
