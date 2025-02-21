@@ -107,3 +107,4 @@ shape = SubResource("BoxShape3D_qwtpj")
 [node name="CounterSpawner" parent="." instance=ExtResource("3_cbe4a")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+spawn_amount = 60
