@@ -57,11 +57,18 @@ func _handle_spawning_finished() -> void:
 
 func peek() -> void:
 	if animation_player and not animation_player.is_playing():
+		SignalHelper.once(animation_player.animation_finished, _handle_animation_finished)
+
 		animation_player.play("peek")
 
 func unpeek() -> void:
 	if animation_player and not animation_player.is_playing():
 		animation_player.play_backwards("peek")
+
+func _handle_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "peek":
+		if not Input.is_action_pressed("peek_counter_box"):
+			unpeek()
 
 func take_top() -> void:
 	if not _is_settled:
