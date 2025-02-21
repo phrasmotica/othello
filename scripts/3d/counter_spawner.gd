@@ -34,7 +34,7 @@ func spawn_counters() -> void:
 
 		await get_tree().create_timer(spawn_interval).timeout
 
-	SignalHelper.chain_once(get_tree().create_timer(1.0).timeout, finished)
+	SignalHelper.once(get_tree().create_timer(1.0).timeout, _emit_finished)
 
 func _physics_process(_delta: float) -> void:
 	for c in _counters:
@@ -66,3 +66,11 @@ func _get_rotation_offset() -> Vector3:
 	var z_offset := extent * 2.0 * (randf() - 0.5)
 
 	return Vector3(x_offset, y_offset, z_offset)
+
+func _emit_finished() -> void:
+	for c in _counters:
+		var rb := c.get_child(0) as RigidBody3D
+
+		rb.freeze = true
+
+	finished.emit()
