@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=12 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_2hvj3"]
 [ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
 [ext_resource type="Script" path="res://scripts/3d/board_3d_entrance_animation.gd" id="2_756rn"]
+[ext_resource type="Script" path="res://scripts/3d/entrance_orchestrator.gd" id="2_a6jhs"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
@@ -14,12 +15,17 @@
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
 
-[node name="Board3DEntranceAnimation" type="Node" parent="." node_paths=PackedStringArray("board", "camera_rig", "game_ui")]
+[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "score_ui")]
+unique_name_in_owner = true
+script = ExtResource("2_a6jhs")
+board_entrance_animation = NodePath("Board3DEntranceAnimation")
+score_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn/ScoreUI")
+
+[node name="Board3DEntranceAnimation" type="Node" parent="EntranceOrchestrator" node_paths=PackedStringArray("board", "camera_rig")]
 unique_name_in_owner = true
 script = ExtResource("2_756rn")
-board = NodePath("../Board3D")
-camera_rig = NodePath("../Board3D/CameraRig")
-game_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer")
+board = NodePath("../../Board3D")
+camera_rig = NodePath("../../Board3D/CameraRig")
 
 [node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "debug_canvas")]
 script = ExtResource("1_r07sb")
@@ -29,9 +35,9 @@ debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
 
-[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance_animation", "camera", "board")]
+[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance", "camera", "board")]
 script = ExtResource("2_11kum")
-entrance_animation = NodePath("../Board3DEntranceAnimation")
+entrance = NodePath("../EntranceOrchestrator")
 camera = NodePath("../Board3D/CameraRig/Camera3D")
 board = NodePath("../Board3D")
 
@@ -57,14 +63,25 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ScoreUI" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("5_1k7n7")]
+[node name="MiddleColumn" type="Control" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer"]
+editor_description = "This is required for the ScoreUI menu_in animation to position the UI correctly."
+custom_minimum_size = Vector2(648, 0)
 layout_mode = 2
-game_logic = NodePath("../../../../../../OthelloGameLogic3D")
+size_flags_horizontal = 4
+mouse_filter = 2
 
-[node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer" node_paths=PackedStringArray("game_logic") instance=ExtResource("6_50uei")]
+[node name="ScoreUI" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn" node_paths=PackedStringArray("game_logic") instance=ExtResource("5_1k7n7")]
+layout_mode = 2
+game_logic = NodePath("../../../../../../../OthelloGameLogic3D")
+
+[node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn" node_paths=PackedStringArray("game_logic") instance=ExtResource("6_50uei")]
 unique_name_in_owner = true
 layout_mode = 2
-game_logic = NodePath("../../../../../../OthelloGameLogic3D")
+offset_left = 68.0
+offset_top = 652.0
+offset_right = 580.0
+offset_bottom = 720.0
+game_logic = NodePath("../../../../../../../OthelloGameLogic3D")
 
 [node name="DebugCanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 

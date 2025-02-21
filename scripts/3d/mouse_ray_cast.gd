@@ -1,7 +1,7 @@
 extends Node3D
 
 @export
-var entrance_animation: Board3DEntranceAnimation
+var entrance: EntranceOrchestrator
 
 @export
 var camera: Camera3D
@@ -17,8 +17,8 @@ var _hovered_cell: BoardCell3D
 func _ready() -> void:
 	set_physics_process(false)
 
-	if entrance_animation:
-		entrance_animation.finished.connect(set_physics_process.bind(true))
+	if entrance:
+		entrance.finished.connect(set_physics_process.bind(true))
 
 	if board:
 		board.busy_changed.connect(_handle_board_busy_changed)

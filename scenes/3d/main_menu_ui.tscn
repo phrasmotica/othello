@@ -3,34 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://46ki3f6y5w43" path="res://scenes/3d/main_menu_buttons.tscn" id="1_1114p"]
 [ext_resource type="Script" path="res://scripts/3d/main_menu_ui.gd" id="1_k5lpv"]
 
-[sub_resource type="Animation" id="Animation_ycgvb"]
-resource_name = "menu_start"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -140), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:size")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1280, 1000), Vector2(1280, 860), Vector2(1280, 860), Vector2(1280, 720)]
-}
-
 [sub_resource type="Animation" id="Animation_7t4vj"]
 length = 0.001
 tracks/0/type = "value"
@@ -83,6 +55,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -140)]
+}
+
+[sub_resource type="Animation" id="Animation_ycgvb"]
+resource_name = "menu_start"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -140), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1280, 1000), Vector2(1280, 860), Vector2(1280, 860), Vector2(1280, 720)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pu7id"]
