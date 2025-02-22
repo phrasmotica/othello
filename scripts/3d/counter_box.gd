@@ -44,7 +44,11 @@ func _ready() -> void:
 
 func _update_spawner(data: BoardStateData) -> void:
 	if counter_spawner:
-		counter_spawner.spawn_amount = data.get_remaining_cell_count()
+		var amount := data.get_remaining_cell_count()
+
+		print("Setting spawn amount to %d" % amount)
+
+		counter_spawner.spawn_amount = amount
 
 func start_spawn() -> void:
 	if counter_spawner:

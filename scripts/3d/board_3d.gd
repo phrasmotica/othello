@@ -54,9 +54,9 @@ func _ready() -> void:
 
 	_initialise()
 
-	SignalHelper.once_root_ready(initial_state_ready.emit.bind(initial_state))
-
 	if not Engine.is_editor_hint():
+		SignalHelper.once_next_frame(initial_state_ready.emit.bind(initial_state))
+
 		Globals.init_finished = true
 		print("Init finished")
 
