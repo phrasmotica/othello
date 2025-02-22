@@ -23,6 +23,7 @@ var ray_calculator: RayCalculator = %RayCalculator
 signal score_changed(black_score: int, white_score: int, result: OthelloScore.GameResult)
 signal next_colour_changed(colour: BoardStateData.CounterType)
 signal game_ended
+signal game_restarted
 
 func _ready() -> void:
 	_connect_children()
@@ -52,3 +53,8 @@ func restart_game() -> void:
 
 	if placement_calculator:
 		placement_calculator.refresh()
+
+	_emit_restarted()
+
+func _emit_restarted():
+	game_restarted.emit()

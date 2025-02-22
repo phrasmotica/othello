@@ -83,8 +83,6 @@ var counter_preview: CounterPreview3D = %CounterPreview
 var _col := 0
 var _row := 0
 
-var _counter_initial_pos: Vector3
-
 signal counter_confirmed(data: BoardCellData)
 signal counter_lift_started
 signal counter_lift_finished
@@ -92,9 +90,6 @@ signal counter_flip_started
 signal counter_flip_finished
 
 func _ready():
-	if counter:
-		_counter_initial_pos = counter.position
-
 	if not Engine.is_editor_hint():
 		SignalHelper.persist(Globals.toggled_debug_mode, _handle_toggled_debug_mode)
 
@@ -174,7 +169,7 @@ func place_counter(data: BoardCellData) -> void:
 	counter.prevent_tweening = false
 
 	if counter:
-		counter.position = _counter_initial_pos
+		counter.reset_position()
 
 		var callable := counter_confirmed.emit.bind(cell_data)
 		SignalHelper.once(counter.landed_on_board, callable)

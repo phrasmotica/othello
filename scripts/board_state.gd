@@ -10,11 +10,14 @@ signal cell_changed(index: int, data: BoardCellData)
 signal state_changed(data: BoardStateData)
 
 func _ready() -> void:
-	_current_state = BoardStateData.new()
+	restart_game()
 
 	if board_creator:
 		board_creator.cell_confirmed.connect(_handle_cell_confirmed)
 		board_creator.cell_injected.connect(_handle_cell_injected)
+
+func restart_game() -> void:
+	_current_state = BoardStateData.new()
 
 func set_next_colour(type: BoardStateData.CounterType) -> void:
 	_current_state.next_colour = type

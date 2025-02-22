@@ -92,6 +92,9 @@ func set_next_colour(colour: BoardStateData.CounterType) -> void:
 		cell_data_pool.next_colour = colour
 
 func restart() -> void:
+	if board_state:
+		board_state.restart_game()
+
 	if board_creator:
 		board_creator.inject(initial_state, self)
 

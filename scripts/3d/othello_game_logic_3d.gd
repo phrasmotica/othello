@@ -36,3 +36,5 @@ func restart_game() -> void:
 
 	if placement_calculator:
 		placement_calculator.refresh()
+
+	_emit_restarted()

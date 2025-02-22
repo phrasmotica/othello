@@ -46,6 +46,10 @@ func enable_rigid_body() -> void:
 	if rigid_body:
 		rigid_body.freeze = false
 
+func reset_position() -> void:
+	if rigid_body:
+		rigid_body.position = Vector3.ZERO
+
 func _refresh() -> void:
 	if counter_halves:
 		counter_halves.is_white = is_white

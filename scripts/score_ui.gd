@@ -26,6 +26,7 @@ func _ready() -> void:
 		game_logic.score_changed.connect(_update_ui)
 		game_logic.next_colour_changed.connect(_handle_next_colour_changed)
 		game_logic.game_ended.connect(_handle_game_ended)
+		game_logic.game_restarted.connect(_handle_game_restarted)
 
 	if not Engine.is_editor_hint():
 		if result_panel:
@@ -59,3 +60,7 @@ func _handle_game_ended() -> void:
 
 	if result_panel:
 		result_panel.show()
+
+func _handle_game_restarted() -> void:
+	if result_panel:
+		result_panel.hide()
