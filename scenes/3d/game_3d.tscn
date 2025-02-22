@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
 [ext_resource type="Script" path="res://scripts/3d/board_3d_entrance_animation.gd" id="2_756rn"]
 [ext_resource type="Script" path="res://scripts/3d/entrance_orchestrator.gd" id="2_a6jhs"]
-[ext_resource type="PackedScene" path="res://scenes/3d/world_environment.tscn" id="2_myd6w"]
+[ext_resource type="PackedScene" uid="uid://c03r8nvs2ic2s" path="res://scenes/3d/world_environment.tscn" id="2_myd6w"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc88n0044q3ad"]
+
+[ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_jm7wi"]
+[ext_resource type="Script" path="res://scripts/result_panel.gd" id="1_of4mn"]
+
+[node name="ResultPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 0)
+theme = ExtResource("1_jm7wi")
+theme_type_variation = &"DrawScorePanel"
+script = ExtResource("1_of4mn")
+result = 2
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DrawScoreLabel"
+theme_override_font_sizes/font_size = 32
+text = "It's a draw."
+horizontal_alignment = 1

@@ -14,17 +14,10 @@ var black_score_panel: ScorePanel = %BlackScorePanel
 var white_score_panel: ScorePanel = %WhiteScorePanel
 
 @onready
-var info_label: Label = %InfoLabel
+var result_panel: ResultPanel = %ResultPanel
 
 @onready
 var animation_player: AnimationPlayer = %AnimationPlayer
-
-var _colour_names := {
-	BoardStateData.CounterType.BLACK: "Black",
-	BoardStateData.CounterType.WHITE: "White",
-}
-
-var _result := OthelloScore.GameResult.DRAW
 
 signal starting_animation_finished
 
@@ -35,6 +28,9 @@ func _ready() -> void:
 		game_logic.game_ended.connect(_handle_game_ended)
 
 	if not Engine.is_editor_hint():
+		if result_panel:
+			result_panel.hide()
+
 		if animation_player:
 			SignalHelper.persist(animation_player.animation_finished, _handle_animation_finished)
 
@@ -51,21 +47,15 @@ func _update_ui(black_score: int, white_score: int, result: OthelloScore.GameRes
 	black_score_panel.score = black_score
 	white_score_panel.score = white_score
 
-	_result = result
+	result_panel.result = result
 
 func _handle_next_colour_changed(colour: BoardStateData.CounterType) -> void:
 	black_score_panel.is_highlighted = colour == BoardStateData.CounterType.BLACK
 	white_score_panel.is_highlighted = colour == BoardStateData.CounterType.WHITE
 
-	info_label.text = "It is %s's turn..." % _colour_names[colour]
-
 func _handle_game_ended() -> void:
-	var text := "It's a draw."
+	black_score_panel.is_highlighted = false
+	white_score_panel.is_highlighted = false
 
-	if _result == OthelloScore.GameResult.BLACK_WINS:
-		text = "Black wins!"
-
-	if _result == OthelloScore.GameResult.WHITE_WINS:
-		text = "White wins!"
-
-	info_label.text = text
+	if result_panel:
+		result_panel.show()
