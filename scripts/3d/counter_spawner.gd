@@ -19,9 +19,14 @@ var _counters: Array[Counter3D] = []
 
 signal finished
 
-func spawn_counters() -> void:
+func spawn_counters(skip_finished) -> void:
 	if not counter_scene:
 		return
+
+	for c in _counters:
+		c.queue_free()
+
+	_counters.clear()
 
 	for i in spawn_amount:
 		var counter: Counter3D = counter_scene.instantiate()
@@ -40,7 +45,8 @@ func spawn_counters() -> void:
 
 		await get_tree().create_timer(spawn_interval).timeout
 
-	SignalHelper.once(get_tree().create_timer(1.0).timeout, _emit_finished)
+	if not skip_finished:
+		SignalHelper.once(get_tree().create_timer(1.0).timeout, _emit_finished)
 
 func get_counters() -> Array[Counter3D]:
 	return _counters

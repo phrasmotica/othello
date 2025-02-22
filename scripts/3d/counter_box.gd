@@ -9,6 +9,9 @@ var disable_environment := false:
 		_refresh()
 
 @export
+var game_logic: OthelloGameLogic3D
+
+@export
 var board: Board3D
 
 @onready
@@ -36,6 +39,9 @@ func _ready() -> void:
 		if board:
 			SignalHelper.persist(board.initial_state_ready, _update_spawner)
 
+		if game_logic:
+			SignalHelper.persist(game_logic.game_restarted, start_spawn.bind(true))
+
 	if world_environment:
 		_original_environment = world_environment.environment
 
@@ -51,11 +57,11 @@ func _update_spawner(data: BoardStateData) -> void:
 
 		counter_spawner.spawn_amount = amount
 
-func start_spawn() -> void:
+func start_spawn(skip_finished := false) -> void:
 	if counter_spawner:
 		SignalHelper.once(counter_spawner.finished, _handle_spawning_finished)
 
-		counter_spawner.spawn_counters()
+		counter_spawner.spawn_counters(skip_finished)
 
 func _handle_spawning_finished() -> void:
 	_is_settled = true
