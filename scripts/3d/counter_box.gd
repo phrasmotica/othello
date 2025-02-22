@@ -8,6 +8,9 @@ var disable_environment := false:
 
 		_refresh()
 
+@export
+var board: Board3D
+
 @onready
 var world_environment: WorldEnvironment = %WorldEnvironment
 
@@ -29,12 +32,19 @@ var _is_settled := false
 signal spawning_finished
 
 func _ready() -> void:
+	if board:
+		SignalHelper.persist(board.initial_state_ready, _update_spawner)
+
 	if world_environment:
 		_original_environment = world_environment.environment
 
 	set_process(false)
 
 	_refresh()
+
+func _update_spawner(data: BoardStateData) -> void:
+	if counter_spawner:
+		counter_spawner.spawn_amount = data.get_remaining_cell_count()
 
 func start_spawn() -> void:
 	if counter_spawner:

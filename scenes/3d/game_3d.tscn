@@ -44,6 +44,22 @@ tracks/1/keys = {
 "values": [Vector3(0.785398, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_eix6r"]
+resource_name = "peek_box"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.785398, 0, 0), Vector3(0.959931, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_s5702"]
 resource_name = "to_box"
 length = 0.2
@@ -70,22 +86,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0.785398, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_eix6r"]
-resource_name = "peek_box"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0.785398, 0, 0), Vector3(0.959931, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pmppe"]
@@ -197,6 +197,7 @@ board = NodePath("../../../..")
 
 [node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
 
-[node name="CounterBox" parent="." instance=ExtResource("14_upf2v")]
+[node name="CounterBox" parent="." node_paths=PackedStringArray("board") instance=ExtResource("14_upf2v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
 disable_environment = true
+board = NodePath("../Board3D")

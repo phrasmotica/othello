@@ -32,6 +32,8 @@ var busy_tracker: BoardBusyTracker = %BoardBusyTracker
 @onready
 var cell_data_pool: CellDataPool = %CellDataPool
 
+signal initial_state_ready(data: BoardStateData)
+
 signal busy_changed(is_busy: bool)
 signal freed(is_busy: bool)
 
@@ -51,6 +53,8 @@ func _ready() -> void:
 		SignalHelper.chain(board_state.state_changed, state_changed)
 
 	_initialise()
+
+	SignalHelper.once_root_ready(initial_state_ready.emit.bind(initial_state))
 
 	if not Engine.is_editor_hint():
 		Globals.init_finished = true

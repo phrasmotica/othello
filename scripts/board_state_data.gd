@@ -37,3 +37,6 @@ var next_colour := CounterType.BLACK:
 
 func set_cell(key: int, data: BoardCellData) -> void:
 	cells_data[key] = data
+
+func get_remaining_cell_count() -> int:
+	return board_size.x * board_size.y - cells_data.size()
