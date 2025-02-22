@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=21 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -6,15 +6,43 @@
 [ext_resource type="Script" path="res://scripts/3d/mouse_ray_cast.gd" id="2_11kum"]
 [ext_resource type="Script" path="res://scripts/3d/board_3d_entrance_animation.gd" id="2_756rn"]
 [ext_resource type="Script" path="res://scripts/3d/entrance_orchestrator.gd" id="2_a6jhs"]
-[ext_resource type="PackedScene" uid="uid://c03r8nvs2ic2s" path="res://scenes/3d/world_environment.tscn" id="2_myd6w"]
+[ext_resource type="PackedScene" path="res://scenes/3d/world_environment.tscn" id="2_myd6w"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
 [ext_resource type="Script" path="res://scripts/3d/camera_rig_to_box_animation.gd" id="5_uolml"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
+[ext_resource type="Script" path="res://scripts/3d/input_handler.gd" id="7_vq6r7"]
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
+
+[sub_resource type="Animation" id="Animation_p6wt0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.785398, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_s5702"]
 resource_name = "to_box"
@@ -44,36 +72,26 @@ tracks/1/keys = {
 "values": [Vector3(0.785398, 0, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_p6wt0"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_eix6r"]
+resource_name = "peek_box"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.785398, 0, 0)]
+"values": [Vector3(0.785398, 0, 0), Vector3(0.959931, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pmppe"]
 _data = {
 "RESET": SubResource("Animation_p6wt0"),
+"peek_box": SubResource("Animation_eix6r"),
 "to_box": SubResource("Animation_s5702")
 }
 
@@ -108,6 +126,11 @@ script = ExtResource("1_r07sb")
 board = NodePath("../Board3D")
 counter_box = NodePath("../CounterBox")
 debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
+
+[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("counter_box", "camera_rig_animation")]
+script = ExtResource("7_vq6r7")
+counter_box = NodePath("../CounterBox")
+camera_rig_animation = NodePath("../Board3D/CameraRig/CameraRigAnimation")
 
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")

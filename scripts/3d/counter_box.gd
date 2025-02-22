@@ -36,13 +36,6 @@ func _ready() -> void:
 
 	_refresh()
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("peek_counter_box"):
-		peek()
-
-	if Input.is_action_just_released("peek_counter_box"):
-		unpeek()
-
 func start_spawn() -> void:
 	if counter_spawner:
 		SignalHelper.once(counter_spawner.finished, _handle_spawning_finished)
