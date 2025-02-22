@@ -7,6 +7,9 @@ var game_scene: PackedScene = load("res://scenes/3d/game_3d.tscn")
 var auto_player: AutoPlayer3D = %AutoPlayer3D
 
 @onready
+var board: Board3D = %Board3D
+
+@onready
 var camera_rig: CameraRig = %CameraRig
 
 @onready
@@ -19,14 +22,17 @@ func _ready() -> void:
 
 func _handle_started() -> void:
 	auto_player.stop_autoplay()
-	camera_rig.camera_mode = CameraRig.CameraMode.STATIC
+
+	camera_rig.is_paused = true
 
 	var tween := create_tween()
 
+	var camera_right := camera_rig.global_basis.x
+
 	tween.tween_property(
 		camera_rig,
-		"position:x",
-		camera_rig.position.x + 30,
+		"position",
+		camera_rig.position + 30 * camera_right,
 		0.4
 	)
 

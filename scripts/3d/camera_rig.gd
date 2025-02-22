@@ -31,6 +31,9 @@ var use_tweening := false
 
 @export_group("Moving")
 
+@export
+var is_paused := false
+
 @export_range(0.1, 1.0)
 var rotation_speed := 0.5
 
@@ -39,6 +42,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
+		return
+
+	if is_paused:
 		return
 
 	if camera_mode == CameraMode.MOVING:

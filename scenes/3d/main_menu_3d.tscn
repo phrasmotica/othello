@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="2_ui3b4"]
 [ext_resource type="Script" path="res://scripts/3d/auto_player_3d.gd" id="2_v5wsa"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="3_job7k"]
-[ext_resource type="PackedScene" path="res://scenes/3d/world_environment.tscn" id="7_24yx4"]
+[ext_resource type="PackedScene" uid="uid://c03r8nvs2ic2s" path="res://scenes/3d/world_environment.tscn" id="7_24yx4"]
 [ext_resource type="PackedScene" uid="uid://bd3rr0upsyvdk" path="res://scenes/3d/main_menu_ui.tscn" id="7_tu8ix"]
 
 [node name="MainMenu3D" type="Node3D"]
@@ -22,6 +22,7 @@ script = ExtResource("2_v5wsa")
 board = NodePath("../Board3D")
 
 [node name="Board3D" parent="." instance=ExtResource("2_ui3b4")]
+unique_name_in_owner = true
 
 [node name="CameraRig" parent="Board3D" instance=ExtResource("3_job7k")]
 unique_name_in_owner = true
