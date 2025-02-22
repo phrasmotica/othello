@@ -32,8 +32,9 @@ var _is_settled := false
 signal spawning_finished
 
 func _ready() -> void:
-	if board:
-		SignalHelper.persist(board.initial_state_ready, _update_spawner)
+	if not Engine.is_editor_hint():
+		if board:
+			SignalHelper.persist(board.initial_state_ready, _update_spawner)
 
 	if world_environment:
 		_original_environment = world_environment.environment
