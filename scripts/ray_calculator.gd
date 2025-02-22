@@ -165,15 +165,15 @@ func _compute_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> Array[in
 func _encode_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> String:
 	var result := ""
 
-	var next_x_pos := pos.x
-	var next_y_pos := pos.y
+	var next_x_pos := pos.x + offset_x
+	var next_y_pos := pos.y + offset_y
 
 	while _cell_exists(next_x_pos, next_y_pos):
-		next_x_pos += offset_x
-		next_y_pos += offset_y
-
 		var idx := _get_pos_as_idx(Vector2i(next_x_pos, next_y_pos))
 		result = result + _encode_cell(idx)
+
+		next_x_pos += offset_x
+		next_y_pos += offset_y
 
 	return result.replace(_missing_cell_code, "")
 

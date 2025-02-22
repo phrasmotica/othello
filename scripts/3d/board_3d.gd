@@ -116,9 +116,6 @@ func play_random() -> void:
 		cell.place_counter(cell_data_pool.get_next())
 
 func perform_flips(indexes: Array[int]) -> void:
-	# HIGH: it looks like some cells at the edge of the board are getting
-	# flipped when they shouldn't be?
-
 	if indexes.size() < 0:
 		return
 
