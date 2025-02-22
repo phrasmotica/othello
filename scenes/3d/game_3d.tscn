@@ -197,8 +197,7 @@ board = NodePath("../../../..")
 
 [node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
 
-[node name="CounterBox" parent="." node_paths=PackedStringArray("game_logic", "board") instance=ExtResource("14_upf2v")]
+[node name="CounterBox" parent="." node_paths=PackedStringArray("board") instance=ExtResource("14_upf2v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
 disable_environment = true
-game_logic = NodePath("../OthelloGameLogic3D")
 board = NodePath("../Board3D")
