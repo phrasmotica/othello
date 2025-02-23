@@ -19,21 +19,26 @@ const RAY_LENGTH := 100.0
 
 var _board_is_busy := false
 var _hovered_cell: BoardCell3D
+var _is_ready := false
 
 func _ready() -> void:
 	set_physics_process(false)
 
 	if entrance:
-		entrance.finished.connect(set_physics_process.bind(true))
+		SignalHelper.persist(entrance.finished, _handle_entrance_finished)
 
 	if board:
-		board.busy_changed.connect(_handle_board_busy_changed)
+		SignalHelper.persist(board.busy_changed, _handle_board_busy_changed)
 
 	if settings_menu:
 		SignalHelper.persist(
 			settings_menu.visibility_changed,
 			_handle_settings_menu_visibility_changed
 		)
+
+func _handle_entrance_finished() -> void:
+	_is_ready = true
+	_set_enabled(not settings_menu.visible)
 
 func _handle_board_busy_changed(is_busy: bool) -> void:
 	_board_is_busy = is_busy
@@ -44,9 +49,13 @@ func _handle_board_busy_changed(is_busy: bool) -> void:
 		print("Board is no longer busy, resuming mouse processing")
 
 func _handle_settings_menu_visibility_changed() -> void:
-	print("MouseRayCast processing %s" % not settings_menu.visible)
+	var is_enabled := _is_ready and not settings_menu.visible
+	_set_enabled(is_enabled)
 
-	set_physics_process(not settings_menu.visible)
+func _set_enabled(is_enabled: bool) -> void:
+	print("MouseRayCast processing %s" % is_enabled)
+
+	set_physics_process(is_enabled)
 
 func _physics_process(_delta: float) -> void:
 	var cell := _get_hovered_cell()
