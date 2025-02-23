@@ -45,13 +45,16 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
 
-func _go_to_next_turn() -> void:
+func _go_to_next_turn(turn_skipped := false) -> void:
 	if _has_game_ended:
 		return
 
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
 
-	print("Turn ended, %d plays next" % _next_turn_colour)
+	if turn_skipped:
+		print("Turn skipped! %d plays next" % _next_turn_colour)
+	else:
+		print("Turn ended, %d plays next" % _next_turn_colour)
 
 	next_colour_changed.emit(_next_turn_colour)
 
@@ -79,7 +82,7 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 		# play, then colour B cannot play, then colour A can play again. But
 		# we have this here for completeness
 		print("%d cannot play!" % _next_turn_colour)
-		_go_to_next_turn()
+		_go_to_next_turn(true)
 
 func _end_game() -> void:
 	print("Game ended!")
