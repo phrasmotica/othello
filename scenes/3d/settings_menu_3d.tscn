@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4q58aabscvio"]
+
+[ext_resource type="Script" path="res://scripts/3d/gui_3d.gd" id="1_fy7wi"]
+[ext_resource type="Script" path="res://scripts/3d/settings_menu_3d.gd" id="1_rb545"]
+[ext_resource type="PackedScene" uid="uid://0ivagoypmkgb" path="res://scenes/3d/settings_menu_ui.tscn" id="2_iqt3v"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_2rp85"]
+size = Vector2(6, 4)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_r66ua"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v7h30"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_r66ua")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8uvab"]
+size = Vector3(6, 4, 0.1)
+
+[node name="SettingsMenu3D" type="Node3D"]
+script = ExtResource("1_rb545")
+
+[node name="GUI3D" type="Node3D" parent="." node_paths=PackedStringArray("viewport", "quad", "area")]
+script = ExtResource("1_fy7wi")
+viewport = NodePath("../SubViewport")
+quad = NodePath("Quad")
+area = NodePath("Quad/Area3D")
+
+[node name="Quad" type="MeshInstance3D" parent="GUI3D"]
+mesh = SubResource("QuadMesh_2rp85")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_v7h30")
+
+[node name="Area3D" type="Area3D" parent="GUI3D/Quad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GUI3D/Quad/Area3D"]
+shape = SubResource("BoxShape3D_8uvab")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(600, 400)
+size_2d_override = Vector2i(600, 400)
+
+[node name="SettingsMenuUI" parent="SubViewport" instance=ExtResource("2_iqt3v")]
+unique_name_in_owner = true
+offset_right = 600.0
+offset_bottom = 400.0
