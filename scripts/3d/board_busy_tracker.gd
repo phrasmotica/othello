@@ -21,6 +21,13 @@ func accept_cells() -> void:
 	for idx in cells_manager_3d.count():
 		var cell := cells_manager_3d.get_cell_3d(idx)
 
+		cell.counter_placing.connect(_handle_counter_placing.bind(idx))
+
+		cell.counter_confirmed.connect(
+			func(data: BoardCellData) -> void:
+				_handle_counter_confirmed(idx, data)
+		)
+
 		cell.counter_lift_started.connect(_handle_lift_started.bind(idx))
 		cell.counter_lift_finished.connect(_handle_lift_finished.bind(idx))
 
@@ -33,6 +40,12 @@ func accept_cells() -> void:
 		tracked_count += 1
 
 	print("BoardBusyTracker accepted %d cell(s)" % tracked_count)
+
+func _handle_counter_placing(idx: int) -> void:
+	_handle_drop_started(idx)
+
+func _handle_counter_confirmed(idx: int, _data: BoardCellData) -> void:
+	_handle_drop_finished(idx)
 
 func _handle_lift_started(idx: int) -> void:
 	if not _busy_lifting.has(idx):
@@ -71,7 +84,7 @@ func _handle_drop_finished(idx: int) -> void:
 		_broadcast()
 
 func _is_free() -> bool:
-	return _busy_lifting.is_empty() and _busy_flipping.is_empty()
+	return _busy_lifting.is_empty() and _busy_flipping.is_empty() and _busy_dropping.is_empty()
 
 func _broadcast() -> void:
 	var is_busy := not _is_free()

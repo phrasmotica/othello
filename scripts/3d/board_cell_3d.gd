@@ -83,6 +83,7 @@ var counter_preview: CounterPreview3D = %CounterPreview
 var _col := 0
 var _row := 0
 
+signal counter_placing
 signal counter_confirmed(data: BoardCellData)
 signal counter_lift_started
 signal counter_lift_finished
@@ -166,6 +167,8 @@ func unpreview_flip() -> void:
 		counter_lifter.drop()
 
 func place_counter(data: BoardCellData) -> void:
+	counter_placing.emit()
+
 	if counter:
 		counter.prevent_tweening = true
 

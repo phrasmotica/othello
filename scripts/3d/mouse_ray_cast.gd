@@ -42,19 +42,20 @@ func _physics_process(_delta: float) -> void:
 			_hovered_cell = cell
 
 			if board:
-				if _board_is_busy or cell.cannot_place:
+				if cell.cannot_place:
 					MouseCursor.set_default()
 
-					board.highlight_cell(-1)
-					_hovered_cell = null
+					if not _board_is_busy:
+						board.highlight_cell(-1)
+						_hovered_cell = null
 				else:
-					MouseCursor.set_pointing()
-
-					board.highlight_cell(cell.index)
+					if not _board_is_busy:
+						MouseCursor.set_pointing()
+						board.highlight_cell(cell.index)
 	else:
 		MouseCursor.set_default()
 
-		if board:
+		if board and not _board_is_busy:
 			board.highlight_cell(-1)
 
 func _unhandled_input(event: InputEvent) -> void:
