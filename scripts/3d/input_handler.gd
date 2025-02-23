@@ -1,6 +1,9 @@
 extends Node
 
 @export
+var entrance: EntranceOrchestrator
+
+@export
 var counter_box: CounterBox
 
 @export
@@ -8,6 +11,14 @@ var settings_menu: SettingsMenu3D
 
 @export
 var camera_rig_animation: AnimationPlayer
+
+func _ready() -> void:
+	set_process(false)
+
+	if entrance:
+		SignalHelper.once(entrance.finished, set_process.bind(true))
+	else:
+		set_process(true)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("peek_counter_box"):

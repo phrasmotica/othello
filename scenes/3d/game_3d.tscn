@@ -157,8 +157,9 @@ board = NodePath("../Board3D")
 counter_box = NodePath("../CounterBox")
 debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
 
-[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("counter_box", "settings_menu", "camera_rig_animation")]
+[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("entrance", "counter_box", "settings_menu", "camera_rig_animation")]
 script = ExtResource("7_vq6r7")
+entrance = NodePath("../EntranceOrchestrator")
 counter_box = NodePath("../CounterBox")
 settings_menu = NodePath("../Board3D/CameraRig/Camera3D/SettingsMenuRig/SettingsMenu3D")
 camera_rig_animation = NodePath("../Board3D/CameraRig/CameraRigAnimation")
