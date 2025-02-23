@@ -37,21 +37,21 @@ func _handle_board_busy_changed(is_busy: bool) -> void:
 func _physics_process(_delta: float) -> void:
 	var cell := _get_hovered_cell()
 
+	if _hovered_cell != cell:
+		_hovered_cell = cell
+
 	if cell:
-		if _hovered_cell != cell:
-			_hovered_cell = cell
+		if board:
+			if cell.cannot_place:
+				MouseCursor.set_default()
 
-			if board:
-				if cell.cannot_place:
-					MouseCursor.set_default()
-
-					if not _board_is_busy:
-						board.highlight_cell(-1)
-						_hovered_cell = null
-				else:
-					if not _board_is_busy:
-						MouseCursor.set_pointing()
-						board.highlight_cell(cell.index)
+				if not _board_is_busy:
+					board.highlight_cell(-1)
+					_hovered_cell = null
+			else:
+				if not _board_is_busy:
+					MouseCursor.set_pointing()
+					board.highlight_cell(cell.index)
 	else:
 		MouseCursor.set_default()
 
