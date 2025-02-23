@@ -32,6 +32,9 @@ var busy_tracker: BoardBusyTracker = %BoardBusyTracker
 @onready
 var cell_data_pool: CellDataPool = %CellDataPool
 
+@onready
+var flip_processor: FlipProcessor = %FlipProcessor
+
 signal initial_state_ready(data: BoardStateData)
 
 signal busy_changed(is_busy: bool)
@@ -49,8 +52,10 @@ signal board_reset
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		SignalHelper.persist(board_state.cell_changed, cell_changed.emit)
+		SignalHelper.chain(board_state.cell_changed, cell_changed)
 		SignalHelper.chain(board_state.state_changed, state_changed)
+
+		SignalHelper.chain(flip_processor.flips_finished, flips_finished)
 
 	_initialise()
 
@@ -116,31 +121,7 @@ func play_random() -> void:
 		cell.place_counter(cell_data_pool.get_next())
 
 func perform_flips(indexes: Array[int]) -> void:
-	if indexes.size() < 0:
-		return
-
-	var count := 0
-
-	for i in indexes:
-		var cell := cells_manager_3d.get_cell_3d(i)
-
-		cell.flip_delay = flip_delay_factor * count
-
-		# MEDIUM: instead, do this once the counter lands on the board again
-		SignalHelper.persist(
-			cell.counter_flip_finished,
-			func() -> void:
-				board_state.set_cell(i, cell.cell_data, false)
-		)
-
-		cell.cell_data = cell_data_pool.flip(cell.cell_data)
-
-		count += 1
-
-	flips_finished.emit(indexes)
-
-func _handle_counter_flip_finished(idx: int, cell_data: BoardCellData) -> void:
-	board_state.set_cell(idx, cell_data, false)
+	flip_processor.perform_flips(indexes, flip_delay_factor)
 
 func preview_flips(indexes: Array[int]) -> void:
 	for i in cells_manager_3d.count():

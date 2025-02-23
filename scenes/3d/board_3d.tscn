@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://2ryiy7bbn55i"]
+[gd_scene load_steps=14 format=3 uid="uid://2ryiy7bbn55i"]
 
 [ext_resource type="PackedScene" uid="uid://8js6lj7t2xty" path="res://scenes/3d/board_cell_3d.tscn" id="1_80kwy"]
 [ext_resource type="Script" path="res://scripts/3d/cells_parent_3d.gd" id="1_ebh4i"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://crcg846yilqdv" path="res://scenes/board_state.tscn" id="4_ch6ci"]
 [ext_resource type="PackedScene" uid="uid://crn1w7viex67d" path="res://scenes/cell_data_pool.tscn" id="4_q7gkl"]
 [ext_resource type="Script" path="res://scripts/3d/board_busy_tracker.gd" id="7_bylm5"]
+[ext_resource type="Script" path="res://scripts/3d/flip_processor.gd" id="8_rt8fx"]
 [ext_resource type="Resource" uid="uid://c5gfjl10d81hu" path="res://resources/empty_counter_data.tres" id="9_i6vqj"]
 [ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="12_ls45f"]
 [ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="13_u6iyn"]
@@ -39,6 +40,13 @@ script = ExtResource("2_1qqbh")
 unique_name_in_owner = true
 script = ExtResource("7_bylm5")
 cells_manager_3d = NodePath("../CellsManager3D")
+
+[node name="FlipProcessor" type="Node" parent="." node_paths=PackedStringArray("board_state", "cell_data_pool", "cells_manager")]
+unique_name_in_owner = true
+script = ExtResource("8_rt8fx")
+board_state = NodePath("../BoardState")
+cell_data_pool = NodePath("../CellDataPool")
+cells_manager = NodePath("../CellsManager3D")
 
 [node name="CellsParent3D" type="Node3D" parent="."]
 script = ExtResource("1_ebh4i")

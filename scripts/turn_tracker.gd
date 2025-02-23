@@ -71,6 +71,9 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 		SignalHelper.once_next_frame(_end_game)
 		return
 
+	print("Colours that can play: ", colours_that_can_play)
+	print("Next turn colour: ", _next_turn_colour)
+
 	if not colours_that_can_play.has(_next_turn_colour):
 		# this is quite an edge case... it might be impossible for colour A to
 		# play, then colour B cannot play, then colour A can play again. But
