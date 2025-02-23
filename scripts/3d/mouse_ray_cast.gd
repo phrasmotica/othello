@@ -10,6 +10,9 @@ var camera: Camera3D
 var board: Board3D
 
 @export
+var settings_menu: Node3D
+
+@export
 var counter_box: CounterBox
 
 const RAY_LENGTH := 100.0
@@ -26,6 +29,12 @@ func _ready() -> void:
 	if board:
 		board.busy_changed.connect(_handle_board_busy_changed)
 
+	if settings_menu:
+		SignalHelper.persist(
+			settings_menu.visibility_changed,
+			_handle_settings_menu_visibility_changed
+		)
+
 func _handle_board_busy_changed(is_busy: bool) -> void:
 	_board_is_busy = is_busy
 
@@ -33,6 +42,11 @@ func _handle_board_busy_changed(is_busy: bool) -> void:
 		print("Board is now busy, pausing mouse processing")
 	else:
 		print("Board is no longer busy, resuming mouse processing")
+
+func _handle_settings_menu_visibility_changed() -> void:
+	print("MouseRayCast processing %s" % not settings_menu.visible)
+
+	set_physics_process(not settings_menu.visible)
 
 func _physics_process(_delta: float) -> void:
 	var cell := _get_hovered_cell()

@@ -3,6 +3,9 @@ extends Node3D
 @export
 var board: Board3D
 
+@export
+var animator: AnimationPlayer
+
 @onready
 var settings_menu_ui: SettingsMenuUI = %SettingsMenuUI
 
@@ -23,4 +26,10 @@ func _handle_preview_flips_toggled(toggled_on: bool) -> void:
 		board.show_flip_previews = toggled_on
 
 func _handle_close_button_pressed() -> void:
+	if animator:
+		SignalHelper.once(animator.animation_finished, _handle_animation_finished)
+		animator.play_backwards("show_settings_menu")
+
+func _handle_animation_finished(_anim_name: StringName) -> void:
+	print("Hiding settings menu")
 	hide()

@@ -6,6 +6,9 @@ var game_logic: OthelloGameLogic
 @export
 var settings_menu: Node3D
 
+@export
+var camera_rig_animation: AnimationPlayer
+
 @onready
 var restart_button: Button = %RestartButton
 
@@ -30,8 +33,10 @@ func _handle_restarted() -> void:
 		game_logic.restart_game()
 
 func _handle_settings() -> void:
-	if settings_menu:
+	if settings_menu and camera_rig_animation:
 		settings_menu.show()
+
+		camera_rig_animation.play("show_settings_menu")
 
 func _handle_quit() -> void:
 	quit_to_main_menu.emit()
