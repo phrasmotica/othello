@@ -67,11 +67,7 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 
 	if colours_that_can_play.size() <= 0:
 		print("Both colours cannot play!")
-
-		# ensure the game is only ended after all of the next_colour_changed
-		# connections have finished, since this method is directly called from
-		# one of them...
-		SignalHelper.once_next_frame(_end_game)
+		SignalHelper.once(_board_3d.freed, _end_game)
 		return
 
 	print("Colours that can play: ", colours_that_can_play)
