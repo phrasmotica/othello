@@ -35,6 +35,12 @@ var next_colour := CounterType.BLACK:
 
 			emit_changed()
 
+func get_cell(key: int) -> BoardCellData:
+	if not cells_data.has(key):
+		return null
+
+	return cells_data[key] as BoardCellData
+
 func set_cell(key: int, data: BoardCellData) -> void:
 	cells_data[key] = data
 

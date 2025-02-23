@@ -30,7 +30,15 @@ func _handle_cell_injected(index: int, data: BoardCellData) -> void:
 	set_cell(index, data, false)
 
 func set_cell(index: int, data: BoardCellData, emit_changed: bool) -> void:
+	var old_data := _current_state.get_cell(index)
+	var old_colour := old_data.counter_presence if old_data else BoardCellData.CounterPresence.NONE
+
 	_current_state.set_cell(index, data)
+
+	var new_data := _current_state.get_cell(index)
+
+	print("Cell %d %d->%d" % [index, old_colour, new_data.counter_presence])
+
 	_broadcast()
 
 	if emit_changed:

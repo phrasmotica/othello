@@ -26,9 +26,14 @@ func perform_flips(indexes: Array[int], flip_delay_factor: float) -> void:
 
 		cell.flip_delay = flip_delay_factor * count
 
+		# the callable needs to be a lambda rather than a bound callable,
+		# because bound callables capture the value of outer variables rather
+		# than getting them by reference. So cell.cell_data would still have its
+		# old value if we used _handle_counter_flip_finished.bind(...)
 		SignalHelper.persist(
 			cell.counter_flip_finished,
-			_handle_counter_flip_finished.bind(i, cell.cell_data, indexes)
+			func() -> void:
+				_handle_counter_flip_finished(i, cell.cell_data, indexes)
 		)
 
 		cell.cell_data = cell_data_pool.flip(cell.cell_data)
