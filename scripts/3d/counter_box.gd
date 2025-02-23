@@ -59,15 +59,19 @@ func _handle_board_reset() -> void:
 
 func start_spawn(skip_finished := false) -> void:
 	if counter_spawner:
-		SignalHelper.once(counter_spawner.finished, _handle_spawning_finished)
+		SignalHelper.once(
+			counter_spawner.finished,
+			_handle_spawning_finished.bind(skip_finished)
+		)
 
-		counter_spawner.spawn_counters(skip_finished)
+		counter_spawner.spawn_counters()
 
-func _handle_spawning_finished() -> void:
+func _handle_spawning_finished(skip_finished: bool) -> void:
 	_is_settled = true
 	set_process(true)
 
-	spawning_finished.emit()
+	if not skip_finished:
+		spawning_finished.emit()
 
 func peek() -> void:
 	if animation_player and not animation_player.is_playing():
