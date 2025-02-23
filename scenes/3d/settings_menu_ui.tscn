@@ -29,6 +29,8 @@ text = "Settings"
 [node name="PreviewFlipsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
 theme_type_variation = &"MenuItemLabel"
 button_pressed = true
 text = "Preview flips"
@@ -40,6 +42,7 @@ size_flags_vertical = 3
 [node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 24
 text = "Close"
