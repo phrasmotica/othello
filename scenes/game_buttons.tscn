@@ -11,7 +11,7 @@ script = ExtResource("1_g2qpf")
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 68)
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 10
 
 [node name="RestartButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
@@ -22,6 +22,16 @@ size_flags_vertical = 4
 focus_mode = 0
 mouse_default_cursor_shape = 2
 text = "Restart"
+
+[node name="SettingsButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+mouse_default_cursor_shape = 2
+text = "Settings"
 
 [node name="MainMenuButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true

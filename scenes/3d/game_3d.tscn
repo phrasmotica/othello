@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=22 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
+[ext_resource type="PackedScene" uid="uid://b4q58aabscvio" path="res://scenes/3d/settings_menu_3d.tscn" id="15_dietl"]
 
 [sub_resource type="Animation" id="Animation_p6wt0"]
 length = 0.001
@@ -157,6 +158,10 @@ libraries = {
 [node name="Camera3D" type="Camera3D" parent="Board3D/CameraRig"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 0)
 
+[node name="SettingsMenu3D" parent="Board3D/CameraRig/Camera3D" node_paths=PackedStringArray("board") instance=ExtResource("15_dietl")]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.38419e-07, -5)
+board = NodePath("../../..")
+
 [node name="UICanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 
 [node name="MarginContainer" type="MarginContainer" parent="Board3D/CameraRig/Camera3D/UICanvas"]
@@ -178,7 +183,7 @@ mouse_filter = 2
 layout_mode = 2
 game_logic = NodePath("../../../../../../../OthelloGameLogic3D")
 
-[node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn" node_paths=PackedStringArray("game_logic") instance=ExtResource("6_50uei")]
+[node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn" node_paths=PackedStringArray("game_logic", "settings_menu") instance=ExtResource("6_50uei")]
 unique_name_in_owner = true
 layout_mode = 2
 offset_left = 68.0
@@ -186,6 +191,7 @@ offset_top = 652.0
 offset_right = 580.0
 offset_bottom = 720.0
 game_logic = NodePath("../../../../../../../OthelloGameLogic3D")
+settings_menu = NodePath("../../../../SettingsMenu3D")
 
 [node name="DebugCanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 
