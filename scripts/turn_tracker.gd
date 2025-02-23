@@ -77,11 +77,13 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 	print("Colours that can play: ", colours_that_can_play)
 	print("Next turn colour: ", _next_turn_colour)
 
-	if not colours_that_can_play.has(_next_turn_colour):
+	var next_colour := ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
+
+	if not colours_that_can_play.has(next_colour):
 		# this is quite an edge case... it might be impossible for colour A to
 		# play, then colour B cannot play, then colour A can play again. But
 		# we have this here for completeness
-		print("%d cannot play!" % _next_turn_colour)
+		print("%d cannot play!" % next_colour)
 		_go_to_next_turn(true)
 
 func _end_game() -> void:
