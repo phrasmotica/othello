@@ -4,6 +4,9 @@ extends Node
 var counter_box: CounterBox
 
 @export
+var settings_menu: SettingsMenu3D
+
+@export
 var camera_rig_animation: AnimationPlayer
 
 func _process(_delta: float) -> void:
@@ -20,3 +23,7 @@ func _process(_delta: float) -> void:
 
 		if camera_rig_animation:
 			camera_rig_animation.play_backwards("peek_box")
+
+	if Input.is_action_just_pressed("toggle_settings_menu"):
+		if settings_menu:
+			settings_menu.toggle_menu()
