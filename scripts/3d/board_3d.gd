@@ -48,7 +48,7 @@ signal cell_changed(index: int, data: BoardCellData)
 
 signal state_changed(data: BoardStateData)
 signal flips_finished(indexes: Array[int])
-signal board_reset
+signal board_reset(old_state: BoardStateData, new_state: BoardStateData)
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -97,13 +97,15 @@ func set_next_colour(colour: BoardStateData.CounterType) -> void:
 		cell_data_pool.next_colour = colour
 
 func restart() -> void:
+	var current_state: BoardStateData
+
 	if board_state:
-		board_state.restart_game()
+		current_state = board_state.restart_game()
 
 	if board_creator:
 		board_creator.inject(initial_state, self)
 
-	board_reset.emit()
+	board_reset.emit(current_state, initial_state)
 
 func play_at(cell: BoardCell3D) -> void:
 	if cell:

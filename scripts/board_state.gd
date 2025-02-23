@@ -16,8 +16,12 @@ func _ready() -> void:
 		board_creator.cell_confirmed.connect(_handle_cell_confirmed)
 		board_creator.cell_injected.connect(_handle_cell_injected)
 
-func restart_game() -> void:
+func restart_game() -> BoardStateData:
+	var old_state := _current_state
+
 	_current_state = BoardStateData.new()
+
+	return old_state
 
 func set_next_colour(type: BoardStateData.CounterType) -> void:
 	_current_state.next_colour = type

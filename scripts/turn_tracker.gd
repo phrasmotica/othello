@@ -95,7 +95,7 @@ func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
 	else:
 		_go_to_next_turn()
 
-func _handle_board_reset() -> void:
+func _handle_board_reset(_old_state: BoardStateData, _new_state: BoardStateData) -> void:
 	_has_game_ended = false
 
 	_next_turn_colour = starting_colour

@@ -52,9 +52,12 @@ func _update_spawner(data: BoardStateData) -> void:
 
 		counter_spawner.spawn_amount = amount
 
-func _handle_board_reset() -> void:
-	# HIGH: spawn in the amount of counters that were removed from the
-	# board as part of the reset
+func _handle_board_reset(old_state: BoardStateData, new_state: BoardStateData) -> void:
+	var counters_removed := old_state.get_counter_count() - new_state.get_counter_count()
+	counter_spawner.spawn_amount = counters_removed
+
+	print("Respawning %d counter(s) that were placed on the board" % counters_removed)
+
 	start_spawn(true)
 
 func start_spawn(skip_finished := false) -> void:

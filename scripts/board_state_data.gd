@@ -44,5 +44,11 @@ func get_cell(key: int) -> BoardCellData:
 func set_cell(key: int, data: BoardCellData) -> void:
 	cells_data[key] = data
 
+func get_counter_count() -> int:
+	return cells_data.values().filter(
+		func(d: BoardCellData) -> bool:
+			return d.has_counter()
+	).size()
+
 func get_remaining_cell_count() -> int:
-	return board_size.x * board_size.y - cells_data.size()
+	return board_size.x * board_size.y - get_counter_count()
