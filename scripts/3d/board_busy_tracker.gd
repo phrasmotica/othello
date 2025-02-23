@@ -7,6 +7,7 @@ var _last_busy := false
 
 var _busy_lifting: Array[int] = []
 var _busy_flipping: Array[int] = []
+var _busy_dropping: Array[int] = []
 
 signal busy_changed(is_busy: bool)
 signal freed
@@ -25,6 +26,9 @@ func accept_cells() -> void:
 
 		cell.counter_flip_started.connect(_handle_flip_started.bind(idx))
 		cell.counter_flip_finished.connect(_handle_flip_finished.bind(idx))
+
+		cell.counter_drop_started.connect(_handle_drop_started.bind(idx))
+		cell.counter_drop_finished.connect(_handle_drop_finished.bind(idx))
 
 		tracked_count += 1
 
@@ -51,6 +55,18 @@ func _handle_flip_started(idx: int) -> void:
 func _handle_flip_finished(idx: int) -> void:
 	if _busy_flipping.has(idx):
 		_busy_flipping.erase(idx)
+
+		_broadcast()
+
+func _handle_drop_started(idx: int) -> void:
+	if not _busy_dropping.has(idx):
+		_busy_dropping.append(idx)
+
+		_broadcast()
+
+func _handle_drop_finished(idx: int) -> void:
+	if _busy_dropping.has(idx):
+		_busy_dropping.erase(idx)
 
 		_broadcast()
 

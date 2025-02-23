@@ -14,16 +14,17 @@ var lift_duration := 0.5
 
 var _animation_state: AnimationState
 
-signal is_holding
 signal lift_started
 signal lift_finished
+signal drop_started
+signal drop_finished
 
 func lift() -> void:
 	if not target_counter:
 		return
 
 	if not _validate_transition(AnimationState.IDLE, AnimationState.LIFTING):
-		is_holding.emit()
+		lift_finished.emit()
 		return
 
 	lift_started.emit()
@@ -39,7 +40,7 @@ func lift() -> void:
 		lift_duration
 	)
 
-	SignalHelper.once(tween.finished, is_holding.emit)
+	SignalHelper.chain_once(tween.finished, lift_finished)
 
 	_set_state_on(tween.finished, AnimationState.HOLDING)
 
@@ -50,11 +51,13 @@ func drop() -> void:
 	if not _validate_transition(AnimationState.HOLDING, AnimationState.DROPPING):
 		return
 
+	drop_started.emit()
+
 	target_counter.enable_rigid_body()
 
 	_set_state_on(target_counter.landed_on_board, AnimationState.IDLE)
 
-	SignalHelper.chain_once(target_counter.landed_on_board, lift_finished)
+	SignalHelper.chain_once(target_counter.landed_on_board, drop_finished)
 
 func _validate_transition(required: AnimationState, next: AnimationState) -> bool:
 	if _animation_state != required:

@@ -88,6 +88,8 @@ signal counter_lift_started
 signal counter_lift_finished
 signal counter_flip_started
 signal counter_flip_finished
+signal counter_drop_started
+signal counter_drop_finished
 
 func _ready():
 	if not Engine.is_editor_hint():
@@ -98,6 +100,9 @@ func _ready():
 
 		SignalHelper.chain(counter_flipper.flip_started, counter_flip_started)
 		SignalHelper.persist(counter_flipper.flip_finished, _handle_flip_finished)
+
+		SignalHelper.chain(counter_lifter.drop_started, counter_drop_started)
+		SignalHelper.chain(counter_lifter.drop_finished, counter_drop_finished)
 
 	_refresh()
 

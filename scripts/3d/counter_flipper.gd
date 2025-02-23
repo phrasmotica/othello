@@ -40,7 +40,7 @@ func _flip_counter(flippable: Node3D, flip_delay: float) -> void:
 	var flip_callable := _do_flip.bind(flippable, flip_delay)
 
 	if counter_lifter:
-		SignalHelper.once(counter_lifter.is_holding, flip_callable)
+		SignalHelper.once(counter_lifter.lift_finished, flip_callable)
 		counter_lifter.lift()
 	else:
 		flip_callable.call()
