@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="OptionCyclerSet" load_steps=2 format=3 uid="uid://dctuvim81hd2m"]
+
+[ext_resource type="Script" path="res://scripts/option_cycler_set.gd" id="1_5d3g1"]
+
+[resource]
+script = ExtResource("1_5d3g1")
+items = Array[String](["Purple Room", "Space Galaxy"])
