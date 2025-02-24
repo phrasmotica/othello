@@ -12,7 +12,7 @@ var selected_index := -1:
 var world_environment: WorldEnvironment
 
 @export
-var options: Array[EnvironmentOption] = []
+var options: EnvironmentOptions
 
 func _refresh() -> void:
 	if not world_environment:
@@ -21,7 +21,7 @@ func _refresh() -> void:
 	if selected_index < 0 or selected_index >= options.size():
 		return
 
-	var option := options[selected_index]
+	var option := options.get_option(selected_index)
 
 	world_environment.environment = option.environment
 

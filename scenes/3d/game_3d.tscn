@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=26 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -15,10 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
 [ext_resource type="Script" path="res://scripts/3d/input_handler.gd" id="7_vq6r7"]
 [ext_resource type="Script" path="res://scripts/3d/environment_manager.gd" id="8_3kus1"]
+[ext_resource type="Resource" uid="uid://ckoxrses1ro38" path="res://resources/all_environment_options.tres" id="10_27s3k"]
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
-[ext_resource type="Script" path="res://scripts/environment_option.gd" id="10_pqncn"]
-[ext_resource type="Resource" uid="uid://dm0lfgjgx0im1" path="res://resources/environment_option_purple_room.tres" id="11_a50bi"]
-[ext_resource type="Resource" uid="uid://cqvslskc5x531" path="res://resources/environment_option_space_galaxy.tres" id="12_f0ron"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
 [ext_resource type="PackedScene" uid="uid://b4q58aabscvio" path="res://scenes/3d/settings_menu_3d.tscn" id="15_dietl"]
@@ -174,7 +172,7 @@ camera_rig_animation = NodePath("../Board3D/CameraRig/CameraRigAnimation")
 script = ExtResource("8_3kus1")
 selected_index = 0
 world_environment = NodePath("../WorldEnvironment")
-options = Array[ExtResource("10_pqncn")]([ExtResource("11_a50bi"), ExtResource("12_f0ron")])
+options = ExtResource("10_27s3k")
 
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")

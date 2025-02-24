@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://0ivagoypmkgb"]
+[gd_scene load_steps=8 format=3 uid="uid://0ivagoypmkgb"]
 
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_yf03n"]
 [ext_resource type="Script" path="res://scripts/3d/settings_menu_ui.gd" id="2_u8hd8"]
 [ext_resource type="PackedScene" uid="uid://7utsvufla0f1" path="res://scenes/check_box_proxy.tscn" id="3_byn2t"]
 [ext_resource type="PackedScene" uid="uid://lbqmnqo7w6yg" path="res://scenes/option_cycler.tscn" id="4_xnd0h"]
-[ext_resource type="Resource" uid="uid://p7grssxwbghx" path="res://resources/option_cycler_set_environment_options.tres" id="5_0vly7"]
+[ext_resource type="Resource" uid="uid://ckoxrses1ro38" path="res://resources/all_environment_options.tres" id="5_n2t54"]
+[ext_resource type="Script" path="res://scripts/environment_option_cycler_set.gd" id="8_ntl0d"]
+
+[sub_resource type="Resource" id="Resource_i27vk"]
+script = ExtResource("8_ntl0d")
+environment_options = ExtResource("5_n2t54")
 
 [node name="SettingsMenuUI" type="PanelContainer"]
 custom_minimum_size = Vector2(600, 400)
@@ -68,7 +73,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
 size_flags_vertical = 4
-option_set = ExtResource("5_0vly7")
+option_set = SubResource("Resource_i27vk")
 selected_index = 0
 
 [node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer"]
