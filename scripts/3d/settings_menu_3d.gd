@@ -6,6 +6,9 @@ var board: Board3D
 @export
 var animator: AnimationPlayer
 
+@export
+var environment_manager: EnvironmentManager
+
 @onready
 var settings_menu_ui: SettingsMenuUI = %SettingsMenuUI
 
@@ -17,6 +20,12 @@ func _ready() -> void:
 			settings_menu_ui.preview_flips_check_box_toggled,
 			_handle_preview_flips_toggled
 		)
+
+		if environment_manager:
+			SignalHelper.persist(
+				settings_menu_ui.environment_cycler_selected_index_changed,
+				environment_manager.handle_index_changed
+			)
 
 		SignalHelper.persist(
 			settings_menu_ui.close_button_pressed,

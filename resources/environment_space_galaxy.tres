@@ -1,0 +1,16 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://ba8xk8g8d38ml"]
+
+[ext_resource type="Texture2D" uid="uid://bvpqyied3mgmi" path="res://assets/images/galaxy-1.jpg" id="1_rwbi5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ewufg"]
+panorama = ExtResource("1_rwbi5")
+
+[sub_resource type="Sky" id="Sky_g1fc0"]
+sky_material = SubResource("PanoramaSkyMaterial_ewufg")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_g1fc0")
+sky_rotation = Vector3(2.0944, 0, 0)
+tonemap_mode = 2
+glow_enabled = true
