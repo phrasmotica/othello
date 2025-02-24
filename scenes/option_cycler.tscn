@@ -18,10 +18,11 @@ mouse_default_cursor_shape = 2
 text = "< Prev"
 
 [node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Option 0"
+text = "???"
 horizontal_alignment = 1
 
 [node name="NextButton" type="Button" parent="."]
