@@ -24,7 +24,8 @@ func _ready() -> void:
 		if environment_manager:
 			SignalHelper.persist(
 				settings_menu_ui.environment_cycler_selected_index_changed,
-				environment_manager.handle_index_changed
+				func(index: int) -> void:
+					environment_manager.selected_index = index
 			)
 
 		SignalHelper.persist(

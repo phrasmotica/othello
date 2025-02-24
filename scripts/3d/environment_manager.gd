@@ -4,36 +4,29 @@ class_name EnvironmentManager extends Node
 @export
 var selected_index := -1:
 	set(value):
-		var new_index := clampi(value, 0, 1)
+		selected_index = clampi(value, 0, 1)
 
-		selected_index = new_index
-
-		handle_index_changed(selected_index)
-
-@export
-var purple_room: Node3D
+		_refresh()
 
 @export
 var world_environment: WorldEnvironment
 
-@onready
-var purple_sky_environment: Environment = load("res://resources/environment_purple_sky.tres")
+@export
+var options: Array[EnvironmentOption] = []
 
-@onready
-var space_galaxy_environment: Environment = load("res://resources/environment_space_galaxy.tres")
-
-# HIGH: make all of this more generalisable. Create a resource class for a given
-# environment setting, containing an environment resource, lists of nodes to
-# show/hide, etc.
-
-func handle_index_changed(index: int) -> void:
-	if not purple_room or not world_environment:
+func _refresh() -> void:
+	if not world_environment:
 		return
 
-	if index == 0:
-		purple_room.show()
-		world_environment.environment = purple_sky_environment
+	if selected_index < 0 or selected_index >= options.size():
+		return
 
-	if index == 1:
-		purple_room.hide()
-		world_environment.environment = space_galaxy_environment
+	var option := options[selected_index]
+
+	world_environment.environment = option.environment
+
+	for p in option.nodes_to_show:
+		(get_node(p) as Node3D).show()
+
+	for p in option.nodes_to_hide:
+		(get_node(p) as Node3D).hide()
