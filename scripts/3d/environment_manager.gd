@@ -17,6 +17,9 @@ var purple_room: Node3D
 var world_environment: WorldEnvironment
 
 @onready
+var purple_sky_environment: Environment = load("res://resources/environment_purple_sky.tres")
+
+@onready
 var space_galaxy_environment: Environment = load("res://resources/environment_space_galaxy.tres")
 
 # HIGH: make all of this more generalisable. Create a resource class for a given
@@ -29,7 +32,7 @@ func handle_index_changed(index: int) -> void:
 
 	if index == 0:
 		purple_room.show()
-		world_environment.environment = null
+		world_environment.environment = purple_sky_environment
 
 	if index == 1:
 		purple_room.hide()
