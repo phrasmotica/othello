@@ -44,7 +44,7 @@ func _get_max_index() -> int:
 	if not option_set:
 		return -1
 
-	return option_set.items.size() - 1
+	return option_set.get_count() - 1
 
 func _change_index(amount: int) -> void:
 	selected_index += amount
