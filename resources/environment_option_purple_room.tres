@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("2_v2hvr")
+name = "Purple Room"
 environment = ExtResource("1_77447")
 nodes_to_show = Array[NodePath]([NodePath("../PurpleRoom")])
 nodes_to_hide = Array[NodePath]([])

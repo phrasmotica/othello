@@ -1,6 +1,9 @@
 class_name EnvironmentOption extends Resource
 
 @export
+var name := ""
+
+@export
 var environment: Environment
 
 @export
