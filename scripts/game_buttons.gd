@@ -18,6 +18,7 @@ var settings_button: Button = %SettingsButton
 @onready
 var main_menu_button: Button = %MainMenuButton
 
+signal starting_animation_finished
 signal quit_to_main_menu
 
 func _ready() -> void:
@@ -27,6 +28,13 @@ func _ready() -> void:
 	restart_button.pressed.connect(_handle_restarted)
 	settings_button.pressed.connect(_handle_settings)
 	main_menu_button.pressed.connect(_handle_quit)
+
+func anim_in() -> void:
+	# TODO: improve this. We should create an AnimationPlayer in the Game3D
+	# scene, to have it move in from below...
+	show()
+
+	starting_animation_finished.emit()
 
 func _handle_restarted() -> void:
 	if game_logic:

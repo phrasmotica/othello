@@ -137,13 +137,14 @@ environment = ExtResource("3_8eoxk")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.382683, 0.92388, 0, -0.92388, 0.382683, 0, 20, 4)
 
-[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "camera_rig_to_box_animation", "counter_box", "score_ui")]
+[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "camera_rig_to_box_animation", "counter_box", "score_ui", "game_buttons")]
 unique_name_in_owner = true
 script = ExtResource("2_a6jhs")
 board_entrance_animation = NodePath("Board3DEntranceAnimation")
 camera_rig_to_box_animation = NodePath("CameraRigToBoxAnimation")
 counter_box = NodePath("../CounterBox")
 score_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn/ScoreUI")
+game_buttons = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn/GameButtons")
 
 [node name="Board3DEntranceAnimation" type="Node" parent="EntranceOrchestrator" node_paths=PackedStringArray("board", "camera_rig")]
 script = ExtResource("2_756rn")

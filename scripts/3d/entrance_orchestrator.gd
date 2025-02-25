@@ -12,6 +12,9 @@ var counter_box: CounterBox
 @export
 var score_ui: ScoreUI
 
+@export
+var game_buttons: GameButtons
+
 signal finished
 
 func _ready() -> void:
@@ -19,13 +22,17 @@ func _ready() -> void:
 	assert(camera_rig_to_box_animation != null)
 	assert(counter_box != null)
 	assert(score_ui != null)
+	assert(game_buttons != null)
+
+	game_buttons.hide()
 
 	_queue(board_entrance_animation.finished, camera_rig_to_box_animation.anim_in, 0.5)
 	_queue(camera_rig_to_box_animation.finished_in, counter_box.start_spawn)
 	_queue(counter_box.spawning_finished, camera_rig_to_box_animation.anim_out)
 	_queue(camera_rig_to_box_animation.finished_out, score_ui.anim_in, 0.5)
+	_queue(score_ui.starting_animation_finished, game_buttons.anim_in)
 
-	SignalHelper.chain(score_ui.starting_animation_finished, finished)
+	SignalHelper.chain(game_buttons.starting_animation_finished, finished)
 
 func _queue(sig: Signal, callable: Callable, delay := 0.0) -> void:
 	if delay > 0:
