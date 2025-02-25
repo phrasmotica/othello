@@ -2,23 +2,7 @@
 class_name CounterBox extends Node3D
 
 @export
-var disable_environment := false:
-	set(value):
-		disable_environment = value
-
-		_refresh()
-
-@export
 var board: Board3D
-
-@onready
-var world_environment: WorldEnvironment = %WorldEnvironment
-
-@onready
-var light: DirectionalLight3D = %DirectionalLight3D
-
-@onready
-var camera: Camera3D = %Camera3D
 
 @onready
 var counter_spawner: CounterSpawner = %CounterSpawner
@@ -26,7 +10,6 @@ var counter_spawner: CounterSpawner = %CounterSpawner
 @onready
 var animation_player: AnimationPlayer = %AnimationPlayer
 
-var _original_environment: Environment
 var _is_settled := false
 
 signal spawning_finished
@@ -37,12 +20,7 @@ func _ready() -> void:
 			SignalHelper.persist(board.initial_state_ready, _update_spawner)
 			SignalHelper.persist(board.board_reset, _handle_board_reset)
 
-	if world_environment:
-		_original_environment = world_environment.environment
-
 	set_process(false)
-
-	_refresh()
 
 func _update_spawner(data: BoardStateData) -> void:
 	if counter_spawner:
@@ -107,16 +85,3 @@ func take_top() -> void:
 
 	var top_counter: Counter3D = counters.pop_front()
 	top_counter.queue_free()
-
-func _refresh() -> void:
-	if world_environment:
-		world_environment.environment = _get_environment()
-
-	if light:
-		light.visible = not disable_environment
-
-	if camera:
-		camera.visible = not disable_environment
-
-func _get_environment() -> Environment:
-	return null if disable_environment else _original_environment

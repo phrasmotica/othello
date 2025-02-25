@@ -1,38 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://vitji75rxe4c"]
+[gd_scene load_steps=12 format=3 uid="uid://vitji75rxe4c"]
 
 [ext_resource type="Script" path="res://scripts/3d/counter_box.gd" id="1_4mkf8"]
 [ext_resource type="PackedScene" uid="uid://bf5dm6wwvkf4o" path="res://scenes/3d/counter_spawner.tscn" id="3_cbe4a"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2gxw"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_gl837"]
-sky_material = SubResource("ProceduralSkyMaterial_h2gxw")
-
-[sub_resource type="Environment" id="Environment_415p1"]
-background_mode = 2
-sky = SubResource("Sky_gl837")
-tonemap_mode = 2
-glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hx00k"]
-albedo_color = Color(0.464225, 0.410052, 0.22435, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ehg72"]
-size = Vector3(6, 0.2, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2jxm0"]
-size = Vector3(6, 1, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4tmoa"]
-size = Vector3(6, 1, 0.2)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5njnd"]
-size = Vector3(0.2, 1, 2.6)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_qwtpj"]
-size = Vector3(0.2, 1, 2.6)
 
 [sub_resource type="Animation" id="Animation_mv1c1"]
 length = 0.001
@@ -96,21 +65,32 @@ _data = {
 "peek": SubResource("Animation_yrmvg")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hx00k"]
+albedo_color = Color(0.464225, 0.410052, 0.22435, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ehg72"]
+size = Vector3(6, 0.2, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2jxm0"]
+size = Vector3(6, 1, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4tmoa"]
+size = Vector3(6, 1, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5njnd"]
+size = Vector3(0.2, 1, 2.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qwtpj"]
+size = Vector3(0.2, 1, 2.6)
+
 [node name="CounterBox" type="Node3D"]
 script = ExtResource("1_4mkf8")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
-environment = SubResource("Environment_415p1")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-shadow_enabled = true
-
-[node name="Camera3D" type="Camera3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 3)
+libraries = {
+"": SubResource("AnimationLibrary_u0wyp")
+}
 
 [node name="CounterBoxCSG" type="CSGCombiner3D" parent="."]
 material_override = SubResource("StandardMaterial3D_hx00k")
@@ -171,9 +151,3 @@ collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CounterBoxCSG/WallX1/StaticBody3D"]
 shape = SubResource("BoxShape3D_qwtpj")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-"": SubResource("AnimationLibrary_u0wyp")
-}
