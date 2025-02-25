@@ -101,10 +101,16 @@ _data = {
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("2_myd6w")]
+[node name="EnvironmentManager" type="Node" parent="." node_paths=PackedStringArray("world_environment")]
+script = ExtResource("8_3kus1")
+selected_index = 0
+world_environment = NodePath("WorldEnvironment")
+options = ExtResource("10_27s3k")
+
+[node name="WorldEnvironment" parent="EnvironmentManager" instance=ExtResource("2_myd6w")]
 environment = ExtResource("3_8eoxk")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentManager"]
 transform = Transform3D(1, 0, 0, 0, 0.382683, 0.92388, 0, -0.92388, 0.382683, 0, 20, 4)
 
 [node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "camera_rig_to_box_animation", "counter_box", "game_ui")]
@@ -125,34 +131,30 @@ script = ExtResource("5_uolml")
 camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
 camera_rig = NodePath("../../Board3D/CameraRig")
 
+[node name="InputHandlers" type="Node" parent="."]
+
+[node name="MouseRayCast" type="Node3D" parent="InputHandlers" node_paths=PackedStringArray("entrance", "camera", "board", "settings_menu_rig", "counter_box")]
+script = ExtResource("2_11kum")
+entrance = NodePath("../../EntranceOrchestrator")
+camera = NodePath("../../Board3D/CameraRig/Camera3D")
+board = NodePath("../../Board3D")
+settings_menu_rig = NodePath("../../Board3D/CameraRig/Camera3D/SettingsMenuRig")
+counter_box = NodePath("../../CounterBox")
+
+[node name="InputHandler" type="Node" parent="InputHandlers" node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation")]
+script = ExtResource("7_vq6r7")
+entrance = NodePath("../../EntranceOrchestrator")
+counter_box = NodePath("../../CounterBox")
+camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
+
 [node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "counter_box", "debug_canvas")]
 script = ExtResource("1_r07sb")
 board = NodePath("../Board3D")
 counter_box = NodePath("../CounterBox")
 debug_canvas = NodePath("../DebugCanvas")
 
-[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation")]
-script = ExtResource("7_vq6r7")
-entrance = NodePath("../EntranceOrchestrator")
-counter_box = NodePath("../CounterBox")
-camera_rig_animation = NodePath("../Board3D/CameraRig/CameraRigAnimation")
-
-[node name="EnvironmentManager" type="Node" parent="." node_paths=PackedStringArray("world_environment")]
-script = ExtResource("8_3kus1")
-selected_index = 0
-world_environment = NodePath("../WorldEnvironment")
-options = ExtResource("10_27s3k")
-
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
-
-[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance", "camera", "board", "settings_menu_rig", "counter_box")]
-script = ExtResource("2_11kum")
-entrance = NodePath("../EntranceOrchestrator")
-camera = NodePath("../Board3D/CameraRig/Camera3D")
-board = NodePath("../Board3D")
-settings_menu_rig = NodePath("../Board3D/CameraRig/Camera3D/SettingsMenuRig")
-counter_box = NodePath("../CounterBox")
 
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -170,7 +172,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 0)
 
 [node name="SettingsMenuRig" parent="Board3D/CameraRig/Camera3D" node_paths=PackedStringArray("input_handler", "environment_manager", "board", "game_ui") instance=ExtResource("15_axfc3")]
-input_handler = NodePath("../../../../InputHandler")
+input_handler = NodePath("../../../../InputHandlers/InputHandler")
 environment_manager = NodePath("../../../../EnvironmentManager")
 board = NodePath("../../..")
 game_ui = NodePath("../../../../UICanvas/GameUI")
