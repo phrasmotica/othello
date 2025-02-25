@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 func chain(sig1: Signal, sig2: Signal) -> void:

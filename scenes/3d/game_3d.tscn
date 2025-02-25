@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=25 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -9,10 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://c03r8nvs2ic2s" path="res://scenes/3d/world_environment.tscn" id="2_myd6w"]
 [ext_resource type="PackedScene" uid="uid://b3axiqvovsmhd" path="res://scenes/3d/othello_game_logic_3d.tscn" id="2_wfqod"]
 [ext_resource type="Environment" uid="uid://jftitu6ynm64" path="res://resources/environment/environment_purple_sky.tres" id="3_8eoxk"]
-[ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="5_1k7n7"]
 [ext_resource type="PackedScene" uid="uid://h7i6lleviljq" path="res://scenes/3d/camera_rig.tscn" id="5_o4xlo"]
 [ext_resource type="Script" path="res://scripts/3d/camera_rig_to_box_animation.gd" id="5_uolml"]
-[ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="6_50uei"]
 [ext_resource type="Script" path="res://scripts/3d/input_handler.gd" id="7_vq6r7"]
 [ext_resource type="Script" path="res://scripts/3d/environment_manager.gd" id="8_3kus1"]
 [ext_resource type="Resource" uid="uid://ckoxrses1ro38" path="res://resources/environment/all_environment_options.tres" id="10_27s3k"]
@@ -20,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
 [ext_resource type="PackedScene" uid="uid://b4q58aabscvio" path="res://scenes/3d/settings_menu_3d.tscn" id="15_dietl"]
+[ext_resource type="PackedScene" uid="uid://csifkwxcn4vbs" path="res://scenes/game_ui.tscn" id="16_5tjil"]
 
 [sub_resource type="Animation" id="Animation_p6wt0"]
 length = 0.001
@@ -137,14 +136,13 @@ environment = ExtResource("3_8eoxk")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.382683, 0.92388, 0, -0.92388, 0.382683, 0, 20, 4)
 
-[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "camera_rig_to_box_animation", "counter_box", "score_ui", "game_buttons")]
+[node name="EntranceOrchestrator" type="Node" parent="." node_paths=PackedStringArray("board_entrance_animation", "camera_rig_to_box_animation", "counter_box", "game_ui")]
 unique_name_in_owner = true
 script = ExtResource("2_a6jhs")
 board_entrance_animation = NodePath("Board3DEntranceAnimation")
 camera_rig_to_box_animation = NodePath("CameraRigToBoxAnimation")
 counter_box = NodePath("../CounterBox")
-score_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn/ScoreUI")
-game_buttons = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn/GameButtons")
+game_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/GameUI")
 
 [node name="Board3DEntranceAnimation" type="Node" parent="EntranceOrchestrator" node_paths=PackedStringArray("board", "camera_rig")]
 script = ExtResource("2_756rn")
@@ -212,35 +210,11 @@ environment_manager = NodePath("../../../../../EnvironmentManager")
 
 [node name="UICanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 
-[node name="MarginContainer" type="MarginContainer" parent="Board3D/CameraRig/Camera3D/UICanvas"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="MiddleColumn" type="Control" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer"]
-editor_description = "This is required for the ScoreUI menu_in animation to position the UI correctly."
-custom_minimum_size = Vector2(648, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-
-[node name="ScoreUI" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn" node_paths=PackedStringArray("game_logic") instance=ExtResource("5_1k7n7")]
-layout_mode = 2
-game_logic = NodePath("../../../../../../../OthelloGameLogic3D")
-
-[node name="GameButtons" parent="Board3D/CameraRig/Camera3D/UICanvas/MarginContainer/MiddleColumn" node_paths=PackedStringArray("game_logic", "settings_menu", "camera_rig_animation") instance=ExtResource("6_50uei")]
+[node name="GameUI" parent="Board3D/CameraRig/Camera3D/UICanvas" node_paths=PackedStringArray("game_logic", "settings_menu", "camera_rig_animation") instance=ExtResource("16_5tjil")]
 unique_name_in_owner = true
-layout_mode = 2
-offset_left = 68.0
-offset_top = 652.0
-offset_right = 580.0
-offset_bottom = 720.0
-game_logic = NodePath("../../../../../../../OthelloGameLogic3D")
-settings_menu = NodePath("../../../../SettingsMenuRig/SettingsMenu3D")
-camera_rig_animation = NodePath("../../../../../CameraRigAnimation")
+game_logic = NodePath("../../../../../OthelloGameLogic3D")
+settings_menu = NodePath("../../SettingsMenuRig/SettingsMenu3D")
+camera_rig_animation = NodePath("../../../CameraRigAnimation")
 
 [node name="DebugCanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 

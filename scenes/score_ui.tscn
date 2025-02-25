@@ -1,47 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dbt4l8heggobx"]
+[gd_scene load_steps=6 format=3 uid="uid://dbt4l8heggobx"]
 
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_pid2x"]
 [ext_resource type="Script" path="res://scripts/score_ui.gd" id="1_uk3uu"]
-[ext_resource type="PackedScene" uid="uid://d0n6174v3afnm" path="res://scenes/black_score_panel.tscn" id="3_2wp1v"]
-[ext_resource type="PackedScene" uid="uid://d62squatyj1u" path="res://scenes/white_score_panel.tscn" id="4_odres"]
+[ext_resource type="PackedScene" path="res://scenes/black_score_panel.tscn" id="3_2wp1v"]
+[ext_resource type="PackedScene" path="res://scenes/white_score_panel.tscn" id="4_odres"]
 [ext_resource type="PackedScene" uid="uid://cc88n0044q3ad" path="res://scenes/result_panel.tscn" id="5_5isde"]
-
-[sub_resource type="Animation" id="Animation_22oap"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_6vxla"]
-resource_name = "menu_in"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, -72), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7h8wr"]
-_data = {
-"RESET": SubResource("Animation_22oap"),
-"menu_in": SubResource("Animation_6vxla")
-}
 
 [node name="ScoreUI" type="VBoxContainer"]
 custom_minimum_size = Vector2(648, 0)
@@ -53,7 +16,6 @@ mouse_filter = 2
 theme = ExtResource("1_pid2x")
 theme_override_constants/separation = 0
 script = ExtResource("1_uk3uu")
-starting_animation = &"menu_in"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 68)
@@ -74,9 +36,3 @@ size_flags_vertical = 0
 [node name="ResultPanel" parent="." instance=ExtResource("5_5isde")]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-"": SubResource("AnimationLibrary_7h8wr")
-}

@@ -7,7 +7,7 @@ var main_menu_scene: PackedScene = load("res://scenes/3d/main_menu_3d.tscn")
 var entrance: EntranceOrchestrator = %EntranceOrchestrator
 
 @onready
-var buttons: GameButtons = %GameButtons
+var game_ui: GameUI = %GameUI
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -16,8 +16,8 @@ func _ready() -> void:
 	if entrance:
 		entrance.run()
 
-	if buttons:
-		buttons.quit_to_main_menu.connect(_handle_quit)
+	if game_ui:
+		game_ui.quit_to_main_menu.connect(_handle_quit)
 
 func _handle_quit() -> void:
 	if main_menu_scene:
