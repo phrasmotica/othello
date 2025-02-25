@@ -19,6 +19,7 @@ const RAY_LENGTH := 100.0
 
 var _board_is_busy := false
 var _hovered_cell: BoardCell3D
+var _hovered_counter_box: CounterBox
 var _is_ready := false
 
 func _ready() -> void:
@@ -58,6 +59,10 @@ func _set_enabled(is_enabled: bool) -> void:
 	set_physics_process(is_enabled)
 
 func _physics_process(_delta: float) -> void:
+	_process_hovered_cell()
+	_process_hovered_counter_box()
+
+func _process_hovered_cell() -> void:
 	var cell := _get_hovered_cell()
 
 	if _hovered_cell != cell:
@@ -81,6 +86,30 @@ func _physics_process(_delta: float) -> void:
 		if board and not _board_is_busy:
 			board.highlight_cell(-1)
 
+func _process_hovered_counter_box() -> void:
+	var box := _get_hovered_counter_box()
+
+	if _hovered_counter_box != box:
+		# assume there's only one box...
+		var just_hovered := not _hovered_counter_box and box
+		var just_unhovered := _hovered_counter_box and not box
+
+		if just_hovered:
+			SignalHelper.once(box.peek_finished, _handle_peek_finished)
+			box.peek()
+
+		if just_unhovered:
+			_hovered_counter_box.unpeek()
+
+		# we need this extra variable to track whether we were/weren't hovering
+		# during the last update.
+		# MEDIUM: could be simplified into a flag...
+		_hovered_counter_box = box
+
+func _handle_peek_finished() -> void:
+	if not _hovered_counter_box:
+		counter_box.unpeek()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -102,6 +131,21 @@ func _get_hovered_cell() -> BoardCell3D:
 		var tile := result["collider"] as StaticBody3D
 		var cell := tile.get_parent_node_3d() as BoardCell3D
 		return cell
+
+	return null
+
+func _get_hovered_counter_box() -> CounterBox:
+	var result := _cast_ray(4) # counter box only
+
+	if result.has("collider"):
+		var body := result["collider"] as StaticBody3D
+
+		var box := body.get_parent_node_3d()
+
+		while not (box is CounterBox):
+			box = box.get_parent_node_3d()
+
+		return box as CounterBox
 
 	return null
 
