@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/board.gd" id="1_2oqc0"]
 [ext_resource type="PackedScene" uid="uid://flkpinjhixfv" path="res://scenes/board_cell.tscn" id="1_52xkg"]
-[ext_resource type="Resource" uid="uid://w8ur2oaq7rpo" path="res://resources/initial_state_default.tres" id="2_dkars"]
+[ext_resource type="Resource" uid="uid://w8ur2oaq7rpo" path="res://resources/board_state/initial_state_default.tres" id="2_dkars"]
 [ext_resource type="Script" path="res://scripts/board_creator.gd" id="4_0bgla"]
 [ext_resource type="PackedScene" uid="uid://crcg846yilqdv" path="res://scenes/board_state.tscn" id="4_tlmts"]
 [ext_resource type="Script" path="res://scripts/cells_manager.gd" id="6_5xf7n"]

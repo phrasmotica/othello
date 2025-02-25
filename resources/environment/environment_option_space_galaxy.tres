@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnvironmentOption" load_steps=3 format=3 uid="uid://cqvslskc5x531"]
 
-[ext_resource type="Environment" uid="uid://ba8xk8g8d38ml" path="res://resources/environment_space_galaxy.tres" id="1_ro5ex"]
+[ext_resource type="Environment" uid="uid://ba8xk8g8d38ml" path="res://resources/environment/environment_space_galaxy.tres" id="1_ro5ex"]
 [ext_resource type="Script" path="res://scripts/environment_option.gd" id="2_nwrt1"]
 
 [resource]

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnvironmentOption" load_steps=3 format=3 uid="uid://dm0lfgjgx0im1"]
 
-[ext_resource type="Environment" uid="uid://jftitu6ynm64" path="res://resources/environment_purple_sky.tres" id="1_77447"]
+[ext_resource type="Environment" uid="uid://jftitu6ynm64" path="res://resources/environment/environment_purple_sky.tres" id="1_77447"]
 [ext_resource type="Script" path="res://scripts/environment_option.gd" id="2_v2hvr"]
 
 [resource]
