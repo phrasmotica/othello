@@ -10,7 +10,7 @@ var camera: Camera3D
 var board: Board3D
 
 @export
-var settings_menu: Node3D
+var settings_menu: SettingsMenu3D
 
 @export
 var counter_box: CounterBox

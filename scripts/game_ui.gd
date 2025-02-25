@@ -7,12 +7,6 @@ var starting_animation: StringName
 @export
 var game_logic: OthelloGameLogic
 
-@export
-var settings_menu: Node3D
-
-@export
-var camera_rig_animation: AnimationPlayer
-
 @onready
 var score_ui: ScoreUI = %ScoreUI
 
@@ -23,6 +17,7 @@ var buttons: GameButtons = %GameButtons
 var animation_player: AnimationPlayer = %AnimationPlayer
 
 signal starting_animation_finished
+signal toggled_settings
 signal quit_to_main_menu
 
 func _ready() -> void:
@@ -34,11 +29,8 @@ func _ready() -> void:
 
 		if not Engine.is_editor_hint():
 			SignalHelper.persist(buttons.restarted, game_logic.restart_game)
-			SignalHelper.persist(buttons.toggle_settings, _handle_settings)
+			SignalHelper.chain(buttons.toggle_settings, toggled_settings)
 			SignalHelper.chain(buttons.quit_to_main_menu, quit_to_main_menu)
-
-	if settings_menu:
-		settings_menu.hide()
 
 	if animation_player:
 		SignalHelper.persist(animation_player.animation_finished, _handle_animation_finished)
@@ -51,11 +43,3 @@ func anim_in() -> void:
 func _handle_animation_finished(anim_name: StringName) -> void:
 	if anim_name == starting_animation:
 		starting_animation_finished.emit()
-
-func _handle_settings() -> void:
-	# HIGH: don't handle this all from here. Emit a signal and handle it higher
-	# up in the scene instead
-	if settings_menu and camera_rig_animation:
-		settings_menu.show()
-
-		camera_rig_animation.play("show_settings_menu")
