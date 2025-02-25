@@ -113,7 +113,7 @@ script = ExtResource("2_a6jhs")
 board_entrance_animation = NodePath("Board3DEntranceAnimation")
 camera_rig_to_box_animation = NodePath("CameraRigToBoxAnimation")
 counter_box = NodePath("../CounterBox")
-game_ui = NodePath("../Board3D/CameraRig/Camera3D/UICanvas/GameUI")
+game_ui = NodePath("../UICanvas/GameUI")
 
 [node name="Board3DEntranceAnimation" type="Node" parent="EntranceOrchestrator" node_paths=PackedStringArray("board", "camera_rig")]
 script = ExtResource("2_756rn")
@@ -129,7 +129,7 @@ camera_rig = NodePath("../../Board3D/CameraRig")
 script = ExtResource("1_r07sb")
 board = NodePath("../Board3D")
 counter_box = NodePath("../CounterBox")
-debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
+debug_canvas = NodePath("../DebugCanvas")
 
 [node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation")]
 script = ExtResource("7_vq6r7")
@@ -173,21 +173,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 
 input_handler = NodePath("../../../../InputHandler")
 environment_manager = NodePath("../../../../EnvironmentManager")
 board = NodePath("../../..")
-game_ui = NodePath("../UICanvas/GameUI")
-
-[node name="UICanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
-
-[node name="GameUI" parent="Board3D/CameraRig/Camera3D/UICanvas" node_paths=PackedStringArray("game_logic") instance=ExtResource("16_5tjil")]
-unique_name_in_owner = true
-game_logic = NodePath("../../../../../OthelloGameLogic3D")
-
-[node name="DebugCanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
-
-[node name="DebugUI" parent="Board3D/CameraRig/Camera3D/DebugCanvas" node_paths=PackedStringArray("board") instance=ExtResource("10_mrax3")]
-unique_name_in_owner = true
-offset_right = 319.0
-size_flags_horizontal = 0
-board = NodePath("../../../..")
+game_ui = NodePath("../../../../UICanvas/GameUI")
 
 [node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]
 
@@ -195,3 +181,17 @@ board = NodePath("../../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
 disable_environment = true
 board = NodePath("../Board3D")
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="GameUI" parent="UICanvas" node_paths=PackedStringArray("game_logic") instance=ExtResource("16_5tjil")]
+unique_name_in_owner = true
+game_logic = NodePath("../../OthelloGameLogic3D")
+
+[node name="DebugCanvas" type="CanvasLayer" parent="."]
+
+[node name="DebugUI" parent="DebugCanvas" node_paths=PackedStringArray("board") instance=ExtResource("10_mrax3")]
+unique_name_in_owner = true
+offset_right = 319.0
+size_flags_horizontal = 0
+board = NodePath("../../Board3D")
