@@ -22,6 +22,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("peek_counter_box"):
 		if counter_box:
+			SignalHelper.once(counter_box.peek_finished, _handle_peek_finished)
 			counter_box.peek()
 
 		if camera_rig_animation:
@@ -36,3 +37,7 @@ func _process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("toggle_settings_menu"):
 		toggled_settings.emit()
+
+func _handle_peek_finished() -> void:
+	if not Input.is_action_pressed("peek_counter_box"):
+		counter_box.unpeek()

@@ -13,6 +13,7 @@ var animation_player: AnimationPlayer = %AnimationPlayer
 var _is_settled := false
 
 signal spawning_finished
+signal peek_finished
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
@@ -66,8 +67,7 @@ func unpeek() -> void:
 
 func _handle_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "peek":
-		if not Input.is_action_pressed("peek_counter_box"):
-			unpeek()
+		peek_finished.emit()
 
 func take_top() -> void:
 	if not _is_settled:
