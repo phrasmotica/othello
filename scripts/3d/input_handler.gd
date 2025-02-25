@@ -1,4 +1,4 @@
-extends Node
+class_name InputHandler extends Node
 
 @export
 var entrance: EntranceOrchestrator
@@ -7,10 +7,9 @@ var entrance: EntranceOrchestrator
 var counter_box: CounterBox
 
 @export
-var settings_menu: SettingsMenu3D
-
-@export
 var camera_rig_animation: AnimationPlayer
+
+signal toggled_settings
 
 func _ready() -> void:
 	set_process(false)
@@ -36,5 +35,4 @@ func _process(_delta: float) -> void:
 			camera_rig_animation.play_backwards("peek_box")
 
 	if Input.is_action_just_pressed("toggle_settings_menu"):
-		if settings_menu:
-			settings_menu.toggle_menu()
+		toggled_settings.emit()

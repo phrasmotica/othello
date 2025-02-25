@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b1motxf0wbelw"]
+[gd_scene load_steps=24 format=3 uid="uid://b1motxf0wbelw"]
 
 [ext_resource type="Script" path="res://scripts/3d/game_3d.gd" id="1_b1isx"]
 [ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_r07sb"]
@@ -17,8 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
-[ext_resource type="PackedScene" uid="uid://b4q58aabscvio" path="res://scenes/3d/settings_menu_3d.tscn" id="15_dietl"]
-[ext_resource type="Script" path="res://scripts/3d/settings_menu_rig.gd" id="15_ysdxk"]
+[ext_resource type="PackedScene" uid="uid://c78e1rknte6o" path="res://scenes/3d/settings_menu_rig.tscn" id="15_axfc3"]
 [ext_resource type="PackedScene" uid="uid://csifkwxcn4vbs" path="res://scenes/game_ui.tscn" id="16_5tjil"]
 
 [sub_resource type="Animation" id="Animation_p6wt0"]
@@ -99,43 +98,6 @@ _data = {
 "to_box": SubResource("Animation_s5702")
 }
 
-[sub_resource type="Animation" id="Animation_or5q4"]
-resource_name = "show_settings_menu"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(-1.5708, 0, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_h5v45"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-1.5708, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tfjnf"]
-_data = {
-"RESET": SubResource("Animation_h5v45"),
-"show_settings_menu": SubResource("Animation_or5q4")
-}
-
 [node name="Game3D" type="Node3D"]
 script = ExtResource("1_b1isx")
 
@@ -169,11 +131,10 @@ board = NodePath("../Board3D")
 counter_box = NodePath("../CounterBox")
 debug_canvas = NodePath("../Board3D/CameraRig/Camera3D/DebugCanvas")
 
-[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("entrance", "counter_box", "settings_menu", "camera_rig_animation")]
+[node name="InputHandler" type="Node" parent="." node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation")]
 script = ExtResource("7_vq6r7")
 entrance = NodePath("../EntranceOrchestrator")
 counter_box = NodePath("../CounterBox")
-settings_menu = NodePath("../Board3D/CameraRig/Camera3D/SettingsMenuRig/SettingsMenu3D")
 camera_rig_animation = NodePath("../Board3D/CameraRig/CameraRigAnimation")
 
 [node name="EnvironmentManager" type="Node" parent="." node_paths=PackedStringArray("world_environment")]
@@ -185,12 +146,12 @@ options = ExtResource("10_27s3k")
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
 board_3d = NodePath("../Board3D")
 
-[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance", "camera", "board", "settings_menu", "counter_box")]
+[node name="MouseRayCast" type="Node3D" parent="." node_paths=PackedStringArray("entrance", "camera", "board", "settings_menu_rig", "counter_box")]
 script = ExtResource("2_11kum")
 entrance = NodePath("../EntranceOrchestrator")
 camera = NodePath("../Board3D/CameraRig/Camera3D")
 board = NodePath("../Board3D")
-settings_menu = NodePath("../Board3D/CameraRig/Camera3D/SettingsMenuRig/SettingsMenu3D")
+settings_menu_rig = NodePath("../Board3D/CameraRig/Camera3D/SettingsMenuRig")
 counter_box = NodePath("../CounterBox")
 
 [node name="Board3D" parent="." instance=ExtResource("2_2hvj3")]
@@ -208,23 +169,11 @@ libraries = {
 [node name="Camera3D" type="Camera3D" parent="Board3D/CameraRig"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 0)
 
-[node name="SettingsMenuRig" type="Node3D" parent="Board3D/CameraRig/Camera3D" node_paths=PackedStringArray("game_ui", "animation", "settings_menu")]
-transform = Transform3D(1, 0, 0, 0, -3.61999e-06, 1, 0, -1, -3.61999e-06, 0, 0, 0)
-script = ExtResource("15_ysdxk")
+[node name="SettingsMenuRig" parent="Board3D/CameraRig/Camera3D" node_paths=PackedStringArray("input_handler", "environment_manager", "board", "game_ui") instance=ExtResource("15_axfc3")]
+input_handler = NodePath("../../../../InputHandler")
+environment_manager = NodePath("../../../../EnvironmentManager")
+board = NodePath("../../..")
 game_ui = NodePath("../UICanvas/GameUI")
-animation = NodePath("SettingsMenuAnimation")
-settings_menu = NodePath("SettingsMenu3D")
-
-[node name="SettingsMenuAnimation" type="AnimationPlayer" parent="Board3D/CameraRig/Camera3D/SettingsMenuRig"]
-libraries = {
-"": SubResource("AnimationLibrary_tfjnf")
-}
-
-[node name="SettingsMenu3D" parent="Board3D/CameraRig/Camera3D/SettingsMenuRig" node_paths=PackedStringArray("board", "animator", "environment_manager") instance=ExtResource("15_dietl")]
-transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 3.57628e-07, -5)
-board = NodePath("../../../..")
-animator = NodePath("../SettingsMenuAnimation")
-environment_manager = NodePath("../../../../../EnvironmentManager")
 
 [node name="UICanvas" type="CanvasLayer" parent="Board3D/CameraRig/Camera3D"]
 

@@ -10,7 +10,7 @@ var camera: Camera3D
 var board: Board3D
 
 @export
-var settings_menu: SettingsMenu3D
+var settings_menu_rig: SettingsMenuRig
 
 @export
 var counter_box: CounterBox
@@ -22,7 +22,7 @@ var _hovered_cell: BoardCell3D
 var _is_ready := false
 
 func _ready() -> void:
-	set_physics_process(false)
+	_set_enabled(false)
 
 	if entrance:
 		SignalHelper.persist(entrance.finished, _handle_entrance_finished)
@@ -30,15 +30,15 @@ func _ready() -> void:
 	if board:
 		SignalHelper.persist(board.busy_changed, _handle_board_busy_changed)
 
-	if settings_menu:
+	if settings_menu_rig:
 		SignalHelper.persist(
-			settings_menu.visibility_changed,
+			settings_menu_rig.settings_menu_toggled,
 			_handle_settings_menu_visibility_changed
 		)
 
 func _handle_entrance_finished() -> void:
 	_is_ready = true
-	_set_enabled(not settings_menu.visible)
+	_set_enabled(true)
 
 func _handle_board_busy_changed(is_busy: bool) -> void:
 	_board_is_busy = is_busy
@@ -48,8 +48,8 @@ func _handle_board_busy_changed(is_busy: bool) -> void:
 	else:
 		print("Board is no longer busy, resuming mouse processing")
 
-func _handle_settings_menu_visibility_changed() -> void:
-	var is_enabled := _is_ready and not settings_menu.visible
+func _handle_settings_menu_visibility_changed(menu_is_visible: bool) -> void:
+	var is_enabled := _is_ready and not menu_is_visible
 	_set_enabled(is_enabled)
 
 func _set_enabled(is_enabled: bool) -> void:
