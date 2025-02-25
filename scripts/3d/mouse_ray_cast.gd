@@ -96,8 +96,18 @@ func _unhandled_input(event: InputEvent) -> void:
 					board.play_at(_hovered_cell)
 
 func _get_hovered_cell() -> BoardCell3D:
+	var result := _cast_ray(2) # board tiles only, not counters
+
+	if result.has("collider"):
+		var tile := result["collider"] as StaticBody3D
+		var cell := tile.get_parent_node_3d() as BoardCell3D
+		return cell
+
+	return null
+
+func _cast_ray(collision_mask: int) -> Dictionary:
 	if not camera:
-		return
+		return {}
 
 	# https://forum.godotengine.org/t/godot-4-how-to-cast-a-ray-from-mouse-position-towards-camera-orientation-in-3d/5280/2
 	var mouse_pos := get_viewport().get_mouse_position()
@@ -110,13 +120,6 @@ func _get_hovered_cell() -> BoardCell3D:
 	var params := PhysicsRayQueryParameters3D.new()
 	params.from = from
 	params.to = to
-	params.collision_mask = 2 # board tiles only, not counters
+	params.collision_mask = collision_mask
 
-	var result := space_state.intersect_ray(params)
-
-	if result.has("collider"):
-		var tile := result["collider"] as StaticBody3D
-		var cell := tile.get_parent_node_3d() as BoardCell3D
-		return cell
-
-	return null
+	return space_state.intersect_ray(params)
