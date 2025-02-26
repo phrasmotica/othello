@@ -194,7 +194,6 @@ game_logic = NodePath("../../OthelloGameLogic3D")
 [node name="DebugCanvas" type="CanvasLayer" parent="."]
 
 [node name="DebugUI" parent="DebugCanvas" node_paths=PackedStringArray("board") instance=ExtResource("10_mrax3")]
-unique_name_in_owner = true
 offset_right = 319.0
 size_flags_horizontal = 0
 board = NodePath("../../Board3D")
