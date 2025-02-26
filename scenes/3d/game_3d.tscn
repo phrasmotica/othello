@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://duyv0dq1ikr5y" path="res://scenes/3d/debug_ui.tscn" id="10_mrax3"]
 [ext_resource type="PackedScene" uid="uid://de5xco2vjeejf" path="res://scenes/3d/purple_room.tscn" id="13_yr2oc"]
 [ext_resource type="PackedScene" uid="uid://vitji75rxe4c" path="res://scenes/3d/counter_box.tscn" id="14_upf2v"]
-[ext_resource type="PackedScene" uid="uid://c78e1rknte6o" path="res://scenes/3d/settings_menu_rig.tscn" id="15_axfc3"]
+[ext_resource type="PackedScene" path="res://scenes/3d/settings_menu_rig.tscn" id="15_axfc3"]
 [ext_resource type="PackedScene" uid="uid://csifkwxcn4vbs" path="res://scenes/game_ui.tscn" id="16_5tjil"]
 
 [sub_resource type="Animation" id="Animation_p6wt0"]

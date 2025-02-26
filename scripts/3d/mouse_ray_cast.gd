@@ -19,7 +19,7 @@ const RAY_LENGTH := 100.0
 
 var _board_is_busy := false
 var _hovered_cell: BoardCell3D
-var _hovered_counter_box: CounterBox
+var _counter_box_is_hovered := false
 var _is_ready := false
 
 func _ready() -> void:
@@ -87,27 +87,25 @@ func _process_hovered_cell() -> void:
 			board.highlight_cell(-1)
 
 func _process_hovered_counter_box() -> void:
-	var box := _get_hovered_counter_box()
+	var is_now_hovered := _is_counter_box_hovered()
 
-	if _hovered_counter_box != box:
-		# assume there's only one box...
-		var just_hovered := not _hovered_counter_box and box
-		var just_unhovered := _hovered_counter_box and not box
+	if _counter_box_is_hovered != is_now_hovered:
+		var just_hovered := not _counter_box_is_hovered and is_now_hovered
+		var just_unhovered := _counter_box_is_hovered and not is_now_hovered
 
 		if just_hovered:
-			SignalHelper.once(box.peek_finished, _handle_peek_finished)
-			box.peek()
+			SignalHelper.once(counter_box.peek_finished, _handle_peek_finished)
+			counter_box.peek()
 
 		if just_unhovered:
-			_hovered_counter_box.unpeek()
+			counter_box.unpeek()
 
 		# we need this extra variable to track whether we were/weren't hovering
 		# during the last update.
-		# MEDIUM: could be simplified into a flag...
-		_hovered_counter_box = box
+		_counter_box_is_hovered = is_now_hovered
 
 func _handle_peek_finished() -> void:
-	if not _hovered_counter_box:
+	if not _counter_box_is_hovered:
 		counter_box.unpeek()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -134,7 +132,7 @@ func _get_hovered_cell() -> BoardCell3D:
 
 	return null
 
-func _get_hovered_counter_box() -> CounterBox:
+func _is_counter_box_hovered() -> bool:
 	var result := _cast_ray(4) # counter box only
 
 	if result.has("collider"):
@@ -145,9 +143,9 @@ func _get_hovered_counter_box() -> CounterBox:
 		while not (box is CounterBox):
 			box = box.get_parent_node_3d()
 
-		return box as CounterBox
+		return box == counter_box
 
-	return null
+	return false
 
 func _cast_ray(collision_mask: int) -> Dictionary:
 	if not camera:
