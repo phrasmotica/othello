@@ -15,6 +15,8 @@ signal close_button_pressed
 
 func _ready() -> void:
 	if preview_flips_check_box:
+		MouseCursor.set_pointing_cursor_for_control(preview_flips_check_box)
+
 		SignalHelper.chain(
 			preview_flips_check_box.toggled,
 			preview_flips_check_box_toggled
@@ -27,6 +29,8 @@ func _ready() -> void:
 		)
 
 	if close_button:
+		MouseCursor.set_pointing_cursor_for_control(close_button)
+
 		SignalHelper.chain(
 			close_button.pressed,
 			close_button_pressed

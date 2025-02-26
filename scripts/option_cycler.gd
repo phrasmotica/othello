@@ -32,9 +32,13 @@ signal selected_index_changed(index: int)
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		if prev_button:
+			MouseCursor.set_pointing_cursor_for_control(prev_button)
+
 			SignalHelper.persist(prev_button.pressed, _change_index.bind(-1))
 
 		if next_button:
+			MouseCursor.set_pointing_cursor_for_control(next_button)
+
 			SignalHelper.persist(next_button.pressed, _change_index.bind(1))
 
 	# attempt to set the first item. This will trigger a _refresh() call

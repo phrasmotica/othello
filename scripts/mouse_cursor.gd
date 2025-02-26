@@ -22,3 +22,10 @@ func set_drag() -> void:
 
 func set_default() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
+## Ensures the mouse cursor changes to a pointing cursor when the given control
+## is entered by the mouse, even if it's being rendered inside a SubViewport.
+## Note that this does not honour any disabled state the control might have.
+func set_pointing_cursor_for_control(control: Control) -> void:
+	SignalHelper.persist(control.mouse_entered, set_pointing)
+	SignalHelper.persist(control.mouse_exited, set_default)
