@@ -133,13 +133,14 @@ camera_rig = NodePath("../../Board3D/CameraRig")
 
 [node name="InputHandlers" type="Node" parent="."]
 
-[node name="MouseRayCast" type="Node3D" parent="InputHandlers" node_paths=PackedStringArray("entrance", "camera", "board", "settings_menu_rig", "counter_box")]
+[node name="MouseRayCast" type="Node3D" parent="InputHandlers" node_paths=PackedStringArray("entrance", "camera", "board", "settings_menu_rig", "counter_box", "camera_rig_animation")]
 script = ExtResource("2_11kum")
 entrance = NodePath("../../EntranceOrchestrator")
 camera = NodePath("../../Board3D/CameraRig/Camera3D")
 board = NodePath("../../Board3D")
 settings_menu_rig = NodePath("../../Board3D/CameraRig/Camera3D/SettingsMenuRig")
 counter_box = NodePath("../../CounterBox")
+camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
 
 [node name="InputHandler" type="Node" parent="InputHandlers" node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation")]
 script = ExtResource("7_vq6r7")

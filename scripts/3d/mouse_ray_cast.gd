@@ -15,12 +15,17 @@ var settings_menu_rig: SettingsMenuRig
 @export
 var counter_box: CounterBox
 
+@export
+var camera_rig_animation: AnimationPlayer
+
 const RAY_LENGTH := 100.0
 
-var _board_is_busy := false
-var _hovered_cell: BoardCell3D
-var _counter_box_is_hovered := false
 var _is_ready := false
+var _board_is_busy := false
+var _counter_box_is_hovered := false
+
+var _hovered_cell: BoardCell3D
+var _hovered_cell_can_be_played := false
 
 func _ready() -> void:
 	_set_enabled(false)
@@ -61,6 +66,7 @@ func _set_enabled(is_enabled: bool) -> void:
 func _physics_process(_delta: float) -> void:
 	_process_hovered_cell()
 	_process_hovered_counter_box()
+	_adjust_mouse_cursor()
 
 func _process_hovered_cell() -> void:
 	var cell := _get_hovered_cell()
@@ -71,17 +77,18 @@ func _process_hovered_cell() -> void:
 	if cell:
 		if board:
 			if cell.cannot_place:
-				MouseCursor.set_default()
+				_hovered_cell_can_be_played = false
 
 				if not _board_is_busy:
 					board.highlight_cell(-1)
 					_hovered_cell = null
 			else:
 				if not _board_is_busy:
-					MouseCursor.set_pointing()
+					_hovered_cell_can_be_played = true
+
 					board.highlight_cell(cell.index)
 	else:
-		MouseCursor.set_default()
+		_hovered_cell_can_be_played = false
 
 		if board and not _board_is_busy:
 			board.highlight_cell(-1)
@@ -97,8 +104,14 @@ func _process_hovered_counter_box() -> void:
 			SignalHelper.once(counter_box.peek_finished, _handle_peek_finished)
 			counter_box.peek()
 
+			if camera_rig_animation:
+				camera_rig_animation.play("peek_box")
+
 		if just_unhovered:
 			counter_box.unpeek()
+
+			if camera_rig_animation:
+				camera_rig_animation.play_backwards("peek_box")
 
 		# we need this extra variable to track whether we were/weren't hovering
 		# during the last update.
@@ -108,6 +121,17 @@ func _handle_peek_finished() -> void:
 	if not _counter_box_is_hovered:
 		counter_box.unpeek()
 
+func _adjust_mouse_cursor() -> void:
+	if _counter_box_is_hovered:
+		MouseCursor.set_drag()
+		return
+
+	if _hovered_cell_can_be_played:
+		MouseCursor.set_pointing()
+		return
+
+	MouseCursor.set_default()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -115,7 +139,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				print("Left button was clicked at ", event.position)
 
 				if _hovered_cell and not _hovered_cell.cannot_place and board:
-					MouseCursor.set_default()
+					# cell is now busy
+					_hovered_cell_can_be_played = false
 
 					if counter_box:
 						counter_box.take_top()
