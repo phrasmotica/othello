@@ -141,7 +141,7 @@ func _compute_indexes(pos: Vector2i, offsets: Array[Vector2i], regex: RegEx) -> 
 			# counter in the sequence
 			ray_cells = ray_cells.slice(0, search_length - 1)
 
-			print(ray_cells)
+			# print(ray_cells)
 
 			indexes.append_array(ray_cells)
 
