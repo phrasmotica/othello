@@ -9,6 +9,9 @@ var counter_box: CounterBox
 @export
 var camera_rig_animation: AnimationPlayer
 
+@export
+var game_logic: OthelloGameLogic
+
 signal toggled_settings
 
 func _ready() -> void:
@@ -37,6 +40,10 @@ func _process(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("toggle_settings_menu"):
 		toggled_settings.emit()
+
+	if Input.is_action_just_pressed("restart_game"):
+		if game_logic:
+			game_logic.restart_game()
 
 func _handle_peek_finished() -> void:
 	if not Input.is_action_pressed("peek_counter_box"):

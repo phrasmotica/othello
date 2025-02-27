@@ -142,11 +142,12 @@ settings_menu_rig = NodePath("../../Board3D/CameraRig/Camera3D/SettingsMenuRig")
 counter_box = NodePath("../../CounterBox")
 camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
 
-[node name="InputHandler" type="Node" parent="InputHandlers" node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation")]
+[node name="InputHandler" type="Node" parent="InputHandlers" node_paths=PackedStringArray("entrance", "counter_box", "camera_rig_animation", "game_logic")]
 script = ExtResource("7_vq6r7")
 entrance = NodePath("../../EntranceOrchestrator")
 counter_box = NodePath("../../CounterBox")
 camera_rig_animation = NodePath("../../Board3D/CameraRig/CameraRigAnimation")
+game_logic = NodePath("../../OthelloGameLogic3D")
 
 [node name="DebugHandler3D" type="Node" parent="." node_paths=PackedStringArray("board", "counter_box", "debug_canvas")]
 script = ExtResource("1_r07sb")
