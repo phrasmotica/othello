@@ -25,8 +25,6 @@ var rigid_body: RigidBody3D = %RigidBody3D
 @onready
 var counter_halves: CounterHalves = %CounterHalves
 
-var _is_flipping := false
-
 signal refreshed
 signal needs_flip(counter_halves: CounterHalves, flip_delay: float)
 signal landed_on_board
@@ -62,11 +60,8 @@ func flip_if_needed() -> void:
 	else:
 		needs_flip.emit(counter_halves, flip_delay)
 
-func update_gravity(cell_data: BoardCellData) -> void:
-	# don't make the counter suddenly fall back to the board if it's in the
-	# middle of the flipping animation
-	if not _is_flipping:
-		rigid_body.gravity_scale = 1 if cell_data and cell_data.has_counter() else 0
+func update_gravity(g_scale: int) -> void:
+	rigid_body.gravity_scale = g_scale
 
 func _handle_body_entered(_body: Node) -> void:
 	landed_on_board.emit()

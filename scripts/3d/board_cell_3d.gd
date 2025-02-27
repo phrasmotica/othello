@@ -46,7 +46,7 @@ var debug_mode := false:
 		if debug_mode != value:
 			debug_mode = value
 
-			_refresh_debug()
+			_refresh()
 
 @export
 var even_tile_mesh: BoxMesh
@@ -122,32 +122,26 @@ func set_pos(col: int, row: int) -> void:
 
 	_refresh()
 
-func _refresh_debug() -> void:
-	_refresh_tile_mesh()
-
-	if index_label:
-		index_label.visible = debug_mode
-
 func _refresh() -> void:
 	_refresh_tile_mesh()
 
+	var has_counter := cell_data and cell_data.has_counter()
+
 	if counter:
 		counter.debug_name = "Counter%d" % index
-		counter.visible = cell_data.has_counter() if cell_data else false
+		counter.visible = has_counter
 
 		counter.flip_delay = flip_delay
 		counter.is_white = cell_data.is_white() if cell_data else false
-		counter.update_gravity(cell_data)
+		counter.update_gravity(1 if has_counter else 0)
 
 	if counter_preview:
-		counter_preview.visible = show_preview
-
-		if cell_data and cell_data.has_counter():
-			counter_preview.visible = false
+		counter_preview.visible = (show_preview or debug_mode) and not has_counter
 
 		counter_preview.is_white = next_colour == BoardStateData.CounterType.WHITE
 
 	if index_label:
+		index_label.visible = debug_mode
 		index_label.text = str(index)
 
 func _refresh_tile_mesh() -> void:
