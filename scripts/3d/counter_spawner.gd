@@ -83,8 +83,6 @@ func _get_rotation_offset() -> Vector3:
 
 func _emit_finished() -> void:
 	for c in _counters:
-		var rb := c.get_child(0) as RigidBody3D
-
-		rb.freeze = true
+		c.disable_rigid_body()
 
 	finished.emit()

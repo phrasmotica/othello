@@ -129,6 +129,7 @@ func _refresh() -> void:
 
 	if counter:
 		counter.debug_name = "Counter%d" % index
+		counter.debug_mode = debug_mode
 		counter.visible = has_counter
 
 		counter.flip_delay = flip_delay

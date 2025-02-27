@@ -35,5 +35,8 @@ func _handle_toggled_debug_mode(is_debug: bool) -> void:
 func _refresh() -> void:
 	set_process(_is_debug)
 
+	if counter_box:
+		counter_box.debug_mode = _is_debug
+
 	if debug_canvas:
 		debug_canvas.visible = _is_debug

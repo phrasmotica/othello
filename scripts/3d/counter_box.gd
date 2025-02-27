@@ -2,6 +2,13 @@
 class_name CounterBox extends Node3D
 
 @export
+var debug_mode := false:
+	set(value):
+		debug_mode = value
+
+		_refresh()
+
+@export
 var board: Board3D
 
 @onready
@@ -22,6 +29,13 @@ func _ready() -> void:
 			SignalHelper.persist(board.board_reset, _handle_board_reset)
 
 	set_process(false)
+
+func _refresh() -> void:
+	if not counter_spawner:
+		return
+
+	for c in counter_spawner.get_counters():
+		c.debug_mode = debug_mode
 
 func _update_spawner(data: BoardStateData) -> void:
 	if counter_spawner:

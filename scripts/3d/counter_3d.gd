@@ -11,6 +11,14 @@ var is_white: bool:
 
 		flip_if_needed()
 
+@export
+var debug_mode := false:
+	set(value):
+		if debug_mode != value:
+			debug_mode = value
+
+			_refresh()
+
 @export_group("Animation")
 
 @export
@@ -24,6 +32,9 @@ var rigid_body: RigidBody3D = %RigidBody3D
 
 @onready
 var counter_halves: CounterHalves = %CounterHalves
+
+@onready
+var rigid_body_indicator: FlagIndicator = %RigidBodyIndicator
 
 signal refreshed
 signal needs_flip(counter_halves: CounterHalves, flip_delay: float)
@@ -39,10 +50,12 @@ func _ready() -> void:
 func disable_rigid_body() -> void:
 	if rigid_body:
 		rigid_body.freeze = true
+		rigid_body_indicator.is_active = false
 
 func enable_rigid_body() -> void:
 	if rigid_body:
 		rigid_body.freeze = false
+		rigid_body_indicator.is_active = true
 
 func reset_position() -> void:
 	if rigid_body:
@@ -51,6 +64,9 @@ func reset_position() -> void:
 func _refresh() -> void:
 	if counter_halves:
 		counter_halves.is_white = is_white
+
+	if rigid_body_indicator:
+		rigid_body_indicator.visible = debug_mode
 
 	refreshed.emit()
 

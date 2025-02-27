@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfqujlwguvw4b"]
+[gd_scene load_steps=6 format=3 uid="uid://cfqujlwguvw4b"]
 
 [ext_resource type="Script" path="res://scripts/3d/counter_3d.gd" id="1_dcfqh"]
 [ext_resource type="PackedScene" uid="uid://bkt1f3hgpfwi1" path="res://scenes/3d/counter_halves.tscn" id="2_61rnl"]
+[ext_resource type="PackedScene" uid="uid://ctrca5n6xfwwu" path="res://scenes/3d/flag_indicator.tscn" id="3_um325"]
+[ext_resource type="SphereMesh" uid="uid://bbbal7vof4jgv" path="res://meshes/flag_indicator_active_mesh.tres" id="4_usnw1"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ijrpa"]
 height = 0.125
@@ -21,3 +23,9 @@ shape = SubResource("CylinderShape3D_ijrpa")
 
 [node name="CounterHalves" parent="RigidBody3D" instance=ExtResource("2_61rnl")]
 unique_name_in_owner = true
+
+[node name="RigidBodyIndicator" parent="RigidBody3D" instance=ExtResource("3_um325")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0)
+mesh = ExtResource("4_usnw1")
+is_active = true
