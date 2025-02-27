@@ -63,11 +63,6 @@ func reset_position() -> void:
 
 		rigid_body.position = Vector3.ZERO
 
-		# BUG: figure out why, after a restart, counters that were flipped in
-		# the previous game have their starting height increasing by the flip
-		# height in each consecutive game...
-		print("%s " % debug_name, position)
-
 		enable_rigid_body()
 
 func _refresh() -> void:

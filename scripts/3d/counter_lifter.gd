@@ -33,10 +33,11 @@ func lift() -> void:
 
 	var tween := create_tween()
 
+	# MEDIUM: create this tween inside the Counter3D script
 	tween.tween_property(
-		target_counter,
+		target_counter.rigid_body,
 		"position:y",
-		target_counter.position.y + lift_height,
+		target_counter.rigid_body.position.y + lift_height,
 		lift_duration
 	)
 
