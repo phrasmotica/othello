@@ -41,6 +41,13 @@ func accept_cells() -> void:
 
 	print("BoardBusyTracker accepted %d cell(s)" % tracked_count)
 
+func evict_all() -> void:
+	_busy_lifting.clear()
+	_busy_flipping.clear()
+	_busy_dropping.clear()
+
+	_broadcast()
+
 func _handle_counter_placing(idx: int) -> void:
 	_handle_drop_started(idx)
 

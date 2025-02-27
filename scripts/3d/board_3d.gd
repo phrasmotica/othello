@@ -100,6 +100,9 @@ func is_free() -> bool:
 	return busy_tracker.is_free()
 
 func restart() -> void:
+	if busy_tracker:
+		busy_tracker.evict_all()
+
 	var current_state: BoardStateData
 
 	if board_state:
@@ -107,6 +110,10 @@ func restart() -> void:
 
 	if board_creator:
 		board_creator.inject(initial_state, self)
+
+	for i in cells_manager_3d.count():
+		var cell := cells_manager_3d.get_cell_3d(i)
+		cell.restart()
 
 	board_reset.emit(current_state, initial_state)
 

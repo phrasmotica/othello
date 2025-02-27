@@ -130,14 +130,14 @@ func _refresh() -> void:
 	if counter:
 		counter.debug_name = "Counter%d" % index
 		counter.debug_mode = debug_mode
-		counter.visible = has_counter
+		counter.visible = has_counter or debug_mode
 
 		counter.flip_delay = flip_delay
 		counter.is_white = cell_data.is_white() if cell_data else false
 		counter.update_gravity(1 if has_counter else 0)
 
 	if counter_preview:
-		counter_preview.visible = (show_preview or debug_mode) and not has_counter
+		counter_preview.visible = (show_preview) and not has_counter
 
 		counter_preview.is_white = next_colour == BoardStateData.CounterType.WHITE
 
@@ -178,5 +178,10 @@ func place_counter(data: BoardCellData) -> void:
 	SignalHelper.once(counter.landed_on_board, callable)
 
 func _handle_counter_landed_on_board(data: BoardCellData) -> void:
+	# BUG: this seems to cause some counters to clip through the board slightly...
 	counter.disable_rigid_body()
 	counter_confirmed.emit(data)
+
+func restart() -> void:
+	if counter:
+		counter.reset_position()
