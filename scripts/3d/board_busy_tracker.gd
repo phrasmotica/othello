@@ -83,11 +83,11 @@ func _handle_drop_finished(idx: int) -> void:
 
 		_broadcast()
 
-func _is_free() -> bool:
+func is_free() -> bool:
 	return _busy_lifting.is_empty() and _busy_flipping.is_empty() and _busy_dropping.is_empty()
 
 func _broadcast() -> void:
-	var is_busy := not _is_free()
+	var is_busy := not is_free()
 
 	if _last_busy != is_busy:
 		busy_changed.emit(is_busy)

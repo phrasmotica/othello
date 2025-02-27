@@ -96,6 +96,9 @@ func set_next_colour(colour: BoardStateData.CounterType) -> void:
 	if cell_data_pool:
 		cell_data_pool.next_colour = colour
 
+func is_free() -> bool:
+	return busy_tracker.is_free()
+
 func restart() -> void:
 	var current_state: BoardStateData
 
