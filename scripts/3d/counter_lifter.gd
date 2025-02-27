@@ -57,7 +57,11 @@ func drop() -> void:
 
 	_set_state_on(target_counter.landed_on_board, AnimationState.IDLE)
 
-	SignalHelper.chain_once(target_counter.landed_on_board, drop_finished)
+	SignalHelper.once(target_counter.landed_on_board, _handle_drop_finished)
+
+func _handle_drop_finished() -> void:
+	target_counter.disable_rigid_body()
+	drop_finished.emit()
 
 func _validate_transition(required: AnimationState, next: AnimationState) -> bool:
 	if _animation_state != required:

@@ -162,19 +162,21 @@ func unpreview_flip() -> void:
 		counter_lifter.drop()
 
 func place_counter(data: BoardCellData) -> void:
+	if not counter:
+		return
+
 	counter_placing.emit()
 
-	if counter:
-		counter.prevent_tweening = true
+	counter.prevent_tweening = true
+	counter.reset_position()
 
 	cell_data = data
 
 	counter.prevent_tweening = false
 
-	if counter:
-		counter.reset_position()
+	var callable := _handle_counter_landed_on_board.bind(cell_data)
+	SignalHelper.once(counter.landed_on_board, callable)
 
-		var callable := counter_confirmed.emit.bind(cell_data)
-		SignalHelper.once(counter.landed_on_board, callable)
-	else:
-		counter_confirmed.emit(cell_data)
+func _handle_counter_landed_on_board(data: BoardCellData) -> void:
+	counter.disable_rigid_body()
+	counter_confirmed.emit(data)
