@@ -185,3 +185,8 @@ func _handle_counter_landed_on_board(data: BoardCellData) -> void:
 func restart() -> void:
 	if counter:
 		counter.reset_position()
+
+	# HIGH: cancel the animations in the CounterLifter and CounterFlipper
+	# scripts, and make sure the appropriate ending signals are still emitted.
+	# These animations are causing issues if the restart happens while the board
+	# is still busy...
