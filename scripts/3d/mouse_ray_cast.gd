@@ -35,6 +35,7 @@ func _ready() -> void:
 
 	if board:
 		SignalHelper.persist(board.busy_changed, _handle_board_busy_changed)
+		SignalHelper.persist(board.board_reset, _handle_board_reset)
 
 	if settings_menu_rig:
 		SignalHelper.persist(
@@ -53,6 +54,14 @@ func _handle_board_busy_changed(is_busy: bool) -> void:
 		print("Board is now busy, pausing mouse processing")
 	else:
 		print("Board is no longer busy, resuming mouse processing")
+
+func _handle_board_reset(_current_state: BoardStateData, _initial_state: BoardStateData) -> void:
+	_counter_box_is_hovered = false
+
+	_hovered_cell = null
+	_hovered_cell_can_be_played = false
+
+	print("Hovered cell reset")
 
 func _handle_settings_menu_visibility_changed(menu_is_visible: bool) -> void:
 	var is_enabled := _is_ready and not menu_is_visible
