@@ -13,6 +13,7 @@ var lift_height := 0.5
 var lift_duration := 0.5
 
 var _animation_state: AnimationState
+var _tween: Tween
 
 signal lift_started
 signal lift_finished
@@ -31,19 +32,19 @@ func lift() -> void:
 
 	target_counter.disable_rigid_body()
 
-	var tween := create_tween()
+	_tween = create_tween()
 
 	# MEDIUM: create this tween inside the Counter3D script
-	tween.tween_property(
+	_tween.tween_property(
 		target_counter.rigid_body,
 		"position:y",
 		target_counter.rigid_body.position.y + lift_height,
 		lift_duration
 	)
 
-	SignalHelper.chain_once(tween.finished, lift_finished)
+	SignalHelper.chain_once(_tween.finished, lift_finished)
 
-	_set_state_on(tween.finished, AnimationState.HOLDING)
+	_set_state_on(_tween.finished, AnimationState.HOLDING)
 
 func drop() -> void:
 	if not target_counter:
@@ -59,6 +60,13 @@ func drop() -> void:
 	_set_state_on(target_counter.landed_on_board, AnimationState.IDLE)
 
 	SignalHelper.once(target_counter.landed_on_board, _handle_drop_finished)
+
+func stop_animations() -> void:
+	if _tween:
+		_tween.stop()
+		_tween.kill()
+
+		lift_finished.emit()
 
 func _handle_drop_finished() -> void:
 	target_counter.disable_rigid_body()
