@@ -27,5 +27,6 @@ unique_name_in_owner = true
 [node name="RigidBodyIndicator" parent="RigidBody3D" instance=ExtResource("3_um325")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11, 0)
+visible = false
 mesh = ExtResource("4_usnw1")
 is_active = true

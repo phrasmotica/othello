@@ -8,7 +8,6 @@
 
 [node name="CounterHalves" type="Node3D"]
 script = ExtResource("1_pld12")
-flip_duration = 0.2
 
 [node name="Main" type="Node3D" parent="."]
 unique_name_in_owner = true
