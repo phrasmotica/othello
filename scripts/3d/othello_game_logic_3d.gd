@@ -30,14 +30,6 @@ func restart_game() -> void:
 	if not board_3d:
 		return
 
-	if board_3d.is_free():
-		_do_restart()
-	else:
-		print("Game restart requested, waiting for the board to be free...")
-
-		SignalHelper.once(board_3d.freed, _do_restart)
-
-func _do_restart() -> void:
 	print("Restarting the game.")
 
 	Globals.init_finished = false
