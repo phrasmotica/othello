@@ -191,8 +191,3 @@ func restart() -> void:
 
 	if counter_flipper:
 		counter_flipper.stop_animations()
-
-	# HIGH: cancel the animations in the CounterLifter and CounterFlipper
-	# scripts, and make sure the appropriate ending signals are still emitted.
-	# These animations are causing issues if the restart happens while the board
-	# is still busy...
