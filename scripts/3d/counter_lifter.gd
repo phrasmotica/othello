@@ -68,6 +68,8 @@ func stop_animations() -> void:
 
 		lift_finished.emit()
 
+	_animation_state = AnimationState.IDLE
+
 func _handle_drop_finished() -> void:
 	target_counter.disable_rigid_body()
 	drop_finished.emit()

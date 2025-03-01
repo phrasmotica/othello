@@ -35,6 +35,8 @@ func stop_animations() -> void:
 
 		flip_finished.emit()
 
+	_animation_state = AnimationState.IDLE
+
 func _flip_counter(flippable: Node3D, flip_delay: float) -> void:
 	if _is_rotated_to_white == target_counter.is_white:
 		return
