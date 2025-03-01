@@ -78,29 +78,32 @@ func _physics_process(_delta: float) -> void:
 	_adjust_mouse_cursor()
 
 func _process_hovered_cell() -> void:
+	if not board:
+		return
+
 	var cell := _get_hovered_cell()
 
+	var cell_changed := false
+
 	if _hovered_cell != cell:
+		cell_changed = true
 		_hovered_cell = cell
 
-	if cell:
-		if board:
-			if cell.cannot_place:
-				_hovered_cell_can_be_played = false
+	# don't attempt to re-highlight on every frame
+	var highlight_needed := cell_changed and not _board_is_busy
 
-				if not _board_is_busy:
-					board.highlight_cell(-1)
-					_hovered_cell = null
-			else:
-				if not _board_is_busy:
-					_hovered_cell_can_be_played = true
+	# assume all cells should be un-highlighted
+	var cell_to_highlight := -1
+	var can_be_played := false
 
-					board.highlight_cell(cell.index)
-	else:
-		_hovered_cell_can_be_played = false
+	if cell and not cell.cannot_place:
+		can_be_played = true
+		cell_to_highlight = cell.index
 
-		if board and not _board_is_busy:
-			board.highlight_cell(-1)
+	_hovered_cell_can_be_played = can_be_played
+
+	if highlight_needed:
+		board.highlight_cell(cell_to_highlight)
 
 func _process_hovered_counter_box() -> void:
 	var is_now_hovered := _is_counter_box_hovered()
