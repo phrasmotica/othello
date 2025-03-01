@@ -83,5 +83,14 @@ func flip_if_needed() -> void:
 func update_gravity(g_scale: int) -> void:
 	rigid_body.gravity_scale = g_scale
 
+func stick_to_board() -> void:
+	disable_rigid_body()
+
+	if rigid_body:
+		rigid_body.rotation_degrees = Vector3.ZERO
+
+		# MEDIUM: compute this position dynamically
+		rigid_body.position.y = -0.2
+
 func _handle_body_entered(_body: Node) -> void:
 	landed_on_board.emit()

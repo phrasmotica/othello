@@ -178,8 +178,8 @@ func place_counter(data: BoardCellData) -> void:
 	SignalHelper.once(counter.landed_on_board, callable)
 
 func _handle_counter_landed_on_board(data: BoardCellData) -> void:
-	# BUG: this seems to cause some counters to clip through the board slightly...
-	counter.disable_rigid_body()
+	counter.stick_to_board()
+
 	counter_confirmed.emit(data)
 
 func restart() -> void:

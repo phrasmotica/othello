@@ -71,7 +71,8 @@ func stop_animations() -> void:
 	_animation_state = AnimationState.IDLE
 
 func _handle_drop_finished() -> void:
-	target_counter.disable_rigid_body()
+	target_counter.stick_to_board()
+
 	drop_finished.emit()
 
 func _validate_transition(required: AnimationState, next: AnimationState) -> bool:
