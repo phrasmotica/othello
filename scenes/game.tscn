@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dskbe0sonplca"]
 
 [ext_resource type="PackedScene" uid="uid://c5cc76vukx7db" path="res://scenes/board.tscn" id="1_8kvr6"]
-[ext_resource type="Script" path="res://scripts/debug_handler.gd" id="1_bl16d"]
+[ext_resource type="Script" uid="uid://cax8f7oxliqg3" path="res://scripts/debug_handler.gd" id="1_bl16d"]
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="2_b5ltn"]
 [ext_resource type="PackedScene" uid="uid://l8exhvs5m3fa" path="res://scenes/othello_game_logic.tscn" id="2_ca2xx"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="3_cbeyc"]

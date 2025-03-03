@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://vitji75rxe4c"]
 
-[ext_resource type="Script" path="res://scripts/3d/counter_box.gd" id="1_4mkf8"]
+[ext_resource type="Script" uid="uid://b3bwpr3rmtf3l" path="res://scripts/3d/counter_box.gd" id="1_4mkf8"]
 [ext_resource type="PackedScene" uid="uid://bf5dm6wwvkf4o" path="res://scenes/3d/counter_spawner.tscn" id="3_cbe4a"]
 
 [sub_resource type="Animation" id="Animation_mv1c1"]
@@ -61,8 +61,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u0wyp"]
 _data = {
-"RESET": SubResource("Animation_mv1c1"),
-"peek": SubResource("Animation_yrmvg")
+&"RESET": SubResource("Animation_mv1c1"),
+&"peek": SubResource("Animation_yrmvg")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hx00k"]

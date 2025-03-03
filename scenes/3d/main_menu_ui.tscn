@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bd3rr0upsyvdk"]
 
 [ext_resource type="PackedScene" uid="uid://46ki3f6y5w43" path="res://scenes/3d/main_menu_buttons.tscn" id="1_1114p"]
-[ext_resource type="Script" path="res://scripts/3d/main_menu_ui.gd" id="1_k5lpv"]
+[ext_resource type="Script" uid="uid://dcdgrtslsh5ob" path="res://scripts/3d/main_menu_ui.gd" id="1_k5lpv"]
 
 [sub_resource type="Animation" id="Animation_7t4vj"]
 length = 0.001
@@ -87,9 +87,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pu7id"]
 _data = {
-"RESET": SubResource("Animation_7t4vj"),
-"menu_out": SubResource("Animation_ylr86"),
-"menu_start": SubResource("Animation_ycgvb")
+&"RESET": SubResource("Animation_7t4vj"),
+&"menu_out": SubResource("Animation_ylr86"),
+&"menu_start": SubResource("Animation_ycgvb")
 }
 
 [node name="MainMenuUI" type="MarginContainer"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b4q58aabscvio"]
 
-[ext_resource type="Script" path="res://scripts/3d/gui_3d.gd" id="1_fy7wi"]
-[ext_resource type="Script" path="res://scripts/3d/settings_menu_3d.gd" id="1_rb545"]
+[ext_resource type="Script" uid="uid://c44fxb8u2yj85" path="res://scripts/3d/gui_3d.gd" id="1_fy7wi"]
+[ext_resource type="Script" uid="uid://l1n4ddabbbtj" path="res://scripts/3d/settings_menu_3d.gd" id="1_rb545"]
 [ext_resource type="PackedScene" uid="uid://0ivagoypmkgb" path="res://scenes/3d/settings_menu_ui.tscn" id="2_iqt3v"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_2rp85"]

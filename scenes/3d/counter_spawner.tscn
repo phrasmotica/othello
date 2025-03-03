@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bf5dm6wwvkf4o"]
 
-[ext_resource type="Script" path="res://scripts/3d/counter_spawner.gd" id="1_rlrbu"]
+[ext_resource type="Script" uid="uid://bioplfg8opy8r" path="res://scripts/3d/counter_spawner.gd" id="1_rlrbu"]
 [ext_resource type="PackedScene" uid="uid://cfqujlwguvw4b" path="res://scenes/3d/counter_3d.tscn" id="2_0dphd"]
 
 [node name="CounterSpawner" type="Marker3D"]

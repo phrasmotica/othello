@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dp6dxebvdlose"]
 
-[ext_resource type="Script" path="res://scripts/debug_handler.gd" id="1_0dpic"]
+[ext_resource type="Script" uid="uid://cax8f7oxliqg3" path="res://scripts/debug_handler.gd" id="1_0dpic"]
 [ext_resource type="PackedScene" uid="uid://l8exhvs5m3fa" path="res://scenes/othello_game_logic.tscn" id="2_eb5co"]
 [ext_resource type="PackedScene" uid="uid://c5cc76vukx7db" path="res://scenes/board.tscn" id="3_jcdtp"]
 [ext_resource type="Resource" uid="uid://dt5o011yj8wx6" path="res://resources/board_state/initial_state_white_no_plays.tres" id="4_5w1ra"]

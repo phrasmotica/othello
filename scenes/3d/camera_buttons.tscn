@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c7xpuvgvkpxf8"]
 
-[ext_resource type="Script" path="res://scripts/3d/camera_buttons.gd" id="1_1cv3g"]
+[ext_resource type="Script" uid="uid://0723f4fqrb8r" path="res://scripts/3d/camera_buttons.gd" id="1_1cv3g"]
 
 [node name="CameraButtons" type="HBoxContainer"]
 custom_minimum_size = Vector2(512, 40)

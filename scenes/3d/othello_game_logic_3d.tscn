@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3axiqvovsmhd"]
 
-[ext_resource type="Script" path="res://scripts/3d/othello_game_logic_3d.gd" id="1_npf6s"]
-[ext_resource type="Script" path="res://scripts/turn_tracker.gd" id="2_1f8ag"]
-[ext_resource type="Script" path="res://scripts/othello_score.gd" id="3_3w053"]
-[ext_resource type="Script" path="res://scripts/placement_calculator.gd" id="4_gvn6k"]
-[ext_resource type="Script" path="res://scripts/ray_calculator.gd" id="5_o23kq"]
+[ext_resource type="Script" uid="uid://dtjgc407mpgh3" path="res://scripts/3d/othello_game_logic_3d.gd" id="1_npf6s"]
+[ext_resource type="Script" uid="uid://dpt42725pddn0" path="res://scripts/turn_tracker.gd" id="2_1f8ag"]
+[ext_resource type="Script" uid="uid://cu4rk0kb6gu1e" path="res://scripts/othello_score.gd" id="3_3w053"]
+[ext_resource type="Script" uid="uid://bgldw7lgun4h4" path="res://scripts/placement_calculator.gd" id="4_gvn6k"]
+[ext_resource type="Script" uid="uid://voi324so41f4" path="res://scripts/ray_calculator.gd" id="5_o23kq"]
 
 [node name="OthelloGameLogic3D" type="Node"]
 script = ExtResource("1_npf6s")

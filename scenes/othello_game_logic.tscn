@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://l8exhvs5m3fa"]
 
-[ext_resource type="Script" path="res://scripts/turn_tracker.gd" id="1_gce5x"]
-[ext_resource type="Script" path="res://scripts/othello_game_logic.gd" id="1_o8dtw"]
-[ext_resource type="Script" path="res://scripts/othello_score.gd" id="2_8vtef"]
-[ext_resource type="Script" path="res://scripts/placement_calculator.gd" id="3_huvro"]
-[ext_resource type="Script" path="res://scripts/ray_calculator.gd" id="4_i70un"]
+[ext_resource type="Script" uid="uid://dpt42725pddn0" path="res://scripts/turn_tracker.gd" id="1_gce5x"]
+[ext_resource type="Script" uid="uid://c054niecqn70x" path="res://scripts/othello_game_logic.gd" id="1_o8dtw"]
+[ext_resource type="Script" uid="uid://cu4rk0kb6gu1e" path="res://scripts/othello_score.gd" id="2_8vtef"]
+[ext_resource type="Script" uid="uid://bgldw7lgun4h4" path="res://scripts/placement_calculator.gd" id="3_huvro"]
+[ext_resource type="Script" uid="uid://voi324so41f4" path="res://scripts/ray_calculator.gd" id="4_i70un"]
 
 [node name="OthelloGameLogic" type="Node"]
 script = ExtResource("1_o8dtw")

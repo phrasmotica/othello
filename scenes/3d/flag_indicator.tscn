@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ctrca5n6xfwwu"]
 
-[ext_resource type="Script" path="res://scripts/3d/flag_indicator.gd" id="2_kbve4"]
+[ext_resource type="Script" uid="uid://y8muv1cw6cct" path="res://scripts/3d/flag_indicator.gd" id="2_kbve4"]
 
 [node name="FlagIndicator" type="MeshInstance3D"]
 script = ExtResource("2_kbve4")

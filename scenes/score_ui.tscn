@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dbt4l8heggobx"]
 
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_pid2x"]
-[ext_resource type="Script" path="res://scripts/score_ui.gd" id="1_uk3uu"]
-[ext_resource type="PackedScene" path="res://scenes/black_score_panel.tscn" id="3_2wp1v"]
-[ext_resource type="PackedScene" path="res://scenes/white_score_panel.tscn" id="4_odres"]
+[ext_resource type="Script" uid="uid://bkxklu5i4wkdx" path="res://scripts/score_ui.gd" id="1_uk3uu"]
+[ext_resource type="PackedScene" uid="uid://d0n6174v3afnm" path="res://scenes/black_score_panel.tscn" id="3_2wp1v"]
+[ext_resource type="PackedScene" uid="uid://d62squatyj1u" path="res://scenes/white_score_panel.tscn" id="4_odres"]
 [ext_resource type="PackedScene" uid="uid://cc88n0044q3ad" path="res://scenes/result_panel.tscn" id="5_5isde"]
 
 [node name="ScoreUI" type="VBoxContainer"]

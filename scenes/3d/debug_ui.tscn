@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://duyv0dq1ikr5y"]
 
-[ext_resource type="Script" path="res://scripts/3d/debug_ui.gd" id="1_a6kpl"]
+[ext_resource type="Script" uid="uid://bpe18rhqdtflq" path="res://scripts/3d/debug_ui.gd" id="1_a6kpl"]
 [ext_resource type="Theme" uid="uid://b3ssq6ibl7e3y" path="res://themes/theme_debug_ui.tres" id="1_oikgs"]
 
 [node name="DebugUI" type="MarginContainer"]

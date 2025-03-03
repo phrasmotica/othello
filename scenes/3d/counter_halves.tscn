@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bkt1f3hgpfwi1"]
 
 [ext_resource type="CylinderMesh" uid="uid://bnhdorgfwot3l" path="res://meshes/counter_3d_black_mesh.tres" id="1_4rek1"]
-[ext_resource type="Script" path="res://scripts/3d/counter_halves.gd" id="1_pld12"]
+[ext_resource type="Script" uid="uid://bgijrxp1dkodj" path="res://scripts/3d/counter_halves.gd" id="1_pld12"]
 [ext_resource type="CylinderMesh" uid="uid://bqssxu8kjeyu6" path="res://meshes/counter_3d_white_mesh.tres" id="2_syv1i"]
 [ext_resource type="CylinderMesh" uid="uid://bjkfumtmwoicm" path="res://meshes/counter_3d_black_preview_mesh.tres" id="3_lncwc"]
 [ext_resource type="CylinderMesh" uid="uid://170kjhbjbl04" path="res://meshes/counter_3d_white_preview_mesh.tres" id="4_ec5hy"]

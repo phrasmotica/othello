@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://lbqmnqo7w6yg"]
 
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_i7i7d"]
-[ext_resource type="Script" path="res://scripts/option_cycler.gd" id="2_emysb"]
+[ext_resource type="Script" uid="uid://bje4qpi4ontgf" path="res://scripts/option_cycler.gd" id="2_emysb"]
 
 [node name="OptionCycler" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 40)

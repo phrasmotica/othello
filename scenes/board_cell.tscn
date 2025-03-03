@@ -1,14 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://flkpinjhixfv"]
 
-[ext_resource type="Shader" path="res://shaders/board_cell.gdshader" id="1_awqyd"]
-[ext_resource type="Script" path="res://scripts/board_cell.gd" id="1_prucg"]
+[ext_resource type="Shader" uid="uid://bnm34rr04q8co" path="res://shaders/board_cell.gdshader" id="1_awqyd"]
+[ext_resource type="Script" uid="uid://qs4rvx3ndjg4" path="res://scripts/board_cell.gd" id="1_prucg"]
 [ext_resource type="Resource" uid="uid://c5gfjl10d81hu" path="res://resources/empty_counter_data.tres" id="2_5pr88"]
 [ext_resource type="PackedScene" uid="uid://8bpnftmnrsln" path="res://scenes/counter.tscn" id="3_lv8le"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wicer"]
 shader = ExtResource("1_awqyd")
 shader_parameter/border_width = 0.01
-shader_parameter/border_colour = null
+shader_parameter/border_colour = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_dp88n"]
 offsets = PackedFloat32Array(0)

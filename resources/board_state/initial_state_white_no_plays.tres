@@ -2,13 +2,15 @@
 
 [ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="1_oy5cu"]
 [ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="2_baa8g"]
-[ext_resource type="Script" path="res://scripts/board_state_data.gd" id="3_qlavd"]
+[ext_resource type="Script" uid="uid://balxt0vkwg477" path="res://scripts/board_state_data.gd" id="3_qlavd"]
 
 [resource]
 script = ExtResource("3_qlavd")
+board_size = Vector2i(8, 8)
 cells_data = {
 27: ExtResource("1_oy5cu"),
 28: ExtResource("2_baa8g"),
 35: ExtResource("1_oy5cu"),
 36: ExtResource("1_oy5cu")
 }
+next_colour = 0

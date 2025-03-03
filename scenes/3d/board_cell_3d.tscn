@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://8js6lj7t2xty"]
 
 [ext_resource type="BoxMesh" uid="uid://b0ox50vh30b3s" path="res://meshes/board_cell_3d_even_mesh.tres" id="1_4aa8d"]
-[ext_resource type="Script" path="res://scripts/3d/board_cell_3d.gd" id="2_ki133"]
+[ext_resource type="Script" uid="uid://dv3kiji34mn3j" path="res://scripts/3d/board_cell_3d.gd" id="2_ki133"]
 [ext_resource type="BoxMesh" uid="uid://cwg8i1xfo2qje" path="res://meshes/board_cell_3d_odd_mesh.tres" id="3_guavf"]
 [ext_resource type="BoxMesh" uid="uid://beyul1hqs6e88" path="res://meshes/board_cell_3d_disabled_mesh.tres" id="4_fei78"]
 [ext_resource type="PackedScene" uid="uid://c1ykgbup2lr1d" path="res://scenes/3d/counter_lifter.tscn" id="5_ysby0"]

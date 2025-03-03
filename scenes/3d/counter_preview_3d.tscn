@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c2ke0x3qy3hhy"]
 
-[ext_resource type="Script" path="res://scripts/3d/counter_preview_3d.gd" id="1_228bn"]
+[ext_resource type="Script" uid="uid://c5vph0mesxesk" path="res://scripts/3d/counter_preview_3d.gd" id="1_228bn"]
 [ext_resource type="PackedScene" uid="uid://bkt1f3hgpfwi1" path="res://scenes/3d/counter_halves.tscn" id="1_kf4q8"]
 
 [node name="CounterPreview3D" type="Node3D"]

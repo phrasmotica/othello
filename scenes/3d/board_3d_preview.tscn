@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqxq3q1nhnsq5"]
 
 [ext_resource type="PackedScene" uid="uid://2ryiy7bbn55i" path="res://scenes/3d/board_3d.tscn" id="1_2dwrq"]
-[ext_resource type="Script" path="res://scripts/3d/debug_handler_3d.gd" id="1_3dm7f"]
+[ext_resource type="Script" uid="uid://bumevecapueea" path="res://scripts/3d/debug_handler_3d.gd" id="1_3dm7f"]
 
 [node name="Board3DPreview" type="Node3D"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c78e1rknte6o"]
 
-[ext_resource type="Script" path="res://scripts/3d/settings_menu_rig.gd" id="1_yu6r8"]
+[ext_resource type="Script" uid="uid://bkawo173j6765" path="res://scripts/3d/settings_menu_rig.gd" id="1_yu6r8"]
 [ext_resource type="PackedScene" uid="uid://b4q58aabscvio" path="res://scenes/3d/settings_menu_3d.tscn" id="2_at0le"]
 
 [sub_resource type="Animation" id="Animation_h5v45"]
@@ -36,8 +36,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tfjnf"]
 _data = {
-"RESET": SubResource("Animation_h5v45"),
-"show_settings_menu": SubResource("Animation_or5q4")
+&"RESET": SubResource("Animation_h5v45"),
+&"show_settings_menu": SubResource("Animation_or5q4")
 }
 
 [node name="SettingsMenuRig" type="Node3D"]

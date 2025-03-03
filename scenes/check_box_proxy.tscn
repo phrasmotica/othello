@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://7utsvufla0f1"]
 
-[ext_resource type="Script" path="res://scripts/check_box_proxy.gd" id="1_jmxoo"]
+[ext_resource type="Script" uid="uid://dy6f8sartir1q" path="res://scripts/check_box_proxy.gd" id="1_jmxoo"]
 
 [node name="CheckBoxProxy" type="Node"]
 script = ExtResource("1_jmxoo")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6e4fdg8vj5hx"]
 
-[ext_resource type="Script" path="res://scripts/3d/counter_flipper.gd" id="1_ro3xf"]
+[ext_resource type="Script" uid="uid://scwr41ptoi57" path="res://scripts/3d/counter_flipper.gd" id="1_ro3xf"]
 
 [node name="CounterFlipper" type="Node" node_paths=PackedStringArray("target_counter")]
 script = ExtResource("1_ro3xf")

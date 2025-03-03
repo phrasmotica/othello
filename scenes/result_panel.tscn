@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc88n0044q3ad"]
 
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_jm7wi"]
-[ext_resource type="Script" path="res://scripts/result_panel.gd" id="1_of4mn"]
+[ext_resource type="Script" uid="uid://dni3caq2bld0q" path="res://scripts/result_panel.gd" id="1_of4mn"]
 
 [node name="ResultPanel" type="PanelContainer"]
 custom_minimum_size = Vector2(300, 0)

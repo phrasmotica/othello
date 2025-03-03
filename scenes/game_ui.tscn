@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://csifkwxcn4vbs"]
 
 [ext_resource type="PackedScene" uid="uid://dbt4l8heggobx" path="res://scenes/score_ui.tscn" id="1_36rxp"]
-[ext_resource type="Script" path="res://scripts/game_ui.gd" id="1_cu863"]
+[ext_resource type="Script" uid="uid://cu5oxbwehp4rg" path="res://scripts/game_ui.gd" id="1_cu863"]
 [ext_resource type="PackedScene" uid="uid://most7j8bx8hc" path="res://scenes/game_buttons.tscn" id="2_rp8v0"]
 
 [sub_resource type="Animation" id="Animation_22oap"]
@@ -61,8 +61,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7h8wr"]
 _data = {
-"RESET": SubResource("Animation_22oap"),
-"menu_in": SubResource("Animation_6vxla")
+&"RESET": SubResource("Animation_22oap"),
+&"menu_in": SubResource("Animation_6vxla")
 }
 
 [node name="GameUI" type="VBoxContainer"]

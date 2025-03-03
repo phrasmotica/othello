@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d0n6174v3afnm"]
 
-[ext_resource type="Script" path="res://scripts/score_panel.gd" id="1_7obxj"]
+[ext_resource type="Script" uid="uid://ud3tbuh6j68y" path="res://scripts/score_panel.gd" id="1_7obxj"]
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_2652s"]
 
 [node name="BlackScorePanel" type="PanelContainer"]

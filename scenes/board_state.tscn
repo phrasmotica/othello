@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://crcg846yilqdv"]
 
-[ext_resource type="Script" path="res://scripts/board_state.gd" id="1_rowpc"]
+[ext_resource type="Script" uid="uid://c0c7ehss4jkt" path="res://scripts/board_state.gd" id="1_rowpc"]
 
 [node name="BoardState" type="Node" node_paths=PackedStringArray("board_creator")]
 script = ExtResource("1_rowpc")
