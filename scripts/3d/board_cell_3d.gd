@@ -130,7 +130,7 @@ func _refresh() -> void:
 	if counter:
 		counter.debug_name = "Counter%d" % index
 		counter.debug_mode = debug_mode
-		counter.visible = has_counter or debug_mode
+		counter.visible = has_counter
 
 		counter.flip_delay = flip_delay
 		counter.is_white = cell_data.is_white() if cell_data else false
