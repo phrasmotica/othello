@@ -89,7 +89,7 @@ script = ExtResource("1_4mkf8")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_u0wyp")
+&"": SubResource("AnimationLibrary_u0wyp")
 }
 
 [node name="CounterBoxCSG" type="CSGCombiner3D" parent="."]

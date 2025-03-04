@@ -169,7 +169,7 @@ use_tweening = true
 
 [node name="CameraRigAnimation" type="AnimationPlayer" parent="Board3D/CameraRig"]
 libraries = {
-"": SubResource("AnimationLibrary_pmppe")
+&"": SubResource("AnimationLibrary_pmppe")
 }
 
 [node name="Camera3D" type="Camera3D" parent="Board3D/CameraRig"]
