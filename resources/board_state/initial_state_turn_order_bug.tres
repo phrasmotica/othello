@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="BoardStateData" load_steps=5 format=3]
+
+[ext_resource type="Resource" path="res://resources/black_counter_data.tres" id="1_ksx16"]
+[ext_resource type="Resource" path="res://resources/empty_counter_data.tres" id="2_sja8l"]
+[ext_resource type="Resource" path="res://resources/white_counter_data.tres" id="3_4p0e3"]
+[ext_resource type="Script" path="res://scripts/board_state_data.gd" id="4_31lxv"]
+
+[resource]
+script = ExtResource("4_31lxv")
+board_size = Vector2i(8, 8)
+cells_data = {
+0: ExtResource("1_ksx16"),
+1: ExtResource("2_sja8l"),
+2: ExtResource("3_4p0e3"),
+3: ExtResource("3_4p0e3"),
+4: ExtResource("3_4p0e3"),
+5: ExtResource("3_4p0e3"),
+6: ExtResource("3_4p0e3"),
+7: ExtResource("1_ksx16"),
+8: ExtResource("1_ksx16"),
+9: ExtResource("3_4p0e3"),
+10: ExtResource("3_4p0e3"),
+11: ExtResource("3_4p0e3"),
+12: ExtResource("3_4p0e3"),
+13: ExtResource("3_4p0e3"),
+14: ExtResource("3_4p0e3"),
+15: ExtResource("3_4p0e3"),
+16: ExtResource("1_ksx16"),
+17: ExtResource("3_4p0e3"),
+18: ExtResource("3_4p0e3"),
+19: ExtResource("3_4p0e3"),
+20: ExtResource("3_4p0e3"),
+21: ExtResource("3_4p0e3"),
+22: ExtResource("3_4p0e3"),
+23: ExtResource("3_4p0e3"),
+24: ExtResource("1_ksx16"),
+25: ExtResource("1_ksx16"),
+26: ExtResource("3_4p0e3"),
+27: ExtResource("3_4p0e3"),
+28: ExtResource("3_4p0e3"),
+29: ExtResource("3_4p0e3"),
+30: ExtResource("3_4p0e3"),
+31: ExtResource("3_4p0e3"),
+32: ExtResource("1_ksx16"),
+33: ExtResource("3_4p0e3"),
+34: ExtResource("3_4p0e3"),
+35: ExtResource("3_4p0e3"),
+36: ExtResource("3_4p0e3"),
+37: ExtResource("3_4p0e3"),
+38: ExtResource("3_4p0e3"),
+39: ExtResource("3_4p0e3"),
+40: ExtResource("1_ksx16"),
+41: ExtResource("3_4p0e3"),
+42: ExtResource("3_4p0e3"),
+43: ExtResource("3_4p0e3"),
+44: ExtResource("3_4p0e3"),
+45: ExtResource("3_4p0e3"),
+46: ExtResource("3_4p0e3"),
+47: ExtResource("3_4p0e3"),
+48: ExtResource("1_ksx16"),
+49: ExtResource("3_4p0e3"),
+50: ExtResource("3_4p0e3"),
+51: ExtResource("3_4p0e3"),
+52: ExtResource("3_4p0e3"),
+53: ExtResource("3_4p0e3"),
+54: ExtResource("2_sja8l"),
+55: ExtResource("3_4p0e3"),
+56: ExtResource("1_ksx16"),
+57: ExtResource("3_4p0e3"),
+58: ExtResource("3_4p0e3"),
+59: ExtResource("3_4p0e3"),
+60: ExtResource("3_4p0e3"),
+61: ExtResource("3_4p0e3"),
+62: ExtResource("3_4p0e3"),
+63: ExtResource("2_sja8l")
+}
+next_colour = 0
