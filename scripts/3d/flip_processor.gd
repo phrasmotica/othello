@@ -10,6 +10,7 @@ var cell_data_pool: CellDataPool
 var cells_manager: CellsManager3D
 
 var _flips_finished_count := 0
+var _new_state_callbacks: Array[Callable] = []
 
 signal flips_finished(indexes: Array[int])
 
@@ -20,6 +21,7 @@ func perform_flips(indexes: Array[int], flip_delay_factor: float) -> void:
 	var count := 0
 
 	_flips_finished_count = 0
+	_new_state_callbacks.clear()
 
 	for i in indexes:
 		var cell := cells_manager.get_cell_3d(i)
@@ -41,13 +43,23 @@ func perform_flips(indexes: Array[int], flip_delay_factor: float) -> void:
 		count += 1
 
 func _handle_counter_drop_finished(idx: int, cell_data: BoardCellData, indexes: Array[int]) -> void:
-	SignalHelper.once(
-		flips_finished,
-		func(_indexes: Array[int]) -> void:
-			board_state.set_cell(idx, cell_data, false)
-	)
+	_new_state_callbacks.append(board_state.set_cell.bind(idx, cell_data, false))
 
 	_flips_finished_count += 1
 
 	if _flips_finished_count >= indexes.size():
+		_process_new_board_state()
+
 		flips_finished.emit(indexes)
+
+func _process_new_board_state() -> void:
+	if _new_state_callbacks.size() <= 0:
+		print("No board state callbacks to process")
+		return
+
+	for c in _new_state_callbacks:
+		c.call()
+
+	print("Processed %d new board state callback(s)" % _new_state_callbacks.size())
+
+	_new_state_callbacks.clear()
