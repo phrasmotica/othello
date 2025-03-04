@@ -15,9 +15,11 @@ var placement_calculator: PlacementCalculator
 var _board_3d: Board3D
 var _next_turn_colour: BoardStateData.CounterType
 var _has_game_ended := false
+var _turn_skip_duration := 3.0
 
 signal starting_colour_changed(colour: BoardStateData.CounterType)
 signal next_colour_changed(colour: BoardStateData.CounterType)
+signal turn_skipped
 signal game_ended
 
 func _ready() -> void:
@@ -45,18 +47,28 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
 
-func _go_to_next_turn(turn_skipped := false) -> void:
+func _go_to_next_turn(turn_is_skipped := false) -> void:
 	if _has_game_ended:
 		return
 
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
 
-	if turn_skipped:
+	if turn_is_skipped:
 		print("Turn skipped! %d plays next" % _next_turn_colour)
+
+		turn_skipped.emit()
+
+		# HIGH: instead of pausing here, provide a way for scenes that depend on
+		# this one to acknowledge the skipped turn. After that, progress to the
+		# next turn.
+		SignalHelper.once_after(
+			_turn_skip_duration,
+			next_colour_changed.emit.bind(_next_turn_colour)
+		)
 	else:
 		print("Turn ended, %d plays next" % _next_turn_colour)
 
-	next_colour_changed.emit(_next_turn_colour)
+		next_colour_changed.emit(_next_turn_colour)
 
 func _handle_computed_plays_available(plays: Dictionary) -> void:
 	var colours_that_can_play: Array[BoardStateData.CounterType] = []

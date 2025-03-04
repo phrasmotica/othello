@@ -18,3 +18,7 @@ func once(sig: Signal, callable: Callable) -> void:
 func once_next_frame(callable: Callable) -> void:
 	var sig := get_tree().process_frame
 	once(sig, callable)
+
+func once_after(delay: float, callable: Callable) -> void:
+	var sig := get_tree().create_timer(delay).timeout
+	once(sig, callable)
