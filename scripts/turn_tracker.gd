@@ -67,7 +67,12 @@ func _handle_computed_plays_available(plays: Dictionary) -> void:
 
 	if colours_that_can_play.size() <= 0:
 		print("Both colours cannot play!")
-		SignalHelper.once(_board_3d.freed, _end_game)
+
+		if _board_3d.is_free():
+			_end_game()
+		else:
+			SignalHelper.once(_board_3d.freed, _end_game)
+
 		return
 
 	print("Colours that can play: ", colours_that_can_play)
