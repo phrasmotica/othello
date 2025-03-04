@@ -32,6 +32,8 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
 
+	# MEDIUM: only refresh if this came from a counter being placed,
+	# or from an entire set of flips completing
 	refresh()
 
 func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> void:
