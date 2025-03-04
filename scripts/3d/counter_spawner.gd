@@ -33,8 +33,14 @@ func spawn_counters() -> void:
 		counter.position = position + _get_offset()
 		counter.rotation = _get_rotation_offset()
 
-		var rb := counter.get_child(0) as RigidBody3D
-		rb.apply_impulse(spawn_force * Vector3.DOWN)
+		# Jolt physics library requires a node to be added to the scene tree
+		# before an impulse can be applied to it successfully
+		SignalHelper.once(
+			counter.ready,
+			func() -> void:
+				var rb := counter.get_child(0) as RigidBody3D
+				rb.apply_impulse(spawn_force * Vector3.DOWN)
+		)
 
 		SignalHelper.once(
 			counter.landed_on_board,
