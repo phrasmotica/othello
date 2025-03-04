@@ -30,7 +30,7 @@ func perform_flips(indexes: Array[int], flip_delay_factor: float) -> void:
 		# because bound callables capture the value of outer variables rather
 		# than getting them by reference. So cell.cell_data would still have its
 		# old value if we used _handle_counter_drop_finished.bind(...)
-		SignalHelper.persist(
+		SignalHelper.once(
 			cell.counter_drop_finished,
 			func() -> void:
 				_handle_counter_drop_finished(i, cell.cell_data, indexes)
