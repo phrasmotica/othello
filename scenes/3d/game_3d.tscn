@@ -176,7 +176,6 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8, 0)
 
 [node name="SettingsMenuRig" parent="Board3D/CameraRig/Camera3D" node_paths=PackedStringArray("input_handler", "environment_manager", "board", "game_ui") instance=ExtResource("15_axfc3")]
-transform = Transform3D(1, 0, 0, 0, -3.61999e-06, 1, 0, -1, -3.61999e-06, 0, 0, 0)
 input_handler = NodePath("../../../../InputHandlers/InputHandler")
 environment_manager = NodePath("../../../../EnvironmentManager")
 board = NodePath("../../..")
