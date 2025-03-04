@@ -29,21 +29,23 @@ func perform_flips(indexes: Array[int], flip_delay_factor: float) -> void:
 		# the callable needs to be a lambda rather than a bound callable,
 		# because bound callables capture the value of outer variables rather
 		# than getting them by reference. So cell.cell_data would still have its
-		# old value if we used _handle_counter_flip_finished.bind(...)
+		# old value if we used _handle_counter_drop_finished.bind(...)
 		SignalHelper.persist(
-			cell.counter_flip_finished,
+			cell.counter_drop_finished,
 			func() -> void:
-				_handle_counter_flip_finished(i, cell.cell_data, indexes)
+				_handle_counter_drop_finished(i, cell.cell_data, indexes)
 		)
 
 		cell.cell_data = cell_data_pool.flip(cell.cell_data)
 
 		count += 1
 
-func _handle_counter_flip_finished(idx: int, cell_data: BoardCellData, indexes: Array[int]) -> void:
-	# MEDIUM: only update the board state once the counters associated with a
-	# list of flips have all been flipped and landed back on the board...
-	board_state.set_cell(idx, cell_data, false)
+func _handle_counter_drop_finished(idx: int, cell_data: BoardCellData, indexes: Array[int]) -> void:
+	SignalHelper.once(
+		flips_finished,
+		func(_indexes: Array[int]) -> void:
+			board_state.set_cell(idx, cell_data, false)
+	)
 
 	_flips_finished_count += 1
 
