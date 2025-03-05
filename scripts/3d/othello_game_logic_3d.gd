@@ -13,6 +13,7 @@ func _connect_children() -> void:
 			turn_tracker.connect_to_board_3d(board_3d)
 
 			turn_tracker.next_colour_changed.connect(next_colour_changed.emit)
+			turn_tracker.turn_skipped.connect(turn_skipped.emit)
 			turn_tracker.game_ended.connect(game_ended.emit)
 
 		if score:

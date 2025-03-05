@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8af3ic4idr71"]
+
+[ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_pld3y"]
+[ext_resource type="Script" uid="uid://c0j27bhabg10w" path="res://scripts/turn_indicator_panel.gd" id="2_pld3y"]
+
+[node name="TurnIndicatorPanel" type="PanelContainer"]
+custom_minimum_size = Vector2(500, 0)
+theme = ExtResource("1_pld3y")
+theme_type_variation = &"BlackScorePanel"
+script = ExtResource("2_pld3y")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"BlackScoreLabel"
+theme_override_font_sizes/font_size = 32
+text = "Black to play..."
+horizontal_alignment = 1

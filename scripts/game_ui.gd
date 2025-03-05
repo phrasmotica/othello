@@ -23,6 +23,7 @@ signal quit_to_main_menu
 func _ready() -> void:
 	if game_logic:
 		SignalHelper.persist(game_logic.score_changed, score_ui.update_ui)
+		SignalHelper.persist(game_logic.turn_skipped, score_ui.handle_turn_skipped)
 		SignalHelper.persist(game_logic.next_colour_changed, score_ui.handle_next_colour_changed)
 		SignalHelper.persist(game_logic.game_ended, score_ui.handle_game_ended)
 		SignalHelper.persist(game_logic.game_restarted, score_ui.handle_game_restarted)

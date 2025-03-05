@@ -1,6 +1,8 @@
 @tool
 class_name TurnTracker extends Node
 
+enum TurnType { BLACK_PLAY, WHITE_PLAY, BLACK_SKIP, WHITE_SKIP, BOTH_SKIP }
+
 @export
 var starting_colour := BoardStateData.CounterType.BLACK:
 	set(value):
@@ -18,7 +20,10 @@ var _has_game_ended := false
 var _turn_skip_duration := 3.0
 
 signal starting_colour_changed(colour: BoardStateData.CounterType)
+
+# HIGH: emit colour and skip/not-skip information in one go
 signal next_colour_changed(colour: BoardStateData.CounterType)
+
 signal turn_skipped
 signal game_ended
 

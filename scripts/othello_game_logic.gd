@@ -21,6 +21,7 @@ var placement_calculator: PlacementCalculator = %PlacementCalculator
 var ray_calculator: RayCalculator = %RayCalculator
 
 signal score_changed(black_score: int, white_score: int, result: OthelloScore.GameResult)
+signal turn_skipped
 signal next_colour_changed(colour: BoardStateData.CounterType)
 signal game_ended
 signal game_restarted
@@ -33,6 +34,7 @@ func _connect_children() -> void:
 		if turn_tracker:
 			turn_tracker.connect_to_board(board)
 
+			turn_tracker.turn_skipped.connect(turn_skipped.emit)
 			turn_tracker.next_colour_changed.connect(next_colour_changed.emit)
 			turn_tracker.game_ended.connect(game_ended.emit)
 
