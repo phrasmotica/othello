@@ -30,8 +30,7 @@ signal game_ended
 func _ready() -> void:
 	get_tree().root.ready.connect(_emit)
 
-	if placement_calculator:
-		placement_calculator.computed_plays_available.connect(_handle_computed_plays_available)
+	assert(placement_calculator)
 
 func connect_to_board(board: Board) -> void:
 	board.cell_changed.connect(_handle_cell_changed)
@@ -43,14 +42,17 @@ func connect_to_board(board: Board) -> void:
 func connect_to_board_3d(board_3d: Board3D) -> void:
 	_board_3d = board_3d
 
-	board_3d.cell_changed.connect(_handle_cell_changed)
 	board_3d.board_reset.connect(_handle_board_reset)
+	board_3d.flips_finished.connect(_handle_flips_finished)
 
 	starting_colour_changed.connect(board_3d.set_next_colour)
 	next_colour_changed.connect(board_3d.set_next_colour)
 
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
+
+func _handle_flips_finished(_indexes: Array[int]) -> void:
+	_go_to_next_turn()
 
 func _go_to_next_turn(turn_is_skipped := false) -> void:
 	if _has_game_ended:
@@ -75,11 +77,15 @@ func _go_to_next_turn(turn_is_skipped := false) -> void:
 
 		next_colour_changed.emit(_next_turn_colour)
 
-func _handle_computed_plays_available(plays: Dictionary) -> void:
+	_check_available_plays()
+
+func _check_available_plays() -> void:
+	var plays_dict := placement_calculator.compute_plays()
+
 	var colours_that_can_play: Array[BoardStateData.CounterType] = []
 
-	for key: BoardStateData.CounterType in plays.keys():
-		if plays[key].size() > 0:
+	for key: BoardStateData.CounterType in plays_dict.keys():
+		if plays_dict[key].can_play():
 			colours_that_can_play.append(key)
 
 	if colours_that_can_play.size() <= 0:

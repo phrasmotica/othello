@@ -1,6 +1,13 @@
 @tool
 class_name PlacementCalculator extends Node
 
+class AvailablePlays extends Resource:
+	@export
+	var plays: Array[int] = []
+
+	func can_play() -> bool:
+		return plays.size() > 0
+
 @export
 var turn_tracker: TurnTracker
 
@@ -10,7 +17,6 @@ var ray_calculator: RayCalculator
 var _board_state: BoardStateData
 
 signal refreshed_cell(idx: int, can_place: bool)
-signal computed_plays_available(plays: Dictionary)
 
 func _ready() -> void:
 	if turn_tracker:
@@ -19,13 +25,11 @@ func _ready() -> void:
 
 func connect_to_board(board: Board) -> void:
 	board.state_changed.connect(_handle_state_changed)
-	board.flips_finished.connect(_handle_flips_finished)
 
 	refreshed_cell.connect(board.enable_cell)
 
 func connect_to_board_3d(board_3d: Board3D) -> void:
 	board_3d.state_changed.connect(_handle_state_changed)
-	board_3d.flips_finished.connect(_handle_flips_finished)
 
 	refreshed_cell.connect(board_3d.enable_cell)
 
@@ -42,10 +46,7 @@ func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> voi
 func _handle_next_colour_changed(_colour: BoardStateData.CounterType) -> void:
 	refresh()
 
-func _handle_flips_finished(_indexes: Array[int]) -> void:
-	compute_plays()
-
-func compute_plays() -> void:
+func compute_plays() -> Dictionary[BoardStateData.CounterType, AvailablePlays]:
 	# for k: int in _board_state.cells_data:
 	# 	var data: BoardCellData = _board_state.cells_data[k]
 	# 	if data.has_counter():
@@ -54,10 +55,10 @@ func compute_plays() -> void:
 	var black_plays := get_plays_for(BoardStateData.CounterType.BLACK)
 	var white_plays := get_plays_for(BoardStateData.CounterType.WHITE)
 
-	computed_plays_available.emit({
+	return {
 		BoardStateData.CounterType.BLACK: black_plays,
 		BoardStateData.CounterType.WHITE: white_plays,
-	})
+	}
 
 func refresh() -> void:
 	if not _board_state:
@@ -72,14 +73,17 @@ func refresh_one(idx: int) -> void:
 
 	refreshed_cell.emit(idx, can_place)
 
-func get_plays_for(colour: BoardStateData.CounterType) -> Array[int]:
+func get_plays_for(colour: BoardStateData.CounterType) -> AvailablePlays:
 	var plays: Array[int] = []
 
 	for idx: int in _board_state.cells_data.keys():
 		if _can_place(idx, colour):
 			plays.append(idx)
 
-	return plays
+	var result := AvailablePlays.new()
+	result.plays = plays
+
+	return result
 
 func _can_place(idx: int, colour: BoardStateData.CounterType) -> bool:
 	var cell_data: BoardCellData = _board_state.cells_data[idx]
