@@ -16,17 +16,17 @@ var placement_calculator: PlacementCalculator
 
 const SKIP_TYPES := [TurnType.BLACK_SKIP, TurnType.WHITE_SKIP, TurnType.BOTH_SKIP]
 
+var _board: Board
 var _board_3d: Board3D
+
+# MEDIUM: remove this field. _next_turn_type does everything we need
 var _next_turn_colour: BoardStateData.CounterType
+
 var _next_turn_type: TurnType
 var _has_game_ended := false
 var _turn_skip_duration := 3.0
 
 signal starting_colour_changed(colour: BoardStateData.CounterType)
-
-# MEDIUM: remove this signal. next_turn_started now does everything we need
-signal next_colour_changed(colour: BoardStateData.CounterType)
-
 signal next_turn_started(turn_type: TurnType)
 signal game_ended
 
@@ -36,11 +36,12 @@ func _ready() -> void:
 	assert(placement_calculator)
 
 func connect_to_board(board: Board) -> void:
+	_board = board
+
 	board.cell_changed.connect(_handle_cell_changed)
 	board.board_reset.connect(_handle_board_reset)
 
 	starting_colour_changed.connect(board.set_next_colour)
-	next_colour_changed.connect(board.set_next_colour)
 
 func connect_to_board_3d(board_3d: Board3D) -> void:
 	_board_3d = board_3d
@@ -49,7 +50,6 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 	board_3d.flips_finished.connect(_handle_flips_finished)
 
 	starting_colour_changed.connect(board_3d.set_next_colour)
-	next_colour_changed.connect(board_3d.set_next_colour)
 
 func _emit() -> void:
 	starting_colour_changed.emit(starting_colour)
@@ -63,7 +63,8 @@ func _go_to_next_turn() -> void:
 
 	_next_turn_colour = _compute_next_colour(_next_turn_colour)
 	print("Turn ended, %d plays next" % _next_turn_colour)
-	next_colour_changed.emit(_next_turn_colour)
+
+	_broadcast_next_colour()
 
 	var can_play := _check_available_plays(_next_turn_colour)
 	_next_turn_type = _compute_next_type(_next_turn_type, not can_play)
@@ -149,7 +150,13 @@ func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
 
 func _handle_board_reset(_old_state: BoardStateData, _new_state: BoardStateData) -> void:
 	_has_game_ended = false
-
 	_next_turn_colour = starting_colour
 
-	next_colour_changed.emit(_next_turn_colour)
+	_broadcast_next_colour()
+
+func _broadcast_next_colour() -> void:
+	if _board:
+		_board.set_next_colour(_next_turn_colour)
+
+	if _board_3d:
+		_board_3d.set_next_colour(_next_turn_colour)

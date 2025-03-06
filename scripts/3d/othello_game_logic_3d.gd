@@ -12,7 +12,6 @@ func _connect_children() -> void:
 		if turn_tracker:
 			turn_tracker.connect_to_board_3d(board_3d)
 
-			turn_tracker.next_colour_changed.connect(next_colour_changed.emit)
 			turn_tracker.next_turn_started.connect(next_turn_started.emit)
 			turn_tracker.game_ended.connect(game_ended.emit)
 

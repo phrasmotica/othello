@@ -21,7 +21,7 @@ signal refreshed_cell(idx: int, can_place: bool)
 func _ready() -> void:
 	if turn_tracker:
 		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
-		turn_tracker.next_colour_changed.connect(_handle_next_colour_changed)
+		turn_tracker.next_turn_started.connect(_handle_next_turn_started)
 
 func connect_to_board(board: Board) -> void:
 	board.state_changed.connect(_handle_state_changed)
@@ -41,9 +41,11 @@ func _handle_state_changed(data: BoardStateData) -> void:
 	refresh()
 
 func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> void:
+	# MEDIUM: call refresh() directly from TurnTracker instead
 	refresh()
 
-func _handle_next_colour_changed(_colour: BoardStateData.CounterType) -> void:
+func _handle_next_turn_started(_type: TurnTracker.TurnType) -> void:
+	# MEDIUM: call refresh() directly from TurnTracker instead
 	refresh()
 
 func compute_plays() -> Dictionary[BoardStateData.CounterType, AvailablePlays]:
