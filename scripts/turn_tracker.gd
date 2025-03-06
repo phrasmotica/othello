@@ -14,17 +14,20 @@ var starting_colour := BoardStateData.CounterType.BLACK:
 @export
 var placement_calculator: PlacementCalculator
 
+const SKIP_TYPES := [TurnType.BLACK_SKIP, TurnType.WHITE_SKIP, TurnType.BOTH_SKIP]
+
 var _board_3d: Board3D
 var _next_turn_colour: BoardStateData.CounterType
+var _next_turn_type: TurnType
 var _has_game_ended := false
 var _turn_skip_duration := 3.0
 
 signal starting_colour_changed(colour: BoardStateData.CounterType)
 
-# HIGH: emit colour and skip/not-skip information in one go
+# MEDIUM: remove this signal. next_turn_started now does everything we need
 signal next_colour_changed(colour: BoardStateData.CounterType)
 
-signal turn_skipped
+signal next_turn_started(turn_type: TurnType)
 signal game_ended
 
 func _ready() -> void:
@@ -58,15 +61,40 @@ func _go_to_next_turn() -> void:
 	if _has_game_ended:
 		return
 
-	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
-
+	_next_turn_colour = _compute_next_colour(_next_turn_colour)
 	print("Turn ended, %d plays next" % _next_turn_colour)
-
 	next_colour_changed.emit(_next_turn_colour)
 
 	var can_play := _check_available_plays(_next_turn_colour)
-	if not can_play:
-		_skip_turn(_next_turn_colour)
+	_next_turn_type = _compute_next_type(_next_turn_type, not can_play)
+
+	# this might have changed due to the _check_available_plays(...) call
+	if _has_game_ended:
+		return
+
+	if SKIP_TYPES.has(_next_turn_type):
+		_skip_turn()
+	else:
+		_start_turn()
+
+func _compute_next_colour(colour: BoardStateData.CounterType) -> BoardStateData.CounterType:
+	return ((colour + 1) % 2) as BoardStateData.CounterType
+
+func _compute_next_type(type: TurnType, skip: bool) -> TurnType:
+	if [TurnType.BLACK_PLAY, TurnType.BLACK_SKIP].has(type):
+		if skip:
+			return TurnType.WHITE_SKIP
+
+		return TurnType.WHITE_PLAY
+
+	if [TurnType.WHITE_PLAY, TurnType.WHITE_SKIP].has(type):
+		if skip:
+			return TurnType.BLACK_SKIP
+
+		return TurnType.BLACK_PLAY
+
+	# does-nothing option
+	return TurnType.BOTH_SKIP
 
 func _check_available_plays(colour: BoardStateData.CounterType) -> bool:
 	var plays_dict := placement_calculator.compute_plays()
@@ -91,10 +119,15 @@ func _check_available_plays(colour: BoardStateData.CounterType) -> bool:
 
 	return colours_that_can_play.has(colour)
 
-func _skip_turn(for_colour: BoardStateData.CounterType) -> void:
-	print("%d cannot play, turn skipped!" % for_colour)
+func _start_turn() -> void:
+	print("%d can play, starting turn." % _next_turn_colour)
 
-	turn_skipped.emit()
+	next_turn_started.emit(_next_turn_type)
+
+func _skip_turn() -> void:
+	print("%d cannot play, skipping turn!" % _next_turn_colour)
+
+	next_turn_started.emit(_next_turn_type)
 
 	# HIGH: instead of pausing here, provide a way for scenes that depend on
 	# this one to acknowledge the skipped turn. After that, progress to the

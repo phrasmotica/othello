@@ -27,14 +27,13 @@ func update_ui(black_score: int, white_score: int, result: OthelloScore.GameResu
 
 	result_panel.result = result
 
-func handle_turn_skipped() -> void:
-	if turn_indicator_panel.turn_type == TurnTracker.TurnType.BLACK_PLAY:
-		turn_indicator_panel.turn_type = TurnTracker.TurnType.BLACK_SKIP
+func handle_next_turn_started(type: TurnTracker.TurnType) -> void:
+	turn_indicator_panel.turn_type = type
 
-	if turn_indicator_panel.turn_type == TurnTracker.TurnType.WHITE_PLAY:
-		turn_indicator_panel.turn_type = TurnTracker.TurnType.WHITE_SKIP
-
-	turn_indicator_panel.show()
+	if [TurnTracker.TurnType.BLACK_PLAY, TurnTracker.TurnType.WHITE_PLAY].has(type):
+		turn_indicator_panel.hide()
+	else:
+		turn_indicator_panel.show()
 
 func handle_next_colour_changed(colour: BoardStateData.CounterType) -> void:
 	if colour == BoardStateData.CounterType.BLACK:
