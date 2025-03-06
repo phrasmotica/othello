@@ -54,32 +54,21 @@ func _emit() -> void:
 func _handle_flips_finished(_indexes: Array[int]) -> void:
 	_go_to_next_turn()
 
-func _go_to_next_turn(turn_is_skipped := false) -> void:
+func _go_to_next_turn() -> void:
 	if _has_game_ended:
 		return
 
 	_next_turn_colour = ((_next_turn_colour + 1) % 2) as BoardStateData.CounterType
 
-	if turn_is_skipped:
-		print("Turn skipped! %d plays next" % _next_turn_colour)
+	print("Turn ended, %d plays next" % _next_turn_colour)
 
-		turn_skipped.emit()
+	next_colour_changed.emit(_next_turn_colour)
 
-		# HIGH: instead of pausing here, provide a way for scenes that depend on
-		# this one to acknowledge the skipped turn. After that, progress to the
-		# next turn.
-		SignalHelper.once_after(
-			_turn_skip_duration,
-			next_colour_changed.emit.bind(_next_turn_colour)
-		)
-	else:
-		print("Turn ended, %d plays next" % _next_turn_colour)
+	var can_play := _check_available_plays(_next_turn_colour)
+	if not can_play:
+		_skip_turn(_next_turn_colour)
 
-		next_colour_changed.emit(_next_turn_colour)
-
-	_check_available_plays()
-
-func _check_available_plays() -> void:
+func _check_available_plays(colour: BoardStateData.CounterType) -> bool:
 	var plays_dict := placement_calculator.compute_plays()
 
 	var colours_that_can_play: Array[BoardStateData.CounterType] = []
@@ -96,16 +85,21 @@ func _check_available_plays() -> void:
 		else:
 			SignalHelper.once(_board_3d.freed, _end_game)
 
-		return
+		return true
 
 	print("Colours that can play: ", colours_that_can_play)
 
-	if not colours_that_can_play.has(_next_turn_colour):
-		# this is quite an edge case... it might be impossible for colour A to
-		# play, then colour B cannot play, then colour A can play again. But
-		# we have this here for completeness
-		print("%d cannot play!" % _next_turn_colour)
-		_go_to_next_turn(true)
+	return colours_that_can_play.has(colour)
+
+func _skip_turn(for_colour: BoardStateData.CounterType) -> void:
+	print("%d cannot play, turn skipped!" % for_colour)
+
+	turn_skipped.emit()
+
+	# HIGH: instead of pausing here, provide a way for scenes that depend on
+	# this one to acknowledge the skipped turn. After that, progress to the
+	# next turn.
+	SignalHelper.once_after(_turn_skip_duration, _go_to_next_turn)
 
 func _end_game() -> void:
 	print("Game ended!")
