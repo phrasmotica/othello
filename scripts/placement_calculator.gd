@@ -46,6 +46,8 @@ func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> voi
 
 func _handle_next_turn_started(_type: TurnTracker.TurnType) -> void:
 	# MEDIUM: call refresh() directly from TurnTracker instead
+	# BUG: this doesn't seem to be happening while pausing for a skipped turn?
+	# The other colour can still hover over board cells...
 	refresh()
 
 func compute_plays() -> Dictionary[BoardStateData.CounterType, AvailablePlays]:
