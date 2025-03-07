@@ -60,16 +60,20 @@ func _start_game() -> void:
 	_start_turn()
 
 func _go_to_next_turn() -> void:
-	var next_colour := _compute_next_colour(_next_turn_colour)
-	var next_type := _compute_type(next_colour)
+	if placement_calculator.both_cannot_play():
+		print("Both colours cannot play!")
 
-	if _has_game_ended:
+		if _board_3d.is_free():
+			_end_game()
+		else:
+			SignalHelper.once(_board_3d.freed, _end_game)
+
 		return
 
-	_next_turn_colour = next_colour
-	_next_turn_type = next_type
+	_next_turn_colour = _compute_next_colour(_next_turn_colour)
+	_next_turn_type = _compute_type(_next_turn_colour)
 
-	print("Turn ended, next: %d" % next_colour)
+	print("Turn ended, next: %d" % _next_turn_colour)
 
 	if SKIP_TYPES.has(_next_turn_type):
 		_skip_turn()
@@ -83,36 +87,14 @@ func _compute_next_colour(colour: BoardStateData.CounterType) -> BoardStateData.
 	return BoardStateData.CounterType.BLACK
 
 func _compute_type(colour: BoardStateData.CounterType) -> TurnType:
-	var has_plays := _check_available_plays(colour)
+	var has_plays := placement_calculator.can_play(colour)
+	if not has_plays:
+		print("%d cannot play" % colour)
 
 	if colour == BoardStateData.CounterType.WHITE:
 		return TurnType.WHITE_PLAY if has_plays else TurnType.WHITE_SKIP
 
 	return TurnType.BLACK_PLAY if has_plays else TurnType.BLACK_SKIP
-
-func _check_available_plays(colour: BoardStateData.CounterType) -> bool:
-	var plays_dict := placement_calculator.compute_plays()
-
-	var colours_that_can_play: Array[BoardStateData.CounterType] = []
-
-	for key: BoardStateData.CounterType in plays_dict.keys():
-		if plays_dict[key].can_play():
-			colours_that_can_play.append(key)
-
-	# HIGH: move this check out into its own function
-	if colours_that_can_play.size() <= 0:
-		print("Both colours cannot play!")
-
-		if _board_3d.is_free():
-			_end_game()
-		else:
-			SignalHelper.once(_board_3d.freed, _end_game)
-
-		return true
-
-	print("Colours that can play: ", colours_that_can_play)
-
-	return colours_that_can_play.has(colour)
 
 func _start_turn() -> void:
 	print("Starting turn: %d" % _next_turn_type)

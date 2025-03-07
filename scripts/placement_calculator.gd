@@ -31,14 +31,14 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
 
-func compute_plays() -> Dictionary[BoardStateData.CounterType, AvailablePlays]:
-	var black_plays := _get_plays_for(BoardStateData.CounterType.BLACK)
-	var white_plays := _get_plays_for(BoardStateData.CounterType.WHITE)
+func can_play(colour: BoardStateData.CounterType) -> bool:
+	return _get_plays_for(colour).can_play()
 
-	return {
-		BoardStateData.CounterType.BLACK: black_plays,
-		BoardStateData.CounterType.WHITE: white_plays,
-	}
+func both_cannot_play() -> bool:
+	return not (
+		can_play(BoardStateData.CounterType.BLACK) or
+		can_play(BoardStateData.CounterType.WHITE)
+	)
 
 func refresh_for(colour: BoardStateData.CounterType) -> void:
 	# check place-ability under the assumption that we have all of the cells
