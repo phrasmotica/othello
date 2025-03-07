@@ -40,6 +40,8 @@ func both_cannot_play() -> bool:
 		can_play(BoardStateData.CounterType.WHITE)
 	)
 
+# HIGH: move all the logic for refreshing the board cells into a new script
+# that sits inside the board scene
 func refresh_for(colour: BoardStateData.CounterType) -> void:
 	# check place-ability under the assumption that we have all of the cells
 	for idx: int in _board_state.cells_data.keys():
