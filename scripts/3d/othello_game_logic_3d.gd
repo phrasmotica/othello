@@ -39,7 +39,4 @@ func restart_game() -> void:
 
 	Globals.init_finished = true
 
-	if placement_calculator:
-		placement_calculator.refresh()
-
 	_emit_restarted()

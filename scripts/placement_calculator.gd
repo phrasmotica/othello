@@ -18,11 +18,6 @@ var _board_state: BoardStateData
 
 signal refreshed_cell(idx: int, can_place: bool)
 
-func _ready() -> void:
-	if turn_tracker:
-		turn_tracker.starting_colour_changed.connect(_handle_starting_colour_changed)
-		turn_tracker.next_turn_started.connect(_handle_next_turn_started)
-
 func connect_to_board(board: Board) -> void:
 	board.state_changed.connect(_handle_state_changed)
 
@@ -38,46 +33,28 @@ func _handle_state_changed(data: BoardStateData) -> void:
 
 	# MEDIUM: only refresh if this came from a counter being placed,
 	# or from an entire set of flips completing
-	refresh()
-
-func _handle_starting_colour_changed(_colour: BoardStateData.CounterType) -> void:
-	# MEDIUM: call refresh() directly from TurnTracker instead
-	refresh()
-
-func _handle_next_turn_started(_type: TurnTracker.TurnType) -> void:
-	# MEDIUM: call refresh() directly from TurnTracker instead
-	# BUG: this doesn't seem to be happening while pausing for a skipped turn?
-	# The other colour can still hover over board cells...
-	refresh()
+	refresh_for(_board_state.next_colour)
 
 func compute_plays() -> Dictionary[BoardStateData.CounterType, AvailablePlays]:
-	# for k: int in _board_state.cells_data:
-	# 	var data: BoardCellData = _board_state.cells_data[k]
-	# 	if data.has_counter():
-	# 		print("%d = %d" % [k, data.counter_presence])
-
-	var black_plays := get_plays_for(BoardStateData.CounterType.BLACK)
-	var white_plays := get_plays_for(BoardStateData.CounterType.WHITE)
+	var black_plays := _get_plays_for(BoardStateData.CounterType.BLACK)
+	var white_plays := _get_plays_for(BoardStateData.CounterType.WHITE)
 
 	return {
 		BoardStateData.CounterType.BLACK: black_plays,
 		BoardStateData.CounterType.WHITE: white_plays,
 	}
 
-func refresh() -> void:
-	if not _board_state:
-		return
-
+func refresh_for(colour: BoardStateData.CounterType) -> void:
 	# check place-ability under the assumption that we have all of the cells
 	for idx: int in _board_state.cells_data.keys():
-		refresh_one(idx)
+		_refresh_one(colour, idx)
 
-func refresh_one(idx: int) -> void:
-	var can_place := _can_place(idx, _board_state.next_colour)
+func _refresh_one(colour: BoardStateData.CounterType, idx: int) -> void:
+	var can_place := _can_place(idx, colour)
 
 	refreshed_cell.emit(idx, can_place)
 
-func get_plays_for(colour: BoardStateData.CounterType) -> AvailablePlays:
+func _get_plays_for(colour: BoardStateData.CounterType) -> AvailablePlays:
 	var plays: Array[int] = []
 
 	for idx: int in _board_state.cells_data.keys():

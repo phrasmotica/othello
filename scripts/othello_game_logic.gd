@@ -51,9 +51,6 @@ func restart_game() -> void:
 	if board:
 		board.restart()
 
-	if placement_calculator:
-		placement_calculator.refresh()
-
 	_emit_restarted()
 
 func _emit_restarted():

@@ -9,7 +9,7 @@ var starting_colour := BoardStateData.CounterType.BLACK:
 		if starting_colour != value:
 			starting_colour = value
 
-			_emit()
+			_broadcast_colour(value)
 
 @export
 var placement_calculator: PlacementCalculator
@@ -18,18 +18,18 @@ const SKIP_TYPES := [TurnType.BLACK_SKIP, TurnType.WHITE_SKIP, TurnType.BOTH_SKI
 
 var _board: Board
 var _board_3d: Board3D
+var _next_turn_colour: BoardStateData.CounterType
 var _next_turn_type: TurnType
 var _has_game_ended := false
 var _turn_skip_duration := 3.0
 
-signal starting_colour_changed(colour: BoardStateData.CounterType)
 signal next_turn_started(turn_type: TurnType)
 signal game_ended
 
 func _ready() -> void:
-	get_tree().root.ready.connect(_emit)
-
 	assert(placement_calculator)
+
+	get_tree().root.ready.connect(_start_game)
 
 func connect_to_board(board: Board) -> void:
 	_board = board
@@ -37,51 +37,58 @@ func connect_to_board(board: Board) -> void:
 	board.cell_changed.connect(_handle_cell_changed)
 	board.board_reset.connect(_handle_board_reset)
 
-	starting_colour_changed.connect(board.set_next_colour)
-
 func connect_to_board_3d(board_3d: Board3D) -> void:
 	_board_3d = board_3d
 
 	board_3d.board_reset.connect(_handle_board_reset)
 	board_3d.flips_finished.connect(_handle_flips_finished)
 
-	starting_colour_changed.connect(board_3d.set_next_colour)
-
-func _emit() -> void:
-	starting_colour_changed.emit(starting_colour)
-
 func _handle_flips_finished(_indexes: Array[int]) -> void:
 	_go_to_next_turn()
 
+func _start_game() -> void:
+	_next_turn_colour = starting_colour
+
+	if starting_colour == BoardStateData.CounterType.BLACK:
+		_next_turn_type = TurnType.BLACK_PLAY
+
+	if starting_colour == BoardStateData.CounterType.WHITE:
+		_next_turn_type = TurnType.WHITE_PLAY
+
+	# MEDIUM: it's possible for the starting colour to not have a play on the
+	# initial board state. So we might need to skip the turn here instead
+	_start_turn()
+
 func _go_to_next_turn() -> void:
-	var next := _compute_next_type(_next_turn_type)
+	var next_colour := _compute_next_colour(_next_turn_colour)
+	var next_type := _compute_type(next_colour)
 
 	if _has_game_ended:
 		return
 
-	_next_turn_type = next
-	print("Turn ended, next: %d" % _next_turn_type)
+	_next_turn_colour = next_colour
+	_next_turn_type = next_type
+
+	print("Turn ended, next: %d" % next_colour)
 
 	if SKIP_TYPES.has(_next_turn_type):
 		_skip_turn()
 	else:
 		_start_turn()
 
-func _compute_next_type(type: TurnType) -> TurnType:
-	if [TurnType.BLACK_PLAY, TurnType.BLACK_SKIP].has(type):
-		if _check_available_plays(BoardStateData.CounterType.WHITE):
-			return TurnType.WHITE_PLAY
+func _compute_next_colour(colour: BoardStateData.CounterType) -> BoardStateData.CounterType:
+	if colour == BoardStateData.CounterType.BLACK:
+		return BoardStateData.CounterType.WHITE
 
-		return TurnType.WHITE_SKIP
+	return BoardStateData.CounterType.BLACK
 
-	if [TurnType.WHITE_PLAY, TurnType.WHITE_SKIP].has(type):
-		if _check_available_plays(BoardStateData.CounterType.BLACK):
-			return TurnType.BLACK_PLAY
+func _compute_type(colour: BoardStateData.CounterType) -> TurnType:
+	var has_plays := _check_available_plays(colour)
 
-		return TurnType.BLACK_SKIP
+	if colour == BoardStateData.CounterType.WHITE:
+		return TurnType.WHITE_PLAY if has_plays else TurnType.WHITE_SKIP
 
-	# does-nothing option
-	return TurnType.BOTH_SKIP
+	return TurnType.BLACK_PLAY if has_plays else TurnType.BLACK_SKIP
 
 func _check_available_plays(colour: BoardStateData.CounterType) -> bool:
 	var plays_dict := placement_calculator.compute_plays()
@@ -110,10 +117,14 @@ func _check_available_plays(colour: BoardStateData.CounterType) -> bool:
 func _start_turn() -> void:
 	print("Starting turn: %d" % _next_turn_type)
 
+	_broadcast_colour(_next_turn_colour)
+
 	next_turn_started.emit(_next_turn_type)
 
 func _skip_turn() -> void:
 	print("Skipping turn: %d" % _next_turn_type)
+
+	_broadcast_colour(_next_turn_colour)
 
 	next_turn_started.emit(_next_turn_type)
 
@@ -138,11 +149,13 @@ func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
 func _handle_board_reset(_old_state: BoardStateData, _new_state: BoardStateData) -> void:
 	_has_game_ended = false
 
-	_reset_turn_type()
+	_start_game()
 
-func _reset_turn_type() -> void:
-	if starting_colour == BoardStateData.CounterType.BLACK:
-		_next_turn_type = TurnType.BLACK_PLAY
+func _broadcast_colour(colour: BoardStateData.CounterType) -> void:
+	if _board:
+		_board.set_next_colour(colour)
 
-	if starting_colour == BoardStateData.CounterType.WHITE:
-		_next_turn_type = TurnType.WHITE_PLAY
+	if _board_3d:
+		_board_3d.set_next_colour(colour)
+
+	placement_calculator.refresh_for(colour)
