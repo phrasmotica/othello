@@ -31,10 +31,6 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 func _handle_state_changed(data: BoardStateData) -> void:
 	_board_state = data
 
-	# MEDIUM: only refresh if this came from a counter being placed,
-	# or from an entire set of flips completing
-	refresh_for(_board_state.next_colour)
-
 func compute_plays() -> Dictionary[BoardStateData.CounterType, AvailablePlays]:
 	var black_plays := _get_plays_for(BoardStateData.CounterType.BLACK)
 	var white_plays := _get_plays_for(BoardStateData.CounterType.WHITE)
