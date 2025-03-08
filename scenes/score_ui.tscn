@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbt4l8heggobx"]
+[gd_scene load_steps=8 format=3 uid="uid://dbt4l8heggobx"]
 
 [ext_resource type="Theme" uid="uid://cyumy3xx60fnx" path="res://themes/theme_ui.tres" id="1_pid2x"]
 [ext_resource type="Script" uid="uid://bkxklu5i4wkdx" path="res://scripts/score_ui.gd" id="1_uk3uu"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://d62squatyj1u" path="res://scenes/white_score_panel.tscn" id="4_odres"]
 [ext_resource type="PackedScene" uid="uid://cc88n0044q3ad" path="res://scenes/result_panel.tscn" id="5_5isde"]
 [ext_resource type="PackedScene" uid="uid://b8af3ic4idr71" path="res://scenes/turn_indicator_panel.tscn" id="5_myrg4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_myrg4"]
+bg_color = Color(0.464225, 0.410052, 0.22435, 1)
 
 [node name="ScoreUI" type="VBoxContainer"]
 custom_minimum_size = Vector2(648, 0)
@@ -37,6 +40,23 @@ size_flags_vertical = 0
 [node name="TurnIndicatorPanel" parent="." instance=ExtResource("5_myrg4")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_myrg4")
+value = 50.0
+show_percentage = false
+
+[node name="ContinueButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 24
+text = "Continue"
 
 [node name="ResultPanel" parent="." instance=ExtResource("5_5isde")]
 unique_name_in_owner = true

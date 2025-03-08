@@ -24,7 +24,6 @@ var _board_3d: Board3D
 var _next_turn_colour: BoardStateData.CounterType
 var _next_turn_type: TurnType
 var _has_game_ended := false
-var _turn_skip_duration := 3.0
 
 signal next_turn_started(turn_type: TurnType)
 signal game_ended
@@ -55,6 +54,9 @@ func before_start_game() -> void:
 
 func start_game() -> void:
 	_process_turn()
+
+func continue_turn() -> void:
+	_go_to_next_turn()
 
 func _go_to_next_turn() -> void:
 	if play_calculator.both_cannot_play():
@@ -110,11 +112,6 @@ func _skip_turn() -> void:
 	_broadcast_colour(_next_turn_colour)
 
 	next_turn_started.emit(_next_turn_type)
-
-	# HIGH: instead of pausing and then resuming automatically here, provide a
-	# way for scenes that depend on this one to acknowledge the skipped turn.
-	# After that, progress to the next turn.
-	SignalHelper.once_after(_turn_skip_duration, _go_to_next_turn)
 
 func _end_game() -> void:
 	print("Game ended!")

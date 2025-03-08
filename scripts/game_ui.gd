@@ -28,6 +28,7 @@ func _ready() -> void:
 		SignalHelper.persist(game_logic.game_restarted, score_ui.handle_game_restarted)
 
 		if not Engine.is_editor_hint():
+			SignalHelper.persist(score_ui.continued, game_logic.continue_turn)
 			SignalHelper.persist(buttons.restarted, game_logic.restart_game)
 			SignalHelper.chain(buttons.toggle_settings, toggled_settings)
 			SignalHelper.chain(buttons.quit_to_main_menu, quit_to_main_menu)

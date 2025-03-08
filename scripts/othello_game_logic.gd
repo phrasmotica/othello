@@ -47,6 +47,10 @@ func _connect_children() -> void:
 		if ray_calculator:
 			ray_calculator.connect_to_board(board)
 
+func continue_turn() -> void:
+	if turn_tracker:
+		turn_tracker.continue_turn()
+
 func restart_game() -> void:
 	if board:
 		board.restart()
