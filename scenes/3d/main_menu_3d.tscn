@@ -16,9 +16,10 @@ script = ExtResource("1_s2dii")
 [node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("1_ejsm0")]
 board_3d = NodePath("../Board3D")
 
-[node name="AutoPlayer3D" type="Node" parent="." node_paths=PackedStringArray("board")]
+[node name="AutoPlayer3D" type="Node" parent="." node_paths=PackedStringArray("game_logic", "board")]
 unique_name_in_owner = true
 script = ExtResource("2_v5wsa")
+game_logic = NodePath("../OthelloGameLogic3D")
 board = NodePath("../Board3D")
 
 [node name="Board3D" parent="." instance=ExtResource("2_ui3b4")]
