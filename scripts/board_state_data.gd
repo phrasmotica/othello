@@ -20,7 +20,7 @@ var board_size: Vector2i = Vector2i(MAX_WIDTH, MAX_HEIGHT):
 			emit_changed()
 
 @export
-var cells_data := {}:
+var cells_data: Dictionary[int, BoardCellData] = {}:
 	set(value):
 		if cells_data != value:
 			cells_data = value
@@ -39,7 +39,7 @@ func get_cell(key: int) -> BoardCellData:
 	if not cells_data.has(key):
 		return null
 
-	return cells_data[key] as BoardCellData
+	return cells_data[key]
 
 func set_cell(key: int, data: BoardCellData) -> void:
 	cells_data[key] = data
