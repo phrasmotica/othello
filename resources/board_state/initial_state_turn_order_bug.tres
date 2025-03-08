@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="BoardStateData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="BoardStateData" load_steps=6 format=3 uid="uid://dx4hpni3p4hq1"]
 
-[ext_resource type="Resource" path="res://resources/black_counter_data.tres" id="1_ksx16"]
-[ext_resource type="Resource" path="res://resources/empty_counter_data.tres" id="2_sja8l"]
-[ext_resource type="Resource" path="res://resources/white_counter_data.tres" id="3_4p0e3"]
-[ext_resource type="Script" path="res://scripts/board_state_data.gd" id="4_31lxv"]
+[ext_resource type="Script" uid="uid://56e2h126a03r" path="res://scripts/board_cell_data.gd" id="1_7px4v"]
+[ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="1_ksx16"]
+[ext_resource type="Resource" uid="uid://c5gfjl10d81hu" path="res://resources/empty_counter_data.tres" id="2_sja8l"]
+[ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="3_4p0e3"]
+[ext_resource type="Script" uid="uid://balxt0vkwg477" path="res://scripts/board_state_data.gd" id="4_31lxv"]
 
 [resource]
 script = ExtResource("4_31lxv")
 board_size = Vector2i(8, 8)
-cells_data = {
+cells_data = Dictionary[int, ExtResource("1_7px4v")]({
 0: ExtResource("1_ksx16"),
 1: ExtResource("2_sja8l"),
 2: ExtResource("3_4p0e3"),
@@ -73,5 +74,5 @@ cells_data = {
 61: ExtResource("3_4p0e3"),
 62: ExtResource("3_4p0e3"),
 63: ExtResource("2_sja8l")
-}
+})
 next_colour = 0

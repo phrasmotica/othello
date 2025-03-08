@@ -155,7 +155,8 @@ board = NodePath("../Board3D")
 counter_box = NodePath("../CounterBox")
 debug_canvas = NodePath("../DebugCanvas")
 
-[node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("board_3d") instance=ExtResource("2_wfqod")]
+[node name="OthelloGameLogic3D" parent="." node_paths=PackedStringArray("entrance", "board_3d") instance=ExtResource("2_wfqod")]
+entrance = NodePath("../EntranceOrchestrator")
 board_3d = NodePath("../Board3D")
 
 [node name="PurpleRoom" parent="." instance=ExtResource("13_yr2oc")]

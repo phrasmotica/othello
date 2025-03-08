@@ -33,8 +33,6 @@ func _ready() -> void:
 	assert(cell_toggler)
 	assert(play_calculator)
 
-	get_tree().root.ready.connect(_start_game)
-
 func connect_to_board(board: Board) -> void:
 	_board = board
 
@@ -50,18 +48,13 @@ func connect_to_board_3d(board_3d: Board3D) -> void:
 func _handle_flips_finished(_indexes: Array[int]) -> void:
 	_go_to_next_turn()
 
-func _start_game() -> void:
+func before_start_game() -> void:
 	_next_turn_colour = starting_colour
 
-	if starting_colour == BoardStateData.CounterType.BLACK:
-		_next_turn_type = TurnType.BLACK_PLAY
+	_broadcast_colour(_next_turn_colour)
 
-	if starting_colour == BoardStateData.CounterType.WHITE:
-		_next_turn_type = TurnType.WHITE_PLAY
-
-	# MEDIUM: it's possible for the starting colour to not have a play on the
-	# initial board state. So we might need to skip the turn here instead
-	_start_turn()
+func start_game() -> void:
+	_process_turn()
 
 func _go_to_next_turn() -> void:
 	if play_calculator.both_cannot_play():
@@ -75,9 +68,13 @@ func _go_to_next_turn() -> void:
 		return
 
 	_next_turn_colour = _compute_next_colour(_next_turn_colour)
-	_next_turn_type = _compute_type(_next_turn_colour)
 
 	print("Turn ended, next: %d" % _next_turn_colour)
+
+	_process_turn()
+
+func _process_turn() -> void:
+	_next_turn_type = _compute_type(_next_turn_colour)
 
 	if SKIP_TYPES.has(_next_turn_type):
 		_skip_turn()
@@ -135,7 +132,7 @@ func _handle_cell_changed(_index: int, _data: BoardCellData) -> void:
 func _handle_board_reset(_old_state: BoardStateData, _new_state: BoardStateData) -> void:
 	_has_game_ended = false
 
-	_start_game()
+	start_game()
 
 func _broadcast_colour(colour: BoardStateData.CounterType) -> void:
 	if _board:
@@ -144,4 +141,5 @@ func _broadcast_colour(colour: BoardStateData.CounterType) -> void:
 	if _board_3d:
 		_board_3d.set_next_colour(colour)
 
-	cell_toggler.refresh_for(colour)
+	if cell_toggler:
+		cell_toggler.refresh_for(colour)
