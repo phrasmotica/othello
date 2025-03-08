@@ -4,6 +4,7 @@ class_name SettingsMenu3D extends Node3D
 var settings_menu_ui: SettingsMenuUI = %SettingsMenuUI
 
 signal preview_flips_toggled(is_on: bool)
+signal auto_skip_toggled(is_on: bool)
 signal environment_index_changed(index: int)
 signal close_button_pressed
 
@@ -12,6 +13,11 @@ func _ready() -> void:
 		SignalHelper.chain(
 			settings_menu_ui.preview_flips_check_box_toggled,
 			preview_flips_toggled
+		)
+
+		SignalHelper.chain(
+			settings_menu_ui.auto_skip_check_box_toggled,
+			auto_skip_toggled
 		)
 
 		SignalHelper.chain(

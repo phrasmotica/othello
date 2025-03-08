@@ -58,6 +58,26 @@ focus_mode = 0
 mouse_default_cursor_shape = 2
 button_pressed = true
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="CheckBoxProxy" parent="MarginContainer/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("check_box", "proxy") instance=ExtResource("3_byn2t")]
+check_box = NodePath("../AutoSkipCheckBox")
+proxy = NodePath("..")
+
+[node name="AutoSkipLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MenuItemLabel"
+text = "Auto-skip"
+
+[node name="AutoSkipCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2

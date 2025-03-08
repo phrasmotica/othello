@@ -4,12 +4,16 @@ class_name SettingsMenuUI extends PanelContainer
 var preview_flips_check_box: CheckBox = %PreviewFlipsCheckBox
 
 @onready
+var auto_skip_check_box: CheckBox = %AutoSkipCheckBox
+
+@onready
 var environment_cycler: OptionCycler = %EnvironmentOptionCycler
 
 @onready
 var close_button: Button = %CloseButton
 
 signal preview_flips_check_box_toggled(toggled_on: bool)
+signal auto_skip_check_box_toggled(toggled_on: bool)
 signal environment_cycler_selected_index_changed(index: int)
 signal close_button_pressed
 
@@ -20,6 +24,14 @@ func _ready() -> void:
 		SignalHelper.chain(
 			preview_flips_check_box.toggled,
 			preview_flips_check_box_toggled
+		)
+
+	if auto_skip_check_box:
+		MouseCursor.set_pointing_cursor_for_control(auto_skip_check_box)
+
+		SignalHelper.chain(
+			auto_skip_check_box.toggled,
+			auto_skip_check_box_toggled
 		)
 
 	if environment_cycler:

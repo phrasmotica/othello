@@ -1,9 +1,6 @@
 @tool
 class_name ScoreUI extends VBoxContainer
 
-@export
-var auto_skip_turn := false
-
 @onready
 var black_score_panel: ScorePanel = %BlackScorePanel
 
@@ -73,7 +70,7 @@ func _handle_turn_type(type: TurnTracker.TurnType) -> void:
 	# turn is being skipped
 	turn_indicator_panel.show()
 
-	if auto_skip_turn:
+	if Globals.auto_skip:
 		progress_bar.show()
 
 		_tween_progress_bar()

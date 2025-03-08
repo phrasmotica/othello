@@ -3,6 +3,7 @@ extends Node
 var _debug_mode := false
 
 var init_finished := false
+var auto_skip := false
 
 signal toggled_debug_mode(is_debug: bool)
 
