@@ -5,35 +5,32 @@ class_name OthelloGameLogic3D extends OthelloGameLogic
 var board_3d: Board3D
 
 @onready
-var cell_toggler: CellToggler = %CellToggler
+var state_tracker: BoardStateTracker = %BoardStateTracker
 
 @onready
-var play_calculator: PlayCalculator = %PlayCalculator
+var cell_toggler: CellToggler = %CellToggler
 
 func _ready() -> void:
 	_connect_children()
 
 func _connect_children() -> void:
 	if board_3d:
+		if state_tracker:
+			state_tracker.connect_to_board_3d(board_3d)
+
 		if turn_tracker:
 			turn_tracker.connect_to_board_3d(board_3d)
 
-			turn_tracker.next_turn_started.connect(next_turn_started.emit)
-			turn_tracker.game_ended.connect(game_ended.emit)
+			SignalHelper.chain(turn_tracker.next_turn_started, next_turn_started)
+			SignalHelper.chain(turn_tracker.game_ended, game_ended)
 
 		if score:
 			score.connect_to_board_3d(board_3d)
 
-			score.score_changed.connect(score_changed.emit)
+			SignalHelper.chain(score.score_changed, score_changed)
 
 		if cell_toggler:
 			cell_toggler.connect_to_board_3d(board_3d)
-
-		if placement_calculator:
-			placement_calculator.connect_to_board_3d(board_3d)
-
-		if play_calculator:
-			play_calculator.connect_to_board_3d(board_3d)
 
 		if ray_calculator:
 			ray_calculator.connect_to_board_3d(board_3d)
