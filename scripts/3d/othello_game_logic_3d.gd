@@ -4,6 +4,12 @@ class_name OthelloGameLogic3D extends OthelloGameLogic
 @export
 var board_3d: Board3D
 
+@onready
+var cell_toggler: CellToggler = %CellToggler
+
+@onready
+var play_calculator: PlayCalculator = %PlayCalculator
+
 func _ready() -> void:
 	_connect_children()
 
@@ -20,8 +26,14 @@ func _connect_children() -> void:
 
 			score.score_changed.connect(score_changed.emit)
 
+		if cell_toggler:
+			cell_toggler.connect_to_board_3d(board_3d)
+
 		if placement_calculator:
 			placement_calculator.connect_to_board_3d(board_3d)
+
+		if play_calculator:
+			play_calculator.connect_to_board_3d(board_3d)
 
 		if ray_calculator:
 			ray_calculator.connect_to_board_3d(board_3d)

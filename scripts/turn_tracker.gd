@@ -12,7 +12,10 @@ var starting_colour := BoardStateData.CounterType.BLACK:
 			_broadcast_colour(value)
 
 @export
-var placement_calculator: PlacementCalculator
+var cell_toggler: CellToggler
+
+@export
+var play_calculator: PlayCalculator
 
 const SKIP_TYPES := [TurnType.BLACK_SKIP, TurnType.WHITE_SKIP, TurnType.BOTH_SKIP]
 
@@ -27,7 +30,8 @@ signal next_turn_started(turn_type: TurnType)
 signal game_ended
 
 func _ready() -> void:
-	assert(placement_calculator)
+	assert(cell_toggler)
+	assert(play_calculator)
 
 	get_tree().root.ready.connect(_start_game)
 
@@ -60,7 +64,7 @@ func _start_game() -> void:
 	_start_turn()
 
 func _go_to_next_turn() -> void:
-	if placement_calculator.both_cannot_play():
+	if play_calculator.both_cannot_play():
 		print("Both colours cannot play!")
 
 		if _board_3d.is_free():
@@ -87,7 +91,7 @@ func _compute_next_colour(colour: BoardStateData.CounterType) -> BoardStateData.
 	return BoardStateData.CounterType.BLACK
 
 func _compute_type(colour: BoardStateData.CounterType) -> TurnType:
-	var has_plays := placement_calculator.can_play(colour)
+	var has_plays := play_calculator.can_play(colour)
 	if not has_plays:
 		print("%d cannot play" % colour)
 
@@ -140,4 +144,4 @@ func _broadcast_colour(colour: BoardStateData.CounterType) -> void:
 	if _board_3d:
 		_board_3d.set_next_colour(colour)
 
-	placement_calculator.refresh_for(colour)
+	cell_toggler.refresh_for(colour)
