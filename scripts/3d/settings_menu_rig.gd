@@ -60,11 +60,8 @@ func _handle_auto_skip_toggled(toggled_on: bool) -> void:
 	Globals.auto_skip = toggled_on
 
 func _show_menu() -> void:
-	_is_busy = true
-
-	settings_menu.show()
-
 	if animation:
+		SignalHelper.once(animation.animation_started, _start_show)
 		SignalHelper.once(animation.animation_finished, _finish_show)
 		animation.play("show_settings_menu")
 	else:
@@ -78,6 +75,12 @@ func _hide_menu() -> void:
 		animation.play_backwards("show_settings_menu")
 	else:
 		_finish_hide()
+
+func _start_show(_anim_name: StringName = "") -> void:
+	print("SettingsMenuRig starting show")
+
+	SignalHelper.once_next_frame(settings_menu.show)
+	_is_busy = true
 
 func _finish_show(_anim_name: StringName = "") -> void:
 	print("SettingsMenuRig finishing show")
