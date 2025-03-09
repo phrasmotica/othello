@@ -9,6 +9,9 @@ var initial_state: BoardStateData:
 
 			_initialise()
 
+@export
+var wait_for_start := false
+
 @export_group("Animation")
 
 @export_range(0.1, 0.5)
@@ -50,7 +53,7 @@ signal flips_finished(indexes: Array[int])
 signal board_reset(old_state: BoardStateData, new_state: BoardStateData)
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
+	if not wait_for_start:
 		start_game()
 
 func start_game() -> void:
