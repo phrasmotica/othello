@@ -21,8 +21,6 @@ func _ready() -> void:
 		ui.quit.connect(_handle_quit)
 
 func _handle_started() -> void:
-	auto_player.stop_autoplay()
-
 	camera_rig.is_paused = true
 
 	var tween := create_tween()

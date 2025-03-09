@@ -1,7 +1,7 @@
 class_name AutoPlayer3D extends Node
 
-@export_range(2.0, 5.0)
-var play_interval := 2.0
+@export_range(1.0, 5.0)
+var play_interval := 1.0
 
 @export
 var game_logic: OthelloGameLogic3D
@@ -9,30 +9,19 @@ var game_logic: OthelloGameLogic3D
 @export
 var board: Board3D
 
-var _tween: Tween
-
 func _ready() -> void:
 	if game_logic:
-		SignalHelper.persist(game_logic.game_ended, stop_autoplay)
+		SignalHelper.persist(
+			game_logic.next_turn_started,
+			_wait_and_play
+		)
 
-	_start_autoplay()
+func _wait_and_play(type: TurnTracker.TurnType) -> void:
+	if TurnTracker.SKIP_TYPES.has(type):
+		SignalHelper.once_after(play_interval, game_logic.continue_turn)
+	else:
+		SignalHelper.once_after(play_interval, _play_random)
 
-func _start_autoplay() -> void:
-	if not board:
-		return
-
-	print("Starting autoplay")
-
-	_tween = create_tween().set_loops()
-
-	_tween.tween_callback(
-		func() -> void:
-			if board:
-				board.play_random()
-	).set_delay(play_interval)
-
-func stop_autoplay() -> void:
-	print("Stopping autoplay")
-
-	if _tween:
-		_tween.stop()
+func _play_random() -> void:
+	if board:
+		board.play_random()
