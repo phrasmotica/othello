@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _connect_children() -> void:
 	if not Engine.is_editor_hint():
-		var ready_sig := get_tree().root.ready
+		var ready_sig := board_3d.ready
 
 		# broadcast the board state for the first time, etc
 		SignalHelper.once(ready_sig, turn_tracker.before_start_game)
