@@ -16,11 +16,12 @@ script = ExtResource("1_npf6s")
 unique_name_in_owner = true
 script = ExtResource("2_6uatc")
 
-[node name="TurnTracker" type="Node" parent="." node_paths=PackedStringArray("cell_toggler", "play_calculator")]
+[node name="TurnTracker" type="Node" parent="." node_paths=PackedStringArray("cell_toggler", "play_calculator", "ray_calculator")]
 unique_name_in_owner = true
 script = ExtResource("2_1f8ag")
 cell_toggler = NodePath("../CellToggler")
 play_calculator = NodePath("../PlayCalculator")
+ray_calculator = NodePath("../RayCalculator")
 
 [node name="ScoreTracker" type="Node" parent="."]
 unique_name_in_owner = true
@@ -44,6 +45,7 @@ script = ExtResource("6_fq6kn")
 state_tracker = NodePath("../BoardStateTracker")
 placement_calculator = NodePath("../PlacementCalculator")
 
-[node name="RayCalculator" type="Node" parent="."]
+[node name="RayCalculator" type="Node" parent="." node_paths=PackedStringArray("state_tracker")]
 unique_name_in_owner = true
 script = ExtResource("5_o23kq")
+state_tracker = NodePath("../BoardStateTracker")

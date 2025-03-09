@@ -23,10 +23,6 @@ func restart_game() -> BoardStateData:
 
 	return old_state
 
-func set_next_colour(type: BoardStateData.CounterType) -> void:
-	_current_state.next_colour = type
-	_broadcast()
-
 func _handle_cell_confirmed(index: int, data: BoardCellData) -> void:
 	set_cell(index, data, true)
 
@@ -43,10 +39,10 @@ func set_cell(index: int, data: BoardCellData, emit_changed: bool) -> void:
 
 	# print("Cell %d %d->%d" % [index, old_colour, new_data.counter_presence])
 
-	_broadcast()
+	broadcast()
 
 	if emit_changed:
 		cell_changed.emit(index, data)
 
-func _broadcast() -> void:
+func broadcast() -> void:
 	state_changed.emit(_current_state)

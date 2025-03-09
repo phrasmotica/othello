@@ -17,6 +17,9 @@ var cell_toggler: CellToggler
 @export
 var play_calculator: PlayCalculator
 
+@export
+var ray_calculator: RayCalculator
+
 const SKIP_TYPES := [TurnType.BLACK_SKIP, TurnType.WHITE_SKIP, TurnType.BOTH_SKIP]
 
 var _board: Board
@@ -137,6 +140,9 @@ func _broadcast_colour(colour: BoardStateData.CounterType) -> void:
 
 	if _board_3d:
 		_board_3d.set_next_colour(colour)
+
+	if ray_calculator:
+		ray_calculator.set_colour(colour)
 
 	if cell_toggler:
 		cell_toggler.refresh_for(colour)

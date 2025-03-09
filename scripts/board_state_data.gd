@@ -27,14 +27,6 @@ var cells_data: Dictionary[int, BoardCellData] = {}:
 
 			emit_changed()
 
-@export
-var next_colour := CounterType.BLACK:
-	set(value):
-		if next_colour != value:
-			next_colour = value
-
-			emit_changed()
-
 func get_cell(key: int) -> BoardCellData:
 	if not cells_data.has(key):
 		return null

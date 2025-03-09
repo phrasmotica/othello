@@ -1,7 +1,8 @@
 @tool
 class_name RayCalculator extends Node
 
-var _board_state: BoardStateData
+@export
+var state_tracker: BoardStateTracker
 
 var _empty_cell_code := "E"
 var _missing_cell_code := "N"
@@ -14,23 +15,25 @@ var _placement_checkers := {
 	BoardStateData.CounterType.WHITE: _regex_w,
 }
 
+var _current_colour: BoardStateData.CounterType
+
 signal computed_flips(indexes: Array[int])
 signal previewed_flips(indexes: Array[int])
 
 func _ready() -> void:
+	assert(state_tracker)
+
 	_regex_b.compile("^1+0")
 	_regex_w.compile("^0+1")
 
 func connect_to_board(board: Board) -> void:
 	board.cell_changed.connect(_handle_cell_changed)
-	board.state_changed.connect(_handle_state_changed)
 
 	computed_flips.connect(board.perform_flips)
 
 func connect_to_board_3d(board_3d: Board3D) -> void:
 	board_3d.cell_highlighted.connect(_handle_cell_highlighted)
 	board_3d.cell_changed.connect(_handle_cell_changed)
-	board_3d.state_changed.connect(_handle_state_changed)
 
 	computed_flips.connect(board_3d.perform_flips)
 	previewed_flips.connect(board_3d.preview_flips)
@@ -48,15 +51,15 @@ func _handle_cell_changed(index: int, _data: BoardCellData) -> void:
 
 	computed_flips.emit(indexes)
 
-func _handle_state_changed(data: BoardStateData) -> void:
-	_board_state = data
+func set_colour(colour: BoardStateData.CounterType) -> void:
+	_current_colour = colour
 
 func get_rays(idx: int, next_colour: BoardStateData.CounterType) -> Array[String]:
 	# cast eight "rays" outwards and check whether the cells that each ray
 	# passes through match the regular expressions defined at the top, depending
 	# on the colour of this cell. 0 represents a black counter, 1 a white one.
 
-	var pos := _get_idx_as_pos(idx)
+	var pos := state_tracker.get_idx_as_pos(idx)
 
 	var strings := [
 		_encode_ray_cells(pos, 0, -1),
@@ -80,13 +83,10 @@ func get_rays(idx: int, next_colour: BoardStateData.CounterType) -> Array[String
 	return result
 
 func _preview_flips(idx: int) -> Array[int]:
-	if not _board_state:
-		return []
-
-	return _compute_flips_for_colour(idx, _board_state.next_colour)
+	return _compute_flips_for_colour(idx, _current_colour)
 
 func _compute_flips(idx: int) -> Array[int]:
-	var cell_data := _get_cell_data(idx)
+	var cell_data := state_tracker.get_cell(idx)
 
 	if not cell_data:
 		return []
@@ -98,14 +98,14 @@ func _compute_flips(idx: int) -> Array[int]:
 	return _compute_flips_for_colour(idx, colour)
 
 func _compute_flips_for_colour(idx: int, colour: BoardStateData.CounterType) -> Array[int]:
-	var cell_data := _get_cell_data(idx)
+	var cell_data := state_tracker.get_cell(idx)
 
 	if not cell_data:
 		return []
 
 	var indexes: Array[int] = []
 
-	var pos := _get_idx_as_pos(idx)
+	var pos := state_tracker.get_idx_as_pos(idx)
 
 	var offsets: Array[Vector2i] = [
 		Vector2i(0, -1),
@@ -153,8 +153,8 @@ func _compute_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> Array[in
 	var next_x_pos := pos.x + offset_x
 	var next_y_pos := pos.y + offset_y
 
-	while _cell_exists(next_x_pos, next_y_pos):
-		var idx := _get_pos_as_idx(Vector2i(next_x_pos, next_y_pos))
+	while state_tracker.cell_exists(next_x_pos, next_y_pos):
+		var idx := state_tracker.get_pos_as_idx(Vector2i(next_x_pos, next_y_pos))
 		indexes.append(idx)
 
 		next_x_pos += offset_x
@@ -168,8 +168,8 @@ func _encode_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> String:
 	var next_x_pos := pos.x + offset_x
 	var next_y_pos := pos.y + offset_y
 
-	while _cell_exists(next_x_pos, next_y_pos):
-		var idx := _get_pos_as_idx(Vector2i(next_x_pos, next_y_pos))
+	while state_tracker.cell_exists(next_x_pos, next_y_pos):
+		var idx := state_tracker.get_pos_as_idx(Vector2i(next_x_pos, next_y_pos))
 		result = result + _encode_cell(idx)
 
 		next_x_pos += offset_x
@@ -178,7 +178,7 @@ func _encode_ray_cells(pos: Vector2i, offset_x: int, offset_y: int) -> String:
 	return result.replace(_missing_cell_code, "")
 
 func _encode_cell(idx: int) -> String:
-	var cell_data := _get_cell_data(idx)
+	var cell_data := state_tracker.get_cell(idx)
 	if not cell_data:
 		return _missing_cell_code
 
@@ -186,31 +186,3 @@ func _encode_cell(idx: int) -> String:
 		return _empty_cell_code
 
 	return str(cell_data.counter_presence)
-
-func _get_cell_data(idx: int) -> BoardCellData:
-	if _board_state.cells_data.has(idx):
-		var cell_data: BoardCellData = _board_state.cells_data[idx]
-		return cell_data
-
-	return null
-
-func _cell_exists(x_pos: int, y_pos: int) -> bool:
-	return x_pos >= 0 and x_pos < width() and y_pos >= 0 and y_pos < _height()
-
-func width() -> int:
-	return _board_state.board_size.x if _board_state else 0
-
-func _height() -> int:
-	return _board_state.board_size.y if _board_state else 0
-
-func _get_idx_as_pos(idx: int) -> Vector2i:
-	if not _board_state:
-		return -Vector2i.ONE
-
-	var x_pos := idx % _board_state.board_size.x
-	var y_pos := int(float(idx) / float(_board_state.board_size.x))
-
-	return Vector2i(x_pos, y_pos)
-
-func _get_pos_as_idx(pos: Vector2i) -> int:
-	return pos.x + _board_state.board_size.x * pos.y

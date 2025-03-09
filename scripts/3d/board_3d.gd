@@ -88,7 +88,7 @@ func set_next_colour(colour: BoardStateData.CounterType) -> void:
 		cells_manager_3d.set_next_colour(colour)
 
 	if board_state:
-		board_state.set_next_colour(colour)
+		board_state.broadcast()
 
 	if cell_data_pool:
 		cell_data_pool.next_colour = colour

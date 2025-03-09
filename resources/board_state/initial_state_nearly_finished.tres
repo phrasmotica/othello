@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="BoardStateData" load_steps=4 format=3 uid="uid://btynvgyugxw0e"]
+[gd_resource type="Resource" script_class="BoardStateData" load_steps=5 format=3 uid="uid://btynvgyugxw0e"]
 
+[ext_resource type="Script" uid="uid://56e2h126a03r" path="res://scripts/board_cell_data.gd" id="1_2e8lc"]
 [ext_resource type="Resource" uid="uid://pqc052my8ydx" path="res://resources/black_counter_data.tres" id="1_uyxx6"]
 [ext_resource type="Resource" uid="uid://bkeyonx1jyci4" path="res://resources/white_counter_data.tres" id="2_fqhxy"]
 [ext_resource type="Script" uid="uid://balxt0vkwg477" path="res://scripts/board_state_data.gd" id="3_jy3uu"]
@@ -7,7 +8,7 @@
 [resource]
 script = ExtResource("3_jy3uu")
 board_size = Vector2i(8, 8)
-cells_data = {
+cells_data = Dictionary[int, ExtResource("1_2e8lc")]({
 0: ExtResource("1_uyxx6"),
 1: ExtResource("2_fqhxy"),
 2: ExtResource("2_fqhxy"),
@@ -71,5 +72,4 @@ cells_data = {
 60: ExtResource("2_fqhxy"),
 61: ExtResource("2_fqhxy"),
 62: ExtResource("2_fqhxy")
-}
-next_colour = 0
+})

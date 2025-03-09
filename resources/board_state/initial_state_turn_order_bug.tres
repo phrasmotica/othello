@@ -75,4 +75,3 @@ cells_data = Dictionary[int, ExtResource("1_7px4v")]({
 62: ExtResource("3_4p0e3"),
 63: ExtResource("2_sja8l")
 })
-next_colour = 0
