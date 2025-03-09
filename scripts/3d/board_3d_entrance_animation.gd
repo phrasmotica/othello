@@ -25,6 +25,11 @@ func run() -> void:
 		tween.tween_callback(finished.emit)
 
 func _prepare_for_entrance() -> void:
+	# starting the game here, rather than as soon as the board is ready, ensures
+	# that all the relevant signal connections have been made before the UI
+	# appears, for example
+	board.start_game()
+
 	camera_rig.top_level = true
 	board.scale = 0.01 * Vector3.ONE
 

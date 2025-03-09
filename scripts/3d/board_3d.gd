@@ -40,6 +40,8 @@ signal initial_state_ready(data: BoardStateData)
 signal busy_changed(is_busy: bool)
 signal freed(is_busy: bool)
 
+signal started
+
 signal cell_highlighted(index: int)
 signal cell_changed(index: int, data: BoardCellData)
 
@@ -48,6 +50,10 @@ signal flips_finished(indexes: Array[int])
 signal board_reset(old_state: BoardStateData, new_state: BoardStateData)
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		start_game()
+
+func start_game() -> void:
 	if not Engine.is_editor_hint():
 		SignalHelper.chain(board_state.cell_changed, cell_changed)
 		SignalHelper.chain(board_state.state_changed, state_changed)
@@ -61,6 +67,8 @@ func _ready() -> void:
 
 		Globals.init_finished = true
 		print("Init finished")
+
+	started.emit()
 
 func _initialise() -> void:
 	_inject_state()
